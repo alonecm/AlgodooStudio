@@ -1,4 +1,4 @@
-﻿using AlgodooStudio.Window.Dialogs;
+﻿using AlgodooStudio.ASProject;
 
 namespace AlgodooStudio.PluginSystem
 {

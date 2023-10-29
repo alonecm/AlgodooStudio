@@ -69,22 +69,46 @@
     <ApplicationIcon>Resources\icon32.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dex.Canvas, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Dex.Analysis, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ClassLibrary\Dex.NET\Dex.Canvas\bin\Debug\Dex.Canvas.dll</HintPath>
+      <HintPath>..\..\ClassLibrary\Dex.NET\Test\bin\Debug\Dex.Analysis.dll</HintPath>
+    </Reference>
+    <Reference Include="Dex.Attribute, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ClassLibrary\Dex.NET\Test\bin\Debug\Dex.Attribute.dll</HintPath>
+    </Reference>
+    <Reference Include="Dex.Canvas">
+      <HintPath>..\..\ClassLibrary\Dex.NET\Test\bin\Debug\Dex.Canvas.dll</HintPath>
     </Reference>
     <Reference Include="Dex.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ClassLibrary\Dex.NET\Dex.Canvas\bin\Debug\Dex.Common.dll</HintPath>
+      <HintPath>..\..\ClassLibrary\Dex.NET\Test\bin\Debug\Dex.Common.dll</HintPath>
     </Reference>
     <Reference Include="Dex.Interfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ClassLibrary\Dex.NET\Dex.Canvas\bin\Debug\Dex.Interfaces.dll</HintPath>
+      <HintPath>..\..\ClassLibrary\Dex.NET\Test\bin\Debug\Dex.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Dex.IO, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ClassLibrary\Dex.NET\Test\bin\Debug\Dex.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Dex.Mathematics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ClassLibrary\Dex.NET\Test\bin\Debug\Dex.Mathematics.dll</HintPath>
+    </Reference>
+    <Reference Include="Dex.Network">
+      <HintPath>..\..\ClassLibrary\Dex.NET\Test\bin\Debug\Dex.Network.dll</HintPath>
+    </Reference>
+    <Reference Include="Dex.Utils">
+      <HintPath>..\..\ClassLibrary\Dex.NET\Test\bin\Debug\Dex.Utils.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.AvalonEdit, Version=6.2.0.78, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
       <HintPath>packages\AvalonEdit.6.2.0.78\lib\net462\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PhunSharp">
+      <HintPath>..\..\ClassLibrary\PhunSharp\PhunSharp\bin\Debug\PhunSharp.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -117,164 +141,116 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Analyzer\PhunAnalyzer.cs" />
-    <Compile Include="Analyzer\RegexTools.cs" />
-    <Compile Include="Analyzer\Stream\PhnStream.cs" />
-    <Compile Include="Analyzer\Stream\PhnUnit.cs" />
-    <Compile Include="Analyzer\Stream\UnitItem.cs" />
-    <Compile Include="Analyzer\Stream\UnitType.cs" />
-    <Compile Include="Analyzer\Syntax\Exception\ErrorCode.cs" />
-    <Compile Include="Analyzer\Syntax\Exception\SyntaxException.cs" />
-    <Compile Include="Analyzer\RegexFormatStrings.cs" />
-    <Compile Include="Analyzer\Stream\StringStream.cs" />
-    <Compile Include="Analyzer\Stream\Token.cs" />
-    <Compile Include="Analyzer\Stream\TokenStream.cs" />
-    <Compile Include="Attribute\NodeType.cs" />
-    <Compile Include="Attribute\XmlSerialize.cs" />
-    <Compile Include="Base\App.cs" />
-    <Compile Include="Base\ASAttribute.cs" />
-    <Compile Include="Base\ASException.cs" />
-    <Compile Include="Base\Container.cs" />
-    <Compile Include="Base\Item.cs" />
-    <Compile Include="Base\SyntaxNode_Type.cs" />
-    <Compile Include="Phun\Archive\SceneVariables.cs" />
-    <Compile Include="Phun\SceneVariable.cs" />
-    <Compile Include="Utils\DrawHelper.cs" />
-    <Compile Include="Phun\Props.cs" />
-    <Compile Include="Interface\IQuickInsertable.cs" />
-    <Compile Include="Interface\Edit\IEditable.cs" />
-    <Compile Include="Interface\Edit\IManage.cs" />
-    <Compile Include="Interface\Edit\IOperateControl.cs" />
-    <Compile Include="Interface\Edit\IReplace.cs" />
-    <Compile Include="Interface\Edit\ISave.cs" />
-    <Compile Include="Interface\Edit\ISearch.cs" />
-    <Compile Include="Interface\Edit\ISelectAll.cs" />
-    <Compile Include="Utils\IconTools.cs" />
-    <Compile Include="Interface\IPropertyItem.cs" />
-    <Compile Include="Interface\ITreeGroup.cs" />
-    <Compile Include="Interface\ITreeNodeEx.cs" />
-    <Compile Include="Phun\AlgodooSetting.cs" />
-    <Compile Include="Base\Layout.cs" />
-    <Compile Include="Phun\Archive\ArchiveInfo.cs" />
-    <Compile Include="Phun\Archive\SceneObjects.cs" />
-    <Compile Include="Phun\Archive\SceneSettings.cs" />
-    <Compile Include="Phun\ObjectItem.cs" />
-    <Compile Include="Phun\SettingGroup.cs" />
-    <Compile Include="Phun\PhunPackage.cs" />
-    <Compile Include="Base\Plugin.cs" />
-    <Compile Include="Base\Range.cs" />
-    <Compile Include="Phun\PhnSave.cs" />
-    <Compile Include="Base\TreeNode.cs" />
-    <Compile Include="Base\Theme.cs" />
-    <Compile Include="Utils\ColorTools.cs" />
-    <Compile Include="Interface\IBasicInformation.cs" />
-    <Compile Include="Interface\IContainer.cs" />
-    <Compile Include="Interface\IHotkey.cs" />
-    <Compile Include="Interface\ITreeNode.cs" />
-    <Compile Include="Manager\LayoutManager.cs" />
-    <Compile Include="Manager\PluginManager.cs" />
-    <Compile Include="Manager\ThemeManager.cs" />
-    <Compile Include="Phun\PhunSaveTools.cs" />
-    <Compile Include="Phun\ObjectType.cs" />
-    <Compile Include="Phun\SceneObject.cs" />
-    <Compile Include="Phun\SettingItem.cs" />
-    <Compile Include="Phun\ValueType.cs" />
+    <Compile Include="ASProject\AutoExecuteManageWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ASProject\AutoExecuteManageWindow.Designer.cs">
+      <DependentUpon>AutoExecuteManageWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ASProject\Interface\IEditable.cs" />
+    <Compile Include="ASProject\Interface\IReplaceable.cs" />
+    <Compile Include="ASProject\Interface\ISaveable.cs" />
+    <Compile Include="ASProject\Interface\ISearchable.cs" />
+    <Compile Include="ASProject\MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ASProject\MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ASProject\Dialogs\PropertiesSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ASProject\Dialogs\PropertiesSelect.Designer.cs">
+      <DependentUpon>PropertiesSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ASProject\PropertyWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ASProject\PropertyWindow.Designer.cs">
+      <DependentUpon>PropertyWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ASProject\FileExploreWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ASProject\FileExploreWindow.Designer.cs">
+      <DependentUpon>FileExploreWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ASProject\Dialogs\QuickInsertDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ASProject\Dialogs\QuickInsertDialog.Designer.cs">
+      <DependentUpon>QuickInsertDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ASProject\SceneViewWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ASProject\SceneViewWindow.Designer.cs">
+      <DependentUpon>SceneViewWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ASProject\Support\App.cs" />
+    <Compile Include="ASProject\Support\EntityType.cs" />
+    <Compile Include="ASProject\Support\Plugin.cs" />
+    <Compile Include="ASProject\Support\Props.cs" />
+    <Compile Include="ASProject\Support\Setting.cs" />
+    <Compile Include="ASProject\TextEditWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ASProject\TextEditWindow.Designer.cs">
+      <DependentUpon>TextEditWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ASProject\Dialogs\TextGetDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ASProject\Dialogs\TextGetDialog.Designer.cs">
+      <DependentUpon>TextGetDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ASProject\ToolBoxWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ASProject\ToolBoxWindow.Designer.cs">
+      <DependentUpon>ToolBoxWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="PluginSystem\API.cs" />
     <Compile Include="PluginSystem\Loader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Setting.cs" />
-    <Compile Include="Utils\Test.cs" />
-    <Compile Include="Utils\XmlSerializer.cs" />
-    <Compile Include="Window\About.cs">
+    <Compile Include="ASProject\About.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Window\About.Designer.cs">
+    <Compile Include="ASProject\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="Window\BraceFoldingStrategy.cs" />
-    <Compile Include="Window\Dialogs\AppSelectorDialog.cs">
+    <Compile Include="ASProject\BraceFoldingStrategy.cs" />
+    <Compile Include="ASProject\Mbox.cs" />
+    <Compile Include="ASProject\ReminderItem.cs" />
+    <Compile Include="ASProject\ReminderList.cs" />
+    <Compile Include="ASProject\Dialogs\ReplaceWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Window\Dialogs\AppSelectorDialog.Designer.cs">
-      <DependentUpon>AppSelectorDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Window\Dialogs\LayoutSelectDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Window\Dialogs\LayoutSelectDialog.Designer.cs">
-      <DependentUpon>LayoutSelectDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Window\Dialogs\Mbox.cs" />
-    <Compile Include="Window\Dialogs\PropertiesSelect.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Window\Dialogs\PropertiesSelect.Designer.cs">
-      <DependentUpon>PropertiesSelect.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Window\Dialogs\QuickInsertDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Window\Dialogs\QuickInsertDialog.Designer.cs">
-      <DependentUpon>QuickInsertDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Window\Dialogs\TextGetDialog.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Window\Dialogs\TextGetDialog.Designer.cs">
-      <DependentUpon>TextGetDialog.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Window\MainWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Window\MainWindow.Designer.cs">
-      <DependentUpon>MainWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Window\ReminderItem.cs" />
-    <Compile Include="Window\ReminderList.cs" />
-    <Compile Include="Window\ReplaceWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Window\ReplaceWindow.Designer.cs">
+    <Compile Include="ASProject\Dialogs\ReplaceWindow.Designer.cs">
       <DependentUpon>ReplaceWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Window\ResourceExplorerWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Window\ResourceExplorerWindow.Designer.cs">
-      <DependentUpon>ResourceExplorerWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Window\SceneEditorWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Window\SceneEditorWindow.Designer.cs">
-      <DependentUpon>SceneEditorWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Window\ScriptEditorWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Window\ScriptEditorWindow.Designer.cs">
-      <DependentUpon>ScriptEditorWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Window\ScriptManageItem.cs" />
-    <Compile Include="Window\ScriptManagerWindow.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Window\ScriptManagerWindow.Designer.cs">
-      <DependentUpon>ScriptManagerWindow.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Window\Style\DarkAlgodooTheme.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Window\Style\DarkQuickToolsRenderer.cs" />
-    <Compile Include="Window\Style\DarkStatusBarRenderer.cs" />
-    <Compile Include="Window\Style\QuickToolsRenderer.cs" />
-    <Compile Include="Window\Style\StatusBarRenderer.cs" />
-    <Compile Include="Window\Style\ThemeToolStripRenderer.cs" />
-    <Compile Include="Window\Support\EntityType.cs" />
-    <Compile Include="Window\Theme\Dark.cs" />
-    <Compile Include="Window\Theme\HighContrast.cs" />
-    <Compile Include="Window\Theme\Light.cs" />
+    <EmbeddedResource Include="ASProject\MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ASProject\Dialogs\PropertiesSelect.resx">
+      <DependentUpon>PropertiesSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ASProject\PropertyWindow.resx">
+      <DependentUpon>PropertyWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ASProject\FileExploreWindow.resx">
+      <DependentUpon>FileExploreWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ASProject\Dialogs\QuickInsertDialog.resx">
+      <DependentUpon>QuickInsertDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ASProject\TextEditWindow.resx">
+      <DependentUpon>TextEditWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ASProject\Dialogs\TextGetDialog.resx">
+      <DependentUpon>TextGetDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -285,41 +261,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="Window\About.resx">
+    <EmbeddedResource Include="ASProject\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Window\Dialogs\AppSelectorDialog.resx">
-      <DependentUpon>AppSelectorDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Window\Dialogs\LayoutSelectDialog.resx">
-      <DependentUpon>LayoutSelectDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Window\Dialogs\PropertiesSelect.resx">
-      <DependentUpon>PropertiesSelect.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Window\Dialogs\QuickInsertDialog.resx">
-      <DependentUpon>QuickInsertDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Window\Dialogs\TextGetDialog.resx">
-      <DependentUpon>TextGetDialog.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Window\MainWindow.resx">
-      <DependentUpon>MainWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Window\ReplaceWindow.resx">
+    <EmbeddedResource Include="ASProject\Dialogs\ReplaceWindow.resx">
       <DependentUpon>ReplaceWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Window\ResourceExplorerWindow.resx">
-      <DependentUpon>ResourceExplorerWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Window\SceneEditorWindow.resx">
-      <DependentUpon>SceneEditorWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Window\ScriptEditorWindow.resx">
-      <DependentUpon>ScriptEditorWindow.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Window\ScriptManagerWindow.resx">
-      <DependentUpon>ScriptManagerWindow.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
   </ItemGroup>
