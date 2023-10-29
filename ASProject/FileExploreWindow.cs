@@ -1283,8 +1283,15 @@ namespace AlgodooStudio.ASProject
                         {
                             saveCache.Add(path, PhunSharp.ArchiveTools.DeCompress(path));
                         }
-                        dynamic fileinfo = saveCache[path].Phn.Settings["FileInfo"];
-                        str += "存档作者：" + fileinfo.author + "\n";
+                        try
+                        {
+                            dynamic fileinfo = saveCache[path].Phn.Settings["FileInfo"];
+                            str += "存档作者：" + fileinfo.author + "\n";
+                        }
+                        catch 
+                        {
+                            str += "存档作者：无\n";
+                        }
                     }
                     str += "项目名称：" + fViewer.SelectedItems[0].Text +
                         "\n创建时间：" + new FileInfo(path).CreationTime.ToString();

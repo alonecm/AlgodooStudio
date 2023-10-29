@@ -452,7 +452,7 @@ namespace AlgodooStudio.ASProject
             this.在新管理器中打开ToolStripMenuItem1,
             this.在资源管理器中打开ToolStripMenuItem1});
             this.fViewerContextMenu.Name = "treeContextMenu";
-            this.fViewerContextMenu.Size = new System.Drawing.Size(185, 346);
+            this.fViewerContextMenu.Size = new System.Drawing.Size(185, 324);
             this.fViewerContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.fViewerContextMenu_Opening);
             // 
             // 新建ToolStripMenuItem1
