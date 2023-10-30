@@ -47,7 +47,7 @@ namespace AlgodooStudio.ASProject
             this.ClientSize = new System.Drawing.Size(386, 450);
             this.Controls.Add(this.propertyGrid);
             this.Name = "PropertyWindow";
-            this.Text = "PropertyWindow";
+            this.Text = "属性";
             this.ResumeLayout(false);
 
         }

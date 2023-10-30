@@ -13,7 +13,7 @@ namespace AlgodooStudio.ASProject.Support
         /// <summary>
         /// AS所在目录
         /// </summary>
-        public string StudioPath { get; internal set; } = Directory.GetCurrentDirectory();
+        public string StudioPath { get; internal set; } = ".\\";
 
 
         /// <summary>

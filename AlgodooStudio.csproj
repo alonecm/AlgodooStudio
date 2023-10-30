@@ -71,42 +71,41 @@
   <ItemGroup>
     <Reference Include="Dex.Analysis, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ClassLibrary\Dex.NET\Test\bin\Debug\Dex.Analysis.dll</HintPath>
+      <HintPath>..\..\ClassLibrary\PhunSharp\PhunSharp\bin\Debug\Dex.Analysis.dll</HintPath>
     </Reference>
     <Reference Include="Dex.Attribute, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ClassLibrary\Dex.NET\Test\bin\Debug\Dex.Attribute.dll</HintPath>
-    </Reference>
-    <Reference Include="Dex.Canvas">
-      <HintPath>..\..\ClassLibrary\Dex.NET\Test\bin\Debug\Dex.Canvas.dll</HintPath>
+      <HintPath>..\..\ClassLibrary\PhunSharp\PhunSharp\bin\Debug\Dex.Attribute.dll</HintPath>
     </Reference>
     <Reference Include="Dex.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ClassLibrary\Dex.NET\Test\bin\Debug\Dex.Common.dll</HintPath>
+      <HintPath>..\..\ClassLibrary\PhunSharp\PhunSharp\bin\Debug\Dex.Common.dll</HintPath>
     </Reference>
     <Reference Include="Dex.Interfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ClassLibrary\Dex.NET\Test\bin\Debug\Dex.Interfaces.dll</HintPath>
+      <HintPath>..\..\ClassLibrary\PhunSharp\PhunSharp\bin\Debug\Dex.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="Dex.IO, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ClassLibrary\Dex.NET\Test\bin\Debug\Dex.IO.dll</HintPath>
+      <HintPath>..\..\ClassLibrary\PhunSharp\PhunSharp\bin\Debug\Dex.IO.dll</HintPath>
     </Reference>
     <Reference Include="Dex.Mathematics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ClassLibrary\Dex.NET\Test\bin\Debug\Dex.Mathematics.dll</HintPath>
+      <HintPath>..\..\ClassLibrary\PhunSharp\PhunSharp\bin\Debug\Dex.Mathematics.dll</HintPath>
     </Reference>
-    <Reference Include="Dex.Network">
-      <HintPath>..\..\ClassLibrary\Dex.NET\Test\bin\Debug\Dex.Network.dll</HintPath>
-    </Reference>
-    <Reference Include="Dex.Utils">
-      <HintPath>..\..\ClassLibrary\Dex.NET\Test\bin\Debug\Dex.Utils.dll</HintPath>
+    <Reference Include="Dex.Utils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ClassLibrary\Dex.NET\Dex.Utils\bin\Debug\Dex.Utils.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.AvalonEdit, Version=6.2.0.78, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
       <HintPath>packages\AvalonEdit.6.2.0.78\lib\net462\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="PhunSharp">
+    <Reference Include="PhunNet.IO">
+      <HintPath>..\..\ClassLibrary\PhunSharp\PhunSharp\bin\Debug\PhunNet.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="PhunSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ClassLibrary\PhunSharp\PhunSharp\bin\Debug\PhunSharp.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
@@ -137,7 +136,7 @@
     <Reference Include="WindowsFormsIntegration" />
     <Reference Include="Zero.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ClassLibrary\ZeroDev\Zero.Engine\bin\Debug\Zero.Core.dll</HintPath>
+      <HintPath>..\..\ClassLibrary\ZeroDev\Zero.Core\bin\Debug\Zero.Core.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -187,8 +186,8 @@
     <Compile Include="ASProject\SceneViewWindow.Designer.cs">
       <DependentUpon>SceneViewWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="ASProject\Support\App.cs" />
     <Compile Include="ASProject\Support\EntityType.cs" />
+    <Compile Include="ASProject\Support\LoadedFileInfo.cs" />
     <Compile Include="ASProject\Support\Plugin.cs" />
     <Compile Include="ASProject\Support\Props.cs" />
     <Compile Include="ASProject\Support\Setting.cs" />

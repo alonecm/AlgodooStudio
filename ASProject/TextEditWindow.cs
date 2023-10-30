@@ -40,6 +40,11 @@ namespace AlgodooStudio.ASProject
         private string fileName;
 
         /// <summary>
+        /// 只读阅读模式
+        /// </summary>
+        private bool readOnly;
+
+        /// <summary>
         /// 提醒器是否已经显示
         /// </summary>
         private bool IsReminderShow;
@@ -89,7 +94,30 @@ namespace AlgodooStudio.ASProject
         internal TextEditWindow()
         {
             InitializeComponent();
+            Initialize();
+        }
 
+        internal TextEditWindow(string title = "", string content = "", bool readOnly = true)
+        {
+            InitializeComponent();
+            Initialize();
+            this.fileName = title;
+            this.IsTextLoad = true;
+            this.editor.Text = content;
+            this.IsTextLoad = false;
+            if (readOnly)
+            {
+                this.readOnly = readOnly;
+                this.editor.IsReadOnly = readOnly;
+                this.快速输入ToolStripMenuItem.Enabled = !readOnly;
+            }
+        }
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        private void Initialize()
+        {
             //选中块设定为非圆角
             editor.TextArea.SelectionCornerRadius = 0;
             //允许复制一整行
@@ -168,27 +196,29 @@ namespace AlgodooStudio.ASProject
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /// <exception cref="NotImplementedException"></exception>
         private void TextArea_TextEntered(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            //提词器未显示时检查内容
-            if (!IsReminderShow)
+            if (!readOnly)
             {
-                //如果内容是字母或数字则创建提词器并标注已经启动
-                if (Regex.IsMatch(e.Text, @"\w|\p{P}"))
+                //提词器未显示时检查内容
+                if (!IsReminderShow)
                 {
-                    CreateReminder();
+                    //如果内容是字母或数字则创建提词器并标注已经启动
+                    if (Regex.IsMatch(e.Text, @"\w|\p{P}"))
+                    {
+                        CreateReminder();
+                    }
                 }
-            }
-            else
-            {
-                //提词器如果已经显示则检查是否是空格是则关闭提词器并标注已关闭
-                //如果内容是空格则关闭提词器并标注已经关闭
-                if (Regex.IsMatch(e.Text, @"\s"))
+                else
                 {
-                    //这个样子只是把之前的给替换掉
-                    reminder.CompletionList.SelectItem(editor.Document.GetText(reminder.StartOffset, reminder.TextArea.Caret.Offset - reminder.StartOffset));
-                    reminder.Close();
+                    //提词器如果已经显示则检查是否是空格是则关闭提词器并标注已关闭
+                    //如果内容是空格则关闭提词器并标注已经关闭
+                    if (Regex.IsMatch(e.Text, @"\s"))
+                    {
+                        //这个样子只是把之前的给替换掉
+                        reminder.CompletionList.SelectItem(editor.Document.GetText(reminder.StartOffset, reminder.TextArea.Caret.Offset - reminder.StartOffset));
+                        reminder.Close();
+                    }
                 }
             }
         }
@@ -341,6 +371,16 @@ namespace AlgodooStudio.ASProject
             editor.Paste();
         }
 
+        private void 快速输入ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (QuickInsertDialog dialog = new QuickInsertDialog())
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    this.Insert(dialog.Content);
+                }
+            }
+        }
         #endregion 右键菜单
 
         #region 其他方法
@@ -555,6 +595,18 @@ namespace AlgodooStudio.ASProject
         protected override string GetPersistString()
         {
             return GetType().ToString() + "," + FilePath;
+        }
+
+        public void Insert(string str, int pos = -1)
+        {
+            if (pos == -1)
+            {
+                editor.Document.Insert(editor.CaretOffset, str);
+            }
+            else
+            {
+                editor.Document.Insert(pos, str);
+            }
         }
     }
 }

@@ -70,8 +70,6 @@ namespace AlgodooStudio.ASProject
             this.平铺ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.刷新ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.打开ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.解析phz文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.解析phn文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.剪切ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.复制ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -439,8 +437,6 @@ namespace AlgodooStudio.ASProject
             this.查看ToolStripMenuItem,
             this.刷新ToolStripMenuItem,
             this.打开ToolStripMenuItem,
-            this.解析phz文件ToolStripMenuItem,
-            this.解析phn文件ToolStripMenuItem,
             this.toolStripSeparator9,
             this.剪切ToolStripMenuItem1,
             this.复制ToolStripMenuItem1,
@@ -452,7 +448,7 @@ namespace AlgodooStudio.ASProject
             this.在新管理器中打开ToolStripMenuItem1,
             this.在资源管理器中打开ToolStripMenuItem1});
             this.fViewerContextMenu.Name = "treeContextMenu";
-            this.fViewerContextMenu.Size = new System.Drawing.Size(185, 324);
+            this.fViewerContextMenu.Size = new System.Drawing.Size(185, 280);
             this.fViewerContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.fViewerContextMenu_Opening);
             // 
             // 新建ToolStripMenuItem1
@@ -508,20 +504,6 @@ namespace AlgodooStudio.ASProject
             this.打开ToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.打开ToolStripMenuItem.Text = "打开";
             this.打开ToolStripMenuItem.Click += new System.EventHandler(this.打开ToolStripMenuItem_Click);
-            // 
-            // 解析phz文件ToolStripMenuItem
-            // 
-            this.解析phz文件ToolStripMenuItem.Name = "解析phz文件ToolStripMenuItem";
-            this.解析phz文件ToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.解析phz文件ToolStripMenuItem.Text = "解析phz文件";
-            this.解析phz文件ToolStripMenuItem.Click += new System.EventHandler(this.解析phz文件ToolStripMenuItem_Click);
-            // 
-            // 解析phn文件ToolStripMenuItem
-            // 
-            this.解析phn文件ToolStripMenuItem.Name = "解析phn文件ToolStripMenuItem";
-            this.解析phn文件ToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.解析phn文件ToolStripMenuItem.Text = "解析phn文件";
-            this.解析phn文件ToolStripMenuItem.Click += new System.EventHandler(this.解析phn文件ToolStripMenuItem_Click);
             // 
             // toolStripSeparator9
             // 
@@ -701,8 +683,6 @@ namespace AlgodooStudio.ASProject
         private System.Windows.Forms.ToolStripMenuItem 空文件夹ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 在新管理器中打开ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem 在资源管理器中打开ToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem 解析phz文件ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 解析phn文件ToolStripMenuItem;
         private System.Windows.Forms.ToolTip fileTip;
     }
 }

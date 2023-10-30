@@ -1,11 +1,16 @@
 ﻿using AlgodooStudio.ASProject.Dialogs;
+using AlgodooStudio.ASProject.Support;
 using Dex.Common;
 using Dex.Utils;
+using PhunSharp;
+using PhunSharp.Archive;
+using PhunSharp.ArchiveSyntax;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
@@ -23,26 +28,22 @@ namespace AlgodooStudio.ASProject
         /// 搜索框文字提示
         /// </summary>
         private const string searchBoxTip = "从当前文件夹中搜索文件(Enter)";
-
         /// <summary>
         /// 鼠标是否点击了
         /// </summary>
         private bool isMouseDown = false;
-
         /// <summary>
         /// 当前的目录路径
         /// </summary>
         private string directoryPath = "";
-
         /// <summary>
         /// 用来展示的文件扩展名
         /// </summary>
         private string displayExtension = "*.png|*.cfg|*.thm|*.phz|*.phn";
-
         /// <summary>
         /// Phun存档缓冲，用于控制输出与写入情况
         /// </summary>
-        private Dictionary<string, PhunSharp.Archive.ArchiveZip> saveCache = new Dictionary<string, PhunSharp.Archive.ArchiveZip>();
+        private Dictionary<string, ArchiveZip> saveCache = new Dictionary<string, ArchiveZip>();
 
         /// <summary>
         /// 生成资源管理器
@@ -53,7 +54,6 @@ namespace AlgodooStudio.ASProject
             //初始化窗体属性
             Initialize();
         }
-
         /// <summary>
         /// 生成资源管理器并定位到指定路径的目录下
         /// </summary>
@@ -64,6 +64,7 @@ namespace AlgodooStudio.ASProject
             //初始化窗体属性
             Initialize(path);
         }
+
 
         /// <summary>
         /// 初始化窗体属性
@@ -150,7 +151,6 @@ namespace AlgodooStudio.ASProject
         /// <param name="checkNumber">检查的数量</param>
         private void MemoryManage(byte cleanNumber, byte checkNumber)
         {
-            byte clean = cleanNumber;
             //如果清理值大于检查值则按检查值清理
             if (cleanNumber > checkNumber)
             {
@@ -178,7 +178,7 @@ namespace AlgodooStudio.ASProject
                 {
                     saveCache.Remove(item);
                 }
-                GC.Collect(2);
+                GC.Collect(3, GCCollectionMode.Forced, false, false);
             }
         }
 
@@ -196,15 +196,25 @@ namespace AlgodooStudio.ASProject
             }
             else if (File.Exists(path))
             {
-                try
+                switch (Path.GetExtension(path))
                 {
-                    TextEditWindow se = new TextEditWindow();
-                    se.FilePath = path;
-                    se.Show(this.DockPanel, DockState.Document);
-                }
-                catch (Exception e)
-                {
-                    MBox.ShowError(e.Message);
+                    case ".phz":
+                        var zip = saveCache[path];
+                        var te = new TextEditWindow($"查看：{Path.GetFileName(path)}",ArchiveTools.GetPhnContent(zip));
+                        te.Show(this.DockPanel, DockState.Document);
+                        break;
+                    default:
+                        try
+                        {
+                            var se = new TextEditWindow();
+                            se.FilePath = path;
+                            se.Show(this.DockPanel, DockState.Document);
+                        }
+                        catch (Exception e)
+                        {
+                            MBox.ShowError(e.Message);
+                        }
+                        break;
                 }
             }
             else
@@ -417,19 +427,6 @@ namespace AlgodooStudio.ASProject
             {
                 contentSpilter.Orientation = Orientation.Vertical;
                 contentSpilter.SplitterDistance = contentSpilter.Size.Width / 4;
-            }
-        }
-
-        /// <summary>
-        /// 让窗口里的所有子窗口实现双缓冲绘制
-        /// </summary>
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cp = base.CreateParams;
-                cp.ExStyle |= 0x02000000;
-                return cp;
             }
         }
 
@@ -960,8 +957,6 @@ namespace AlgodooStudio.ASProject
         /// </summary>
         private void ResetAllItems()
         {
-            解析phn文件ToolStripMenuItem.Visible =
-            解析phz文件ToolStripMenuItem.Visible =
             刷新ToolStripMenuItem.Visible =
                 查看ToolStripMenuItem.Visible =
                 新建ToolStripMenuItem1.Visible =
@@ -1004,7 +999,6 @@ namespace AlgodooStudio.ASProject
                     删除ToolStripMenuItem1.Visible = true;
                     重命名ToolStripMenuItem1.Visible = true;
                     复制完整路径ToolStripMenuItem1.Visible = true;
-                    解析phz文件ToolStripMenuItem.Visible = true;
                 }
                 else if (Path.GetExtension(item.Tag.ToString()) == ".phn")
                 {
@@ -1015,7 +1009,6 @@ namespace AlgodooStudio.ASProject
                     删除ToolStripMenuItem1.Visible = true;
                     重命名ToolStripMenuItem1.Visible = true;
                     复制完整路径ToolStripMenuItem1.Visible = true;
-                    解析phn文件ToolStripMenuItem.Visible = true;
                 }
                 else
                 {
@@ -1141,7 +1134,7 @@ namespace AlgodooStudio.ASProject
                         }
                         else
                         {
-                            FileManager.CopyFileTo(new FileInfo(path), new DirectoryInfo(directoryPath), Path.GetFileNameWithoutExtension(path) + " - 副本" + Path.GetExtension(path));
+                            FileManager.CopyFileTo(new FileInfo(path), new DirectoryInfo(directoryPath), Path.GetFileNameWithoutExtension(path) + " - 副本" + Path.GetExtension(path),false);
                             DisplayFilesAndFolders(directoryPath, "*", displayExtension);
                         }
                     }
@@ -1248,14 +1241,6 @@ namespace AlgodooStudio.ASProject
             }
         }
 
-        private void 解析phz文件ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void 解析phn文件ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-        }
-
         #endregion 文件展示区右键菜单
 
         /// <summary>
@@ -1278,20 +1263,16 @@ namespace AlgodooStudio.ASProject
                     {
                         //优先进行内存检查
                         MemoryManage(10, 20);
+                        
                         //如果存档不存在则优先添加到其中
                         if (!saveCache.ContainsKey(path))
                         {
-                            saveCache.Add(path, PhunSharp.ArchiveTools.DeCompress(path));
+                            saveCache.Add(path, ArchiveTools.DeCompress(path));
                         }
-                        try
-                        {
-                            dynamic fileinfo = saveCache[path].Phn.Settings["FileInfo"];
-                            str += "存档作者：" + fileinfo.author + "\n";
-                        }
-                        catch 
-                        {
-                            str += "存档作者：无\n";
-                        }
+                        //加载存档信息
+                        var info = new LoadedFileInfo(saveCache[path].Phn);
+                        str += "存档作者：" + info.Author + "\n";
+                        Program.SetPropertyEditObject(info);
                     }
                     str += "项目名称：" + fViewer.SelectedItems[0].Text +
                         "\n创建时间：" + new FileInfo(path).CreationTime.ToString();

@@ -269,7 +269,7 @@ namespace AlgodooStudio.ASProject
             this.文本文件ToolStripMenuItem,
             this.场景ToolStripMenuItem});
             this.新建ToolStripMenuItem.Name = "新建ToolStripMenuItem";
-            this.新建ToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.新建ToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.新建ToolStripMenuItem.Text = "新建";
             // 
             // 文本文件ToolStripMenuItem
@@ -290,60 +290,60 @@ namespace AlgodooStudio.ASProject
             // 
             this.打开ToolStripMenuItem.Name = "打开ToolStripMenuItem";
             this.打开ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.打开ToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.打开ToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.打开ToolStripMenuItem.Text = "打开...";
             this.打开ToolStripMenuItem.Click += new System.EventHandler(this.打开ToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(186, 6);
             // 
             // 最近打开ToolStripMenuItem
             // 
             this.最近打开ToolStripMenuItem.Name = "最近打开ToolStripMenuItem";
-            this.最近打开ToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.最近打开ToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.最近打开ToolStripMenuItem.Text = "最近打开";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(199, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(186, 6);
             // 
             // 保存ToolStripMenuItem
             // 
             this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
             this.保存ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.保存ToolStripMenuItem.Text = "保存";
             this.保存ToolStripMenuItem.Click += new System.EventHandler(this.保存ToolStripMenuItem_Click);
             // 
             // 另存为ToolStripMenuItem
             // 
             this.另存为ToolStripMenuItem.Name = "另存为ToolStripMenuItem";
-            this.另存为ToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.另存为ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.S)));
+            this.另存为ToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.另存为ToolStripMenuItem.Text = "另存为...";
             this.另存为ToolStripMenuItem.Click += new System.EventHandler(this.另存为ToolStripMenuItem_Click);
             // 
             // 全部保存ToolStripMenuItem
             // 
             this.全部保存ToolStripMenuItem.Name = "全部保存ToolStripMenuItem";
-            this.全部保存ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.S)));
-            this.全部保存ToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.全部保存ToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.全部保存ToolStripMenuItem.Text = "全部保存";
             this.全部保存ToolStripMenuItem.Click += new System.EventHandler(this.全部保存ToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(199, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(186, 6);
             // 
             // 退出ToolStripMenuItem
             // 
             this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
             this.退出ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.退出ToolStripMenuItem.Text = "退出";
             this.退出ToolStripMenuItem.Click += new System.EventHandler(this.退出ToolStripMenuItem_Click);
             // 
@@ -366,12 +366,13 @@ namespace AlgodooStudio.ASProject
             this.编辑ToolStripMenuItem.Name = "编辑ToolStripMenuItem";
             this.编辑ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.编辑ToolStripMenuItem.Text = "编辑";
+            this.编辑ToolStripMenuItem.Visible = false;
             // 
             // 查找ToolStripMenuItem
             // 
             this.查找ToolStripMenuItem.Name = "查找ToolStripMenuItem";
             this.查找ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.查找ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.查找ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.查找ToolStripMenuItem.Text = "查找";
             this.查找ToolStripMenuItem.Click += new System.EventHandler(this.查找ToolStripMenuItem_Click);
             // 
@@ -379,20 +380,20 @@ namespace AlgodooStudio.ASProject
             // 
             this.替换ToolStripMenuItem.Name = "替换ToolStripMenuItem";
             this.替换ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.替换ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.替换ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.替换ToolStripMenuItem.Text = "替换";
             this.替换ToolStripMenuItem.Click += new System.EventHandler(this.替换ToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
             // 
             // 撤消ToolStripMenuItem
             // 
             this.撤消ToolStripMenuItem.Name = "撤消ToolStripMenuItem";
             this.撤消ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.撤消ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.撤消ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.撤消ToolStripMenuItem.Text = "撤消";
             this.撤消ToolStripMenuItem.Click += new System.EventHandler(this.撤消ToolStripMenuItem_Click);
             // 
@@ -400,20 +401,20 @@ namespace AlgodooStudio.ASProject
             // 
             this.重做ToolStripMenuItem.Name = "重做ToolStripMenuItem";
             this.重做ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.重做ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.重做ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.重做ToolStripMenuItem.Text = "重做";
             this.重做ToolStripMenuItem.Click += new System.EventHandler(this.重做ToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
             // 
             // 复制ToolStripMenuItem
             // 
             this.复制ToolStripMenuItem.Name = "复制ToolStripMenuItem";
             this.复制ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.复制ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.复制ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.复制ToolStripMenuItem.Text = "复制";
             this.复制ToolStripMenuItem.Click += new System.EventHandler(this.复制ToolStripMenuItem_Click);
             // 
@@ -421,7 +422,7 @@ namespace AlgodooStudio.ASProject
             // 
             this.剪切ToolStripMenuItem.Name = "剪切ToolStripMenuItem";
             this.剪切ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.剪切ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.剪切ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.剪切ToolStripMenuItem.Text = "剪切";
             this.剪切ToolStripMenuItem.Click += new System.EventHandler(this.剪切ToolStripMenuItem_Click);
             // 
@@ -429,7 +430,7 @@ namespace AlgodooStudio.ASProject
             // 
             this.粘贴ToolStripMenuItem.Name = "粘贴ToolStripMenuItem";
             this.粘贴ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.粘贴ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.粘贴ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.粘贴ToolStripMenuItem.Text = "粘贴";
             this.粘贴ToolStripMenuItem.Click += new System.EventHandler(this.粘贴ToolStripMenuItem_Click);
             // 
@@ -437,20 +438,20 @@ namespace AlgodooStudio.ASProject
             // 
             this.删除ToolStripMenuItem.Name = "删除ToolStripMenuItem";
             this.删除ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.删除ToolStripMenuItem.Text = "删除";
             this.删除ToolStripMenuItem.Click += new System.EventHandler(this.删除ToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
             // 
             // 全选ToolStripMenuItem
             // 
             this.全选ToolStripMenuItem.Name = "全选ToolStripMenuItem";
             this.全选ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.全选ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.全选ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.全选ToolStripMenuItem.Text = "全选";
             this.全选ToolStripMenuItem.Click += new System.EventHandler(this.全选ToolStripMenuItem_Click);
             // 
@@ -594,33 +595,33 @@ namespace AlgodooStudio.ASProject
             // 新建窗口ToolStripMenuItem
             // 
             this.新建窗口ToolStripMenuItem.Name = "新建窗口ToolStripMenuItem";
-            this.新建窗口ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.新建窗口ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.新建窗口ToolStripMenuItem.Text = "新建窗口";
             this.新建窗口ToolStripMenuItem.Click += new System.EventHandler(this.新建窗口ToolStripMenuItem_Click);
             // 
             // 浮动ToolStripMenuItem
             // 
             this.浮动ToolStripMenuItem.Name = "浮动ToolStripMenuItem";
-            this.浮动ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.浮动ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.浮动ToolStripMenuItem.Text = "浮动";
             this.浮动ToolStripMenuItem.Click += new System.EventHandler(this.浮动ToolStripMenuItem_Click);
             // 
             // 全部浮动ToolStripMenuItem
             // 
             this.全部浮动ToolStripMenuItem.Name = "全部浮动ToolStripMenuItem";
-            this.全部浮动ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.全部浮动ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.全部浮动ToolStripMenuItem.Text = "全部浮动";
             this.全部浮动ToolStripMenuItem.Click += new System.EventHandler(this.全部浮动ToolStripMenuItem_Click);
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(145, 6);
             // 
             // 关闭所有窗口ToolStripMenuItem
             // 
             this.关闭所有窗口ToolStripMenuItem.Name = "关闭所有窗口ToolStripMenuItem";
-            this.关闭所有窗口ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.关闭所有窗口ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.关闭所有窗口ToolStripMenuItem.Text = "关闭所有窗口";
             this.关闭所有窗口ToolStripMenuItem.Click += new System.EventHandler(this.关闭所有窗口ToolStripMenuItem_Click);
             // 
@@ -646,33 +647,33 @@ namespace AlgodooStudio.ASProject
             // 蓝色ToolStripMenuItem
             // 
             this.蓝色ToolStripMenuItem.Name = "蓝色ToolStripMenuItem";
-            this.蓝色ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.蓝色ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.蓝色ToolStripMenuItem.Text = "主题：蓝色";
             this.蓝色ToolStripMenuItem.Click += new System.EventHandler(this.SetSchema);
             // 
             // 白色ToolStripMenuItem
             // 
             this.白色ToolStripMenuItem.Name = "白色ToolStripMenuItem";
-            this.白色ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.白色ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.白色ToolStripMenuItem.Text = "主题：白色";
             this.白色ToolStripMenuItem.Click += new System.EventHandler(this.SetSchema);
             // 
             // 黑色ToolStripMenuItem
             // 
             this.黑色ToolStripMenuItem.Name = "黑色ToolStripMenuItem";
-            this.黑色ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.黑色ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.黑色ToolStripMenuItem.Text = "主题：黑色";
             this.黑色ToolStripMenuItem.Click += new System.EventHandler(this.SetSchema);
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(133, 6);
             // 
             // 关于ToolStripMenuItem1
             // 
             this.关于ToolStripMenuItem1.Name = "关于ToolStripMenuItem1";
-            this.关于ToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.关于ToolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
             this.关于ToolStripMenuItem1.Text = "关于...";
             this.关于ToolStripMenuItem1.Click += new System.EventHandler(this.关于ToolStripMenuItem1_Click);
             // 

@@ -1,4 +1,5 @@
 ﻿using AlgodooStudio.ASProject.Support;
+using Dex.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,15 @@ namespace AlgodooStudio.PluginSystem
     internal static class Loader
     {
         /// <summary>
-        /// 加载指定路径下的DLL插件
+        /// 已注册的插件
+        /// </summary>
+        public static Container<Plugin> RegisteredPlugins { get; } = new Container<Plugin>();
+
+        /// <summary>
+        /// 注册指定路径下的DLL插件
         /// </summary>
         /// <param name="DllPath">插件路径</param>
-        internal static Plugin Load(string DllPath)
+        public static void Regist(string DllPath)
         {
             //获取插件中所有已经存在的类型
             List<TypeInfo> types = Assembly.LoadFrom(DllPath).DefinedTypes.ToList();
@@ -25,10 +31,22 @@ namespace AlgodooStudio.PluginSystem
                 if (item.Name == "Main")
                 {
                     //能输出则证明主类存在
-                    return (Plugin)Activator.CreateInstance(item.AsType());
+                    var p = (Plugin)Activator.CreateInstance(item.AsType());
+                    p.OnLoad();
+                    RegisteredPlugins.Add(p);
                 }
             }
-            return null;
+        }
+
+        /// <summary>
+        /// 启用所有插件
+        /// </summary>
+        public static void EnabledAllPlugin()
+        {
+            foreach (var item in RegisteredPlugins)
+            {
+                item.OnEnabled();
+            }
         }
     }
 }

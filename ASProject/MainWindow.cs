@@ -36,7 +36,27 @@ namespace AlgodooStudio.ASProject
         /// 工具栏渲染
         /// </summary>
         private readonly ToolStripRenderer _toolStripProfessionalRenderer = new ToolStripProfessionalRenderer();
-       
+        /// <summary>
+        /// 需要显示的提示信息
+        /// </summary>
+        private string message;
+
+        /// <summary>
+        /// 状态栏消息
+        /// </summary>
+        public string StatusMessage
+        {
+            get
+            {
+                return message;
+            }
+            set
+            {
+                tips.Text = "消息：" + value;
+                message = value;
+            }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -46,6 +66,8 @@ namespace AlgodooStudio.ASProject
             m_deserializeDockContent = new DeserializeDockContent(GetContentFromPersistString);
 
             vsToolStripExtender.DefaultRenderer = _toolStripProfessionalRenderer;
+
+            StatusMessage = "就绪";
         }
 
 
@@ -168,6 +190,24 @@ namespace AlgodooStudio.ASProject
         }
         #endregion
 
+        #region 其他部分
+        /// <summary>
+        /// 设定属性编辑对象
+        /// </summary>
+        /// <param name="obj"></param>
+        public void SetPropertyEditObject(object obj)
+        {
+            this.propertyWindow.SetEdit(obj);
+        }
+        /// <summary>
+        /// 设定属性编辑对象
+        /// </summary>
+        /// <param name="obj"></param>
+        public void SetPropertyEditObject(object[] obj)
+        {
+            this.propertyWindow.SetEdit(obj);
+        }
+        #endregion
 
         #region 事件
         private void MainWindow_Load(object sender, EventArgs e)
@@ -206,7 +246,7 @@ namespace AlgodooStudio.ASProject
         {
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
-                ofd.Title = "选择需要编辑的脚本";
+                ofd.Title = "选择文件...";
                 ofd.Multiselect = true;
                 ofd.Filter = "Thyme脚本|*.thm|cfg配置文件|*.cfg|其他文件|*.*";
                 if (ofd.ShowDialog() == DialogResult.OK)
@@ -222,7 +262,9 @@ namespace AlgodooStudio.ASProject
         }
         private void 文本文件ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            TextEditWindow te = new TextEditWindow("New", "", false);
+            te.Text = "New";
+            te.Show(this.dockPanel, DockState.Document);
         }
         private void 场景ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -339,6 +381,10 @@ namespace AlgodooStudio.ASProject
         }
         private void 文件浏览器ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (fileExploreWindow.IsDisposed)
+            {
+                fileExploreWindow = new FileExploreWindow();
+            }
             fileExploreWindow.Show(this.dockPanel, DockState.DockLeft);
         }
         private void 工具箱ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -347,7 +393,11 @@ namespace AlgodooStudio.ASProject
         }
         private void 属性窗口ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (propertyWindow.IsDisposed)
+            {
+                propertyWindow=new PropertyWindow();
+            }
+            propertyWindow.Show(this.dockPanel, DockState.DockLeft);
         }
         private void 自启动管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
