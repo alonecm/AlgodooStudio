@@ -32,6 +32,7 @@ namespace AlgodooStudio.ASProject
         private FileExploreWindow fileExploreWindow;
         private PropertyWindow propertyWindow;
         private ToolBoxWindow toolBoxWindow;
+        private AutoExecuteManageWindow autoExecuteManageWindow;
         /// <summary>
         /// 工具栏渲染
         /// </summary>
@@ -385,19 +386,23 @@ namespace AlgodooStudio.ASProject
             {
                 fileExploreWindow = new FileExploreWindow();
             }
-            fileExploreWindow.Show(this.dockPanel, DockState.DockLeft);
+            fileExploreWindow.Show(this.dockPanel, DockState.DockRight);
         }
         private void 工具箱ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (toolBoxWindow.IsDisposed)
+            {
+                toolBoxWindow = new ToolBoxWindow();
+            }
+            toolBoxWindow.Show(this.dockPanel, DockState.DockLeftAutoHide);
         }
         private void 属性窗口ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (propertyWindow.IsDisposed)
             {
-                propertyWindow=new PropertyWindow();
+                propertyWindow = new PropertyWindow();
             }
-            propertyWindow.Show(this.dockPanel, DockState.DockLeft);
+            propertyWindow.Show(this.dockPanel, DockState.DockRight);
         }
         private void 自启动管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -437,10 +442,6 @@ namespace AlgodooStudio.ASProject
             if (this.dockPanel.ActiveContent != null)
             {
                 this.dockPanel.ActiveContent.DockHandler.IsFloat = true;
-            }
-            else
-            {
-                浮动ToolStripMenuItem.Enabled = false;
             }
         }
         private void 全部浮动ToolStripMenuItem_Click(object sender, EventArgs e)

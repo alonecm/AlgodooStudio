@@ -91,9 +91,6 @@ namespace AlgodooStudio.ASProject
             //searchBox.ForeColor = ColorTools.OffsetColor(Setting.theme.BackColor1, 80);
             //folderTree.LineColor = Setting.theme.VarNameColor;
             //folderTree.ForeColor = Setting.theme.VarNameColor;
-            //注册事件
-            searchBox.GotFocus += SearchBox_GotFocus;
-            searchBox.LostFocus += SearchBox_LostFocus;
             //启动生成驱动器树
             GetDriveTree();
             //直接定位到设置的资源树目录
@@ -127,9 +124,6 @@ namespace AlgodooStudio.ASProject
             //searchBox.ForeColor = ColorTools.OffsetColor(Setting.theme.BackColor1, 80);
             //folderTree.LineColor = Setting.theme.VarNameColor;
             //folderTree.ForeColor = Setting.theme.VarNameColor;
-            //注册事件
-            searchBox.GotFocus += SearchBox_GotFocus;
-            searchBox.LostFocus += SearchBox_LostFocus;
             //启动生成驱动器树
             GetDriveTree();
             string np = path;
@@ -188,6 +182,7 @@ namespace AlgodooStudio.ASProject
         /// <param name="path"></param>
         private void Open(string path)
         {
+            fViewer.Cursor = Cursors.WaitCursor;
             //如果是文件夹就打开文件夹并更改树的节点
             if (Directory.Exists(path))
             {
@@ -222,6 +217,7 @@ namespace AlgodooStudio.ASProject
                 DisplayFilesAndFolders(directoryPath, "*", displayExtension);
                 //MBox.ShowError("打开失败，请重试");
             }
+            fViewer.Cursor = Cursors.Default;
         }
 
         /// <summary>
@@ -761,46 +757,6 @@ namespace AlgodooStudio.ASProject
 
         #endregion 工具栏
 
-        #region 搜索框
-
-        /// <summary>
-        /// 搜索框点击时全选
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void searchBox_Click(object sender, EventArgs e)
-        {
-            searchBox.SelectAll();
-        }
-
-        /// <summary>
-        /// 恢复搜索框文字
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SearchBox_LostFocus(object sender, EventArgs e)
-        {
-            if (searchBox.Text == "")
-            {
-                searchBox.Text = searchBoxTip;
-            }
-        }
-
-        /// <summary>
-        /// 搜索框文字清空
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SearchBox_GotFocus(object sender, EventArgs e)
-        {
-            if (searchBox.Text == searchBoxTip)
-            {
-                searchBox.Text = "";
-            }
-        }
-
-        #endregion 搜索框
-
         #region 文件展示区
 
         /// <summary>
@@ -1308,5 +1264,7 @@ namespace AlgodooStudio.ASProject
             saveCache.Clear();
             GC.Collect(2);
         }
+
+        
     }
 }

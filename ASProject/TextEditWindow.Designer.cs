@@ -169,38 +169,41 @@ namespace AlgodooStudio.ASProject
             this.toolStripSeparator3,
             this.快速输入ToolStripMenuItem});
             this.rightMenu.Name = "rightMenu";
-            this.rightMenu.Size = new System.Drawing.Size(181, 120);
+            this.rightMenu.Size = new System.Drawing.Size(146, 98);
             // 
             // 复制ToolStripMenuItem
             // 
             this.复制ToolStripMenuItem.Name = "复制ToolStripMenuItem";
             this.复制ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.复制ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.复制ToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.复制ToolStripMenuItem.Text = "复制";
+            this.复制ToolStripMenuItem.Click += new System.EventHandler(this.复制ToolStripMenuItem_Click);
             // 
             // 剪切ToolStripMenuItem
             // 
             this.剪切ToolStripMenuItem.Name = "剪切ToolStripMenuItem";
             this.剪切ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.剪切ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.剪切ToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.剪切ToolStripMenuItem.Text = "剪切";
+            this.剪切ToolStripMenuItem.Click += new System.EventHandler(this.剪切ToolStripMenuItem_Click);
             // 
             // 粘贴ToolStripMenuItem
             // 
             this.粘贴ToolStripMenuItem.Name = "粘贴ToolStripMenuItem";
             this.粘贴ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.粘贴ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.粘贴ToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.粘贴ToolStripMenuItem.Text = "粘贴";
+            this.粘贴ToolStripMenuItem.Click += new System.EventHandler(this.粘贴ToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(142, 6);
             // 
             // 快速输入ToolStripMenuItem
             // 
             this.快速输入ToolStripMenuItem.Name = "快速输入ToolStripMenuItem";
-            this.快速输入ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.快速输入ToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.快速输入ToolStripMenuItem.Text = "快速输入...";
             this.快速输入ToolStripMenuItem.Click += new System.EventHandler(this.快速输入ToolStripMenuItem_Click);
             // 
@@ -212,7 +215,7 @@ namespace AlgodooStudio.ASProject
             this.ContextMenuStrip = this.rightMenu;
             this.Controls.Add(this.sp);
             this.Name = "TextEditWindow";
-            this.Text = "TextEditWindow";
+            this.Text = "文字编辑器";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ScriptEditor_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ScriptEditor_FormClosed);
             this.sp.Panel1.ResumeLayout(false);

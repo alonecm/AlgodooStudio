@@ -97,6 +97,12 @@ namespace AlgodooStudio.ASProject
             Initialize();
         }
 
+        /// <summary>
+        /// 通过标题，内容和读写方式创建文字编辑窗口
+        /// </summary>
+        /// <param name="title"></param>
+        /// <param name="content"></param>
+        /// <param name="readOnly"></param>
         internal TextEditWindow(string title = "", string content = "", bool readOnly = true)
         {
             InitializeComponent();

@@ -46,9 +46,6 @@ namespace AlgodooStudio.ASProject
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.debugButton = new System.Windows.Forms.ToolStripButton();
             this.contentSpilter = new System.Windows.Forms.SplitContainer();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.searchBox = new System.Windows.Forms.TextBox();
-            this.folderTree = new System.Windows.Forms.TreeView();
             this.treeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.新建文件夹ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
@@ -83,6 +80,7 @@ namespace AlgodooStudio.ASProject
             this.imageListForfViewer_B = new System.Windows.Forms.ImageList(this.components);
             this.imageListForfViewer_S = new System.Windows.Forms.ImageList(this.components);
             this.fileTip = new System.Windows.Forms.ToolTip(this.components);
+            this.folderTree = new System.Windows.Forms.TreeView();
             ((System.ComponentModel.ISupportInitialize)(this.menuSpliter)).BeginInit();
             this.menuSpliter.Panel1.SuspendLayout();
             this.menuSpliter.Panel2.SuspendLayout();
@@ -92,10 +90,6 @@ namespace AlgodooStudio.ASProject
             this.contentSpilter.Panel1.SuspendLayout();
             this.contentSpilter.Panel2.SuspendLayout();
             this.contentSpilter.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
             this.treeContextMenu.SuspendLayout();
             this.fViewerContextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -252,7 +246,7 @@ namespace AlgodooStudio.ASProject
             // 
             // contentSpilter.Panel1
             // 
-            this.contentSpilter.Panel1.Controls.Add(this.splitContainer1);
+            this.contentSpilter.Panel1.Controls.Add(this.folderTree);
             // 
             // contentSpilter.Panel2
             // 
@@ -260,60 +254,6 @@ namespace AlgodooStudio.ASProject
             this.contentSpilter.Size = new System.Drawing.Size(733, 421);
             this.contentSpilter.SplitterDistance = 244;
             this.contentSpilter.TabIndex = 0;
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer1.IsSplitterFixed = true;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.searchBox);
-            this.splitContainer1.Panel1MinSize = 20;
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.folderTree);
-            this.splitContainer1.Panel2MinSize = 20;
-            this.splitContainer1.Size = new System.Drawing.Size(244, 421);
-            this.splitContainer1.SplitterDistance = 25;
-            this.splitContainer1.SplitterWidth = 1;
-            this.splitContainer1.TabIndex = 0;
-            // 
-            // searchBox
-            // 
-            this.searchBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.searchBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.searchBox.Font = new System.Drawing.Font("宋体", 10F);
-            this.searchBox.Location = new System.Drawing.Point(0, 0);
-            this.searchBox.Name = "searchBox";
-            this.searchBox.Size = new System.Drawing.Size(244, 23);
-            this.searchBox.TabIndex = 1;
-            this.searchBox.Text = "从文件夹中搜索文件(Enter)";
-            this.searchBox.WordWrap = false;
-            this.searchBox.Click += new System.EventHandler(this.searchBox_Click);
-            // 
-            // folderTree
-            // 
-            this.folderTree.ContextMenuStrip = this.treeContextMenu;
-            this.folderTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.folderTree.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.folderTree.HotTracking = true;
-            this.folderTree.ImageIndex = 0;
-            this.folderTree.ImageList = this.imageListForTree;
-            this.folderTree.Location = new System.Drawing.Point(0, 0);
-            this.folderTree.Name = "folderTree";
-            this.folderTree.SelectedImageIndex = 0;
-            this.folderTree.Size = new System.Drawing.Size(244, 395);
-            this.folderTree.TabIndex = 0;
-            this.folderTree.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.folderTree_AfterCollapse);
-            this.folderTree.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.folderTree_BeforeExpand);
-            this.folderTree.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.folderTree_BeforeSelect);
-            this.folderTree.MouseDown += new System.Windows.Forms.MouseEventHandler(this.folderTree_MouseDown);
             // 
             // treeContextMenu
             // 
@@ -597,6 +537,20 @@ namespace AlgodooStudio.ASProject
             this.fileTip.ReshowDelay = 100;
             this.fileTip.ToolTipTitle = "文件信息:";
             // 
+            // folderTree
+            // 
+            this.folderTree.ContextMenuStrip = this.treeContextMenu;
+            this.folderTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.folderTree.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.folderTree.HotTracking = true;
+            this.folderTree.ImageIndex = 0;
+            this.folderTree.ImageList = this.imageListForTree;
+            this.folderTree.Location = new System.Drawing.Point(0, 0);
+            this.folderTree.Name = "folderTree";
+            this.folderTree.SelectedImageIndex = 0;
+            this.folderTree.Size = new System.Drawing.Size(244, 421);
+            this.folderTree.TabIndex = 1;
+            // 
             // FileExploreWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -619,11 +573,6 @@ namespace AlgodooStudio.ASProject
             this.contentSpilter.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.contentSpilter)).EndInit();
             this.contentSpilter.ResumeLayout(false);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
             this.treeContextMenu.ResumeLayout(false);
             this.fViewerContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -634,9 +583,7 @@ namespace AlgodooStudio.ASProject
 
         private System.Windows.Forms.SplitContainer menuSpliter;
         private System.Windows.Forms.SplitContainer contentSpilter;
-        private System.Windows.Forms.TreeView folderTree;
         private System.Windows.Forms.ToolStrip toolBar;
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripButton algodooPosition;
         private System.Windows.Forms.ToolStripButton studioPosition;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -648,7 +595,6 @@ namespace AlgodooStudio.ASProject
         private System.Windows.Forms.ToolStripButton debugButton;
         private System.Windows.Forms.ImageList imageListForTree;
         private System.Windows.Forms.ListView fViewer;
-        private System.Windows.Forms.TextBox searchBox;
         private System.Windows.Forms.ImageList imageListForfViewer_B;
         private System.Windows.Forms.ImageList imageListForfViewer_S;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
@@ -684,5 +630,6 @@ namespace AlgodooStudio.ASProject
         private System.Windows.Forms.ToolStripMenuItem 在新管理器中打开ToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem 在资源管理器中打开ToolStripMenuItem1;
         private System.Windows.Forms.ToolTip fileTip;
+        private System.Windows.Forms.TreeView folderTree;
     }
 }
