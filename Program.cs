@@ -2,6 +2,7 @@
 using AlgodooStudio.PluginSystem;
 using Dex.IO.Config;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
@@ -19,6 +20,7 @@ namespace AlgodooStudio
         /// 当前设置文件的所在路径
         /// </summary>
         private static readonly string settingPath = ".\\settings.ini";
+
         /// <summary>
         /// 设定信息
         /// </summary>
@@ -44,7 +46,6 @@ namespace AlgodooStudio
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(mainWindow = new ASProject.MainWindow());
         }
-
         /// <summary>
         /// 加载插件
         /// </summary>

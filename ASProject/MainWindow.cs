@@ -1,4 +1,7 @@
 ﻿using AlgodooStudio.ASProject.Interface;
+using AlgodooStudio.ASProject.Support;
+using AlgodooStudio.PluginSystem;
+using RuFramework.MRU;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,17 +24,26 @@ namespace AlgodooStudio.ASProject
         /// <summary>
         /// 是否保存当前布局
         /// </summary>
-        private bool m_bSaveLayout = true;
+        private bool isSaveLayout = true;
         /// <summary>
         /// 反序列化悬停内容
         /// </summary>
-        private DeserializeDockContent m_deserializeDockContent;
+        private DeserializeDockContent deserializeDockContent;
         /// <summary>
-        /// 三个固定窗口
+        /// 文件浏览器
         /// </summary>
         private FileExploreWindow fileExploreWindow;
+        /// <summary>
+        /// 属性窗口
+        /// </summary>
         private PropertyWindow propertyWindow;
+        /// <summary>
+        /// 工具窗口
+        /// </summary>
         private ToolBoxWindow toolBoxWindow;
+        /// <summary>
+        /// 自启动窗口
+        /// </summary>
         private AutoExecuteManageWindow autoExecuteManageWindow;
         /// <summary>
         /// 工具栏渲染
@@ -41,6 +53,10 @@ namespace AlgodooStudio.ASProject
         /// 需要显示的提示信息
         /// </summary>
         private string message;
+        /// <summary>
+        /// 最近打开管理器
+        /// </summary>
+        private MRUManager mruManager;
 
         /// <summary>
         /// 状态栏消息
@@ -61,14 +77,27 @@ namespace AlgodooStudio.ASProject
         public MainWindow()
         {
             InitializeComponent();
-            //初始化窗口布局
+            //初始化固定窗口
             CreateStandardWindow();
-
-            m_deserializeDockContent = new DeserializeDockContent(GetContentFromPersistString);
-
+            //设定渲染器
             vsToolStripExtender.DefaultRenderer = _toolStripProfessionalRenderer;
+            //设定主题
+            SetSchema(this.蓝色ToolStripMenuItem, null);
 
-            StatusMessage = "就绪";
+            //获取配置文件路径
+            string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
+            //反序列化布局
+            deserializeDockContent = new DeserializeDockContent(GetContentFromPersistString);
+            //加载布局
+            if (File.Exists(configFile))
+                dockPanel.LoadFromXml(configFile, deserializeDockContent);
+
+
+            //为最近打开创建MRU管理器
+            this.mruManager = new MRUManager(this.最近打开ToolStripMenuItem, this.MRU_Open);
+
+            //加载插件
+            ShowPlugins();
         }
 
 
@@ -89,14 +118,18 @@ namespace AlgodooStudio.ASProject
         /// <returns></returns>
         private IDockContent GetContentFromPersistString(string persistString)
         {
+            //检查是否为固定窗口
             if (persistString == typeof(FileExploreWindow).ToString())
                 return fileExploreWindow;
             else if (persistString == typeof(PropertyWindow).ToString())
                 return propertyWindow;
             else if (persistString == typeof(ToolBoxWindow).ToString())
                 return toolBoxWindow;
+            else if (persistString == typeof(AutoExecuteManageWindow).ToString())
+                return autoExecuteManageWindow;
             else
             {
+                //不是则使用文本窗口打开
                 string[] parsedStrings = persistString.Split(new char[] { ',' });
                 if (parsedStrings.Length != 2)
                     return null;
@@ -147,7 +180,7 @@ namespace AlgodooStudio.ASProject
             }
 
             if (File.Exists(configFile))
-                dockPanel.LoadFromXml(configFile, m_deserializeDockContent);
+                dockPanel.LoadFromXml(configFile, deserializeDockContent);
         }
         /// <summary>
         /// 关闭所有窗口
@@ -208,22 +241,64 @@ namespace AlgodooStudio.ASProject
         {
             this.propertyWindow.SetEdit(obj);
         }
+        /// <summary>
+        /// 展示插件
+        /// </summary>
+        private void ShowPlugins()
+        {
+            //已启用插件存在则允许显示
+            if (Loader.EnabledPlugins.Count>0)
+            {
+                this.插件ToolStripMenuItem.Visible = true;
+            }
+        }
+        /// <summary>
+        /// 当从MRU列表中打开时
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="arg"></param>
+        private void MRU_Open(object obj, EventArgs arg)
+        {
+            string fileName = (obj as ToolStripItem).Text;
+            if (!File.Exists(fileName))
+            {
+                //如果不存在则移除
+                this.mruManager.RemoveRecentFile(fileName);
+                MessageBox.Show(fileName + " 不存在");
+                return;
+            }
+            //打开文件
+            Open(fileName);
+        }
+        /// <summary>
+        /// 打开文件
+        /// </summary>
+        /// <param name="fileName">filename</param>
+        private void Open(string fileName)
+        {
+            switch (Path.GetExtension(fileName))
+            {
+                case ".phz":
+                    //TODO: 需要补充一个场景编辑器打开的方式
+                    throw new NotImplementedException("未实现");
+                default://默认使用文本编辑器打开
+                    TextEditWindow se = new TextEditWindow();
+                    se.FilePath = fileName;
+                    se.Show(this.dockPanel, DockState.Document);
+                    break;
+            }
+        }
         #endregion
 
         #region 事件
         private void MainWindow_Load(object sender, EventArgs e)
         {
-            SetSchema(this.蓝色ToolStripMenuItem, null);
-
-            string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
-
-            if (File.Exists(configFile))
-                dockPanel.LoadFromXml(configFile, m_deserializeDockContent);
+            StatusMessage = "就绪";
         }
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
-            if (m_bSaveLayout)
+            if (isSaveLayout)
                 dockPanel.SaveAsXml(configFile);
             else if (File.Exists(configFile))
                 File.Delete(configFile);
@@ -254,9 +329,10 @@ namespace AlgodooStudio.ASProject
                 {
                     foreach (var item in ofd.FileNames)
                     {
-                        TextEditWindow se = new TextEditWindow();
-                        se.FilePath = item;
-                        se.Show(this.dockPanel, DockState.Document);
+                        //打开文件
+                        Open(item);
+                        //添加最近打开项目
+                        this.mruManager.AddRecentFile(item);
                     }
                 }
             }
@@ -269,7 +345,8 @@ namespace AlgodooStudio.ASProject
         }
         private void 场景ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            //TODO: 新建场景
+            throw new NotImplementedException("未实现");
         }
         private void 退出ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -368,8 +445,8 @@ namespace AlgodooStudio.ASProject
                 (dockPanel.ActiveContent as IEditable).SelectAll();
             }
         }
-
         #endregion
+
         #region 视图
         private void 文本编辑器ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -378,7 +455,8 @@ namespace AlgodooStudio.ASProject
         }
         private void 场景视图ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            //TODO: 打开场景视图
+            throw new NotImplementedException("未实现");
         }
         private void 文件浏览器ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -406,35 +484,42 @@ namespace AlgodooStudio.ASProject
         }
         private void 自启动管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            //TODO: 打开自启动管理器
+            throw new NotImplementedException("未实现");
         }
         #endregion
         #region 工具
         private void 启动AlgodooToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            //TODO: 启动ALGODOO
+            throw new NotImplementedException("未实现");
         }
         private void 重置AlgodooToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            //TODO: 重置ALGODOO
+            throw new NotImplementedException("未实现");
         }
         private void 取色器ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            //TODO: 打开取色器
+            throw new NotImplementedException("未实现");
         }
         private void 插件管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            //TODO: 打开插件管理
+            throw new NotImplementedException("未实现");
         }
         private void 设置ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            //TODO: 打开设置
+            throw new NotImplementedException("未实现");
         }
         #endregion
         #region 窗口
         private void 新建窗口ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            //TODO: 新建窗口
+            throw new NotImplementedException("未实现");
         }
         private void 浮动ToolStripMenuItem_Click(object sender, EventArgs e)
         {

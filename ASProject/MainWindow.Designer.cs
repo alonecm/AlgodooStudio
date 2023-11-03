@@ -631,6 +631,7 @@ namespace AlgodooStudio.ASProject
             this.插件ToolStripMenuItem.Name = "插件ToolStripMenuItem";
             this.插件ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
             this.插件ToolStripMenuItem.Text = "插件";
+            this.插件ToolStripMenuItem.Visible = false;
             // 
             // 关于ToolStripMenuItem
             // 

@@ -35,8 +35,9 @@ namespace AlgodooStudio.ASProject
             // toolList
             // 
             this.toolList.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.toolList.Font = new System.Drawing.Font("宋体", 12F);
             this.toolList.FormattingEnabled = true;
-            this.toolList.ItemHeight = 12;
+            this.toolList.ItemHeight = 16;
             this.toolList.Location = new System.Drawing.Point(0, 0);
             this.toolList.Name = "toolList";
             this.toolList.Size = new System.Drawing.Size(245, 450);

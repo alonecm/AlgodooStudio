@@ -11,7 +11,7 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace AlgodooStudio.ASProject
 {
-    public partial class AutoExecuteManageWindow : Form
+    public partial class AutoExecuteManageWindow : DockContent
     {
         public AutoExecuteManageWindow()
         {

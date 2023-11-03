@@ -16,6 +16,10 @@ namespace AlgodooStudio.PluginSystem
         /// 已注册的插件
         /// </summary>
         public static Container<Plugin> RegisteredPlugins { get; } = new Container<Plugin>();
+        /// <summary>
+        /// 已启用的插件
+        /// </summary>
+        public static Container<Plugin> EnabledPlugins { get; } = new Container<Plugin>();
 
         /// <summary>
         /// 注册指定路径下的DLL插件
@@ -30,10 +34,9 @@ namespace AlgodooStudio.PluginSystem
                 //判断是否为主类并输出由这个类型生成的实例
                 if (item.Name == "Main")
                 {
-                    //能输出则证明主类存在
-                    var p = (Plugin)Activator.CreateInstance(item.AsType());
-                    p.OnLoad();
-                    RegisteredPlugins.Add(p);
+                    var plugin = (Plugin)Activator.CreateInstance(item.AsType());
+                    plugin.OnLoad();
+                    RegisteredPlugins.Add(plugin);
                 }
             }
         }
@@ -43,9 +46,16 @@ namespace AlgodooStudio.PluginSystem
         /// </summary>
         public static void EnabledAllPlugin()
         {
+            //依次启用所有注册的插件
             foreach (var item in RegisteredPlugins)
             {
-                item.OnEnabled();
+                try
+                {
+                    //尝试启用如果成功则加入到已启用插件中
+                    item.OnEnabled();
+                    EnabledPlugins.Add(item);
+                }
+                catch{ }
             }
         }
     }

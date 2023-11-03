@@ -12,8 +12,8 @@ namespace AlgodooStudio.ASProject.Support
     public abstract class ToolBase
     {
         /// <summary>
-        /// 工具被激活时执行
+        /// 工具被使用时执行
         /// </summary>
-        public abstract void OnActive();
+        public abstract void OnUse();
     }
 }

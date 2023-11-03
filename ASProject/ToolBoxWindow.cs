@@ -1,30 +1,36 @@
 ﻿using AlgodooStudio.ASProject.Support;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace AlgodooStudio.ASProject
 {
     public partial class ToolBoxWindow : DockContent
     {
+        private Dictionary<string, ToolBase> tools;
+
         public ToolBoxWindow()
         {
             InitializeComponent();
+
+            tools = new Dictionary<string, ToolBase>();
         }
+
         /// <summary>
         /// 添加工具
         /// </summary>
         /// <param name="tools"></param>
         public void AddTools(params ToolBase[] tools)
         {
-            this.toolList.Items.AddRange(tools);
+            foreach (var item in tools)
+            {
+                if (!this.tools.ContainsKey(item.ToString()))
+                {
+                    this.tools.Add(item.ToString(), item);
+                }
+            }
+            this.toolList.DataSource = this.tools.Values.ToArray();
         }
         /// <summary>
         /// 点击某项时直接执行OnActive
@@ -35,7 +41,7 @@ namespace AlgodooStudio.ASProject
         {
             if (this.toolList.SelectedItem != null)
             {
-                (this.toolList.SelectedItem as ToolBase).OnActive();
+                (this.toolList.SelectedItem as ToolBase).OnUse();
             }
         }
     }

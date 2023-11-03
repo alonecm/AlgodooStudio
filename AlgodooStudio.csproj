@@ -62,8 +62,7 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>
-    </StartupObject>
+    <StartupObject>AlgodooStudio.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\icon32.ico</ApplicationIcon>
@@ -162,6 +161,8 @@
     <Compile Include="ASProject\Dialogs\PropertiesSelect.Designer.cs">
       <DependentUpon>PropertiesSelect.cs</DependentUpon>
     </Compile>
+    <Compile Include="ASProject\MRUManager\MRUManager.cs" />
+    <Compile Include="ASProject\MRUManager\MRUSettings.cs" />
     <Compile Include="ASProject\PropertyWindow.cs">
       <SubType>Form</SubType>
     </Compile>
