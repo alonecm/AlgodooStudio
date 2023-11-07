@@ -1,6 +1,7 @@
 ﻿using AlgodooStudio.ASProject.Interface;
 using AlgodooStudio.ASProject.Support;
 using AlgodooStudio.PluginSystem;
+using PhunSharp;
 using RuFramework.MRU;
 using System;
 using System.Collections.Generic;
@@ -131,13 +132,15 @@ namespace AlgodooStudio.ASProject
             {
                 //不是则使用文本窗口打开
                 string[] parsedStrings = persistString.Split(new char[] { ',' });
-                if (parsedStrings.Length != 2)
+                if (parsedStrings.Length != 3)
                     return null;
                 if (parsedStrings[0] != typeof(TextEditWindow).ToString())
                     return null;
                 TextEditWindow textEdit = new TextEditWindow();
                 if (parsedStrings[1] != string.Empty)
                     textEdit.FilePath = parsedStrings[1];//设置文件名时会直接读取文件内容并加载
+                if (bool.Parse(parsedStrings[2]))
+                    textEdit.ReadOnly = true;
                 return textEdit;
             }
         }
@@ -276,17 +279,30 @@ namespace AlgodooStudio.ASProject
         /// <param name="fileName">filename</param>
         private void Open(string fileName)
         {
+            StatusMessage = "准备中...";
+            this.Cursor = Cursors.WaitCursor;
+            TextEditWindow textEditor;
+            //根据信息决定是否展示属性
             switch (Path.GetExtension(fileName))
             {
                 case ".phz":
-                    //TODO: 需要补充一个场景编辑器打开的方式
-                    throw new NotImplementedException("未实现");
-                default://默认使用文本编辑器打开
-                    TextEditWindow se = new TextEditWindow();
-                    se.FilePath = fileName;
-                    se.Show(this.dockPanel, DockState.Document);
+                    StatusMessage = "正在以只读方式打开...";
+                    //读取文件
+                    var zip = ArchiveTools.DeCompress(fileName);
+                    //展示文件属性
+                    SetPropertyEditObject(new LoadedFileInfo(zip.Phn));
+                    textEditor = new TextEditWindow(Path.GetFileName(fileName), fileName, ArchiveTools.GetPhnContent(zip));
+                    break;
+                default:
+                    textEditor = new TextEditWindow();
+                    //通过文件路径加载文件
+                    textEditor.FilePath = fileName;
                     break;
             }
+            //展示内容
+            textEditor.Show(this.dockPanel, DockState.Document);
+            this.Cursor = Cursors.Default;
+            StatusMessage = "就绪";
         }
         #endregion
 
@@ -324,7 +340,7 @@ namespace AlgodooStudio.ASProject
             {
                 ofd.Title = "选择文件...";
                 ofd.Multiselect = true;
-                ofd.Filter = "Thyme脚本|*.thm|cfg配置文件|*.cfg|其他文件|*.*";
+                ofd.Filter = "Thyme脚本 cfg配置文件 Phun文件 存档文件|*.thm;*.cfg;*.phn;*.phz|其他文件|*.*";
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     foreach (var item in ofd.FileNames)
@@ -339,8 +355,7 @@ namespace AlgodooStudio.ASProject
         }
         private void 文本文件ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TextEditWindow te = new TextEditWindow("New", "", false);
-            te.Text = "New";
+            TextEditWindow te = new TextEditWindow("New", "", "", false);
             te.Show(this.dockPanel, DockState.Document);
         }
         private void 场景ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -516,11 +531,6 @@ namespace AlgodooStudio.ASProject
         }
         #endregion
         #region 窗口
-        private void 新建窗口ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //TODO: 新建窗口
-            throw new NotImplementedException("未实现");
-        }
         private void 浮动ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //如果激活的窗体不是空的则可以启用

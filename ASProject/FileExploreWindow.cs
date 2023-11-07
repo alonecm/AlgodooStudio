@@ -195,7 +195,8 @@ namespace AlgodooStudio.ASProject
                 {
                     case ".phz":
                         var zip = saveCache[path];
-                        var te = new TextEditWindow($"查看：{Path.GetFileName(path)}",ArchiveTools.GetPhnContent(zip));
+                        //这里因为已经读取了所以无需再读取直接解析放文件
+                        var te = new TextEditWindow(Path.GetFileName(path), path, ArchiveTools.GetPhnContent(zip));
                         te.Show(this.DockPanel, DockState.Document);
                         break;
                     default:

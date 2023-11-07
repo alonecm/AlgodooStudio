@@ -4,6 +4,7 @@ using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Search;
+using PhunSharp;
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -84,10 +85,34 @@ namespace AlgodooStudio.ASProject
             {
                 filepath = value;
                 fileName = Path.GetFileName(value);
+
                 //证明此处是文字加载阶段
                 IsTextLoad = true;
-                editor.Load(value);
+                switch (Path.GetExtension(value))
+                {
+                    case ".phz":
+                        editor.Text = ArchiveTools.GetPhnContent(ArchiveTools.DeCompress(value));
+                        break;
+                    default:
+                        editor.Load(value);
+                        break;
+                }
                 IsTextLoad = false;
+            }
+        }
+
+        public bool ReadOnly
+        {
+            get
+            {
+                return readOnly;
+            }
+            set
+            {
+                this.readOnly = value;
+                this.editor.IsReadOnly = this.readOnly;
+                this.快速输入ToolStripMenuItem.Enabled = !this.readOnly;
+                SetTitle(this.fileName, false);
             }
         }
 
@@ -103,20 +128,18 @@ namespace AlgodooStudio.ASProject
         /// <param name="title"></param>
         /// <param name="content"></param>
         /// <param name="readOnly"></param>
-        internal TextEditWindow(string title = "", string content = "", bool readOnly = true)
+        internal TextEditWindow(string title = "", string filepath = "", string content = "", bool readOnly = true)
         {
             InitializeComponent();
             Initialize();
-            this.fileName = title;
+            this.fileName = title;//设置文件名
+            this.filepath = filepath;//设置文件路径
             this.IsTextLoad = true;
-            this.editor.Text = content;
+            this.editor.Text = content;//设置内容
             this.IsTextLoad = false;
-            if (readOnly)
-            {
-                this.readOnly = readOnly;
-                this.editor.IsReadOnly = readOnly;
-                this.快速输入ToolStripMenuItem.Enabled = !readOnly;
-            }
+            this.ReadOnly = readOnly;//设置只读
+            //设置标题
+            SetTitle(title, false);
         }
 
         /// <summary>
@@ -429,14 +452,19 @@ namespace AlgodooStudio.ASProject
         /// <param name="needToSave">需要被保存</param>
         private void SetTitle(string title, bool needToSave)
         {
-            if (needToSave)
+            if (!this.ReadOnly)
             {
-                this.Text = title + "*";
+                if (needToSave)
+                {
+                    this.Text = title + "*";
+                }
+                else
+                {
+                    this.Text = title;
+                }
+                return;
             }
-            else
-            {
-                this.Text = title;
-            }
+            this.Text = "仅查看：" + title;
         }
 
         /// <summary>
@@ -600,7 +628,7 @@ namespace AlgodooStudio.ASProject
         /// <returns></returns>
         protected override string GetPersistString()
         {
-            return GetType().ToString() + "," + FilePath;
+            return GetType().ToString() + "," + FilePath + "," + readOnly;
         }
 
         public void Insert(string str, int pos = -1)
