@@ -46,6 +46,7 @@ namespace AlgodooStudio.ASProject
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.debugButton = new System.Windows.Forms.ToolStripButton();
             this.contentSpilter = new System.Windows.Forms.SplitContainer();
+            this.folderTree = new System.Windows.Forms.TreeView();
             this.treeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.新建文件夹ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
@@ -80,7 +81,8 @@ namespace AlgodooStudio.ASProject
             this.imageListForfViewer_B = new System.Windows.Forms.ImageList(this.components);
             this.imageListForfViewer_S = new System.Windows.Forms.ImageList(this.components);
             this.fileTip = new System.Windows.Forms.ToolTip(this.components);
-            this.folderTree = new System.Windows.Forms.TreeView();
+            this.vsToolStripExtender = new WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender(this.components);
+            this.scenePostition = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.menuSpliter)).BeginInit();
             this.menuSpliter.Panel1.SuspendLayout();
             this.menuSpliter.Panel2.SuspendLayout();
@@ -121,6 +123,7 @@ namespace AlgodooStudio.ASProject
             this.toolBar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.algodooPosition,
+            this.scenePostition,
             this.studioPosition,
             this.toolStripSeparator1,
             this.refreshTree,
@@ -254,6 +257,20 @@ namespace AlgodooStudio.ASProject
             this.contentSpilter.Size = new System.Drawing.Size(733, 421);
             this.contentSpilter.SplitterDistance = 244;
             this.contentSpilter.TabIndex = 0;
+            // 
+            // folderTree
+            // 
+            this.folderTree.ContextMenuStrip = this.treeContextMenu;
+            this.folderTree.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.folderTree.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.folderTree.HotTracking = true;
+            this.folderTree.ImageIndex = 0;
+            this.folderTree.ImageList = this.imageListForTree;
+            this.folderTree.Location = new System.Drawing.Point(0, 0);
+            this.folderTree.Name = "folderTree";
+            this.folderTree.SelectedImageIndex = 0;
+            this.folderTree.Size = new System.Drawing.Size(244, 421);
+            this.folderTree.TabIndex = 1;
             // 
             // treeContextMenu
             // 
@@ -537,19 +554,19 @@ namespace AlgodooStudio.ASProject
             this.fileTip.ReshowDelay = 100;
             this.fileTip.ToolTipTitle = "文件信息:";
             // 
-            // folderTree
+            // vsToolStripExtender
             // 
-            this.folderTree.ContextMenuStrip = this.treeContextMenu;
-            this.folderTree.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.folderTree.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.folderTree.HotTracking = true;
-            this.folderTree.ImageIndex = 0;
-            this.folderTree.ImageList = this.imageListForTree;
-            this.folderTree.Location = new System.Drawing.Point(0, 0);
-            this.folderTree.Name = "folderTree";
-            this.folderTree.SelectedImageIndex = 0;
-            this.folderTree.Size = new System.Drawing.Size(244, 421);
-            this.folderTree.TabIndex = 1;
+            this.vsToolStripExtender.DefaultRenderer = null;
+            // 
+            // scenePostition
+            // 
+            this.scenePostition.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.scenePostition.Image = ((System.Drawing.Image)(resources.GetObject("scenePostition.Image")));
+            this.scenePostition.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.scenePostition.Name = "scenePostition";
+            this.scenePostition.Size = new System.Drawing.Size(23, 25);
+            this.scenePostition.Text = "定位到场景根目录";
+            this.scenePostition.Click += new System.EventHandler(this.scenePostition_Click);
             // 
             // FileExploreWindow
             // 
@@ -631,5 +648,7 @@ namespace AlgodooStudio.ASProject
         private System.Windows.Forms.ToolStripMenuItem 在资源管理器中打开ToolStripMenuItem1;
         private System.Windows.Forms.ToolTip fileTip;
         private System.Windows.Forms.TreeView folderTree;
+        private WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender vsToolStripExtender;
+        private System.Windows.Forms.ToolStripButton scenePostition;
     }
 }

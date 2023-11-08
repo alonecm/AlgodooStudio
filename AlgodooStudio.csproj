@@ -88,10 +88,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ClassLibrary\PhunSharp\PhunSharp\bin\Debug\Dex.IO.dll</HintPath>
     </Reference>
-    <Reference Include="Dex.Mathematics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ClassLibrary\PhunSharp\PhunSharp\bin\Debug\Dex.Mathematics.dll</HintPath>
-    </Reference>
     <Reference Include="Dex.Utils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ClassLibrary\Dex.NET\Dex.Utils\bin\Debug\Dex.Utils.dll</HintPath>
@@ -100,9 +96,6 @@
       <HintPath>packages\AvalonEdit.6.2.0.78\lib\net462\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="PhunNet.IO">
-      <HintPath>..\..\ClassLibrary\PhunSharp\PhunSharp\bin\Debug\PhunNet.IO.dll</HintPath>
-    </Reference>
     <Reference Include="PhunSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\ClassLibrary\PhunSharp\PhunSharp\bin\Debug\PhunSharp.dll</HintPath>
@@ -118,6 +111,7 @@
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Messaging" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -185,7 +179,7 @@
     <Compile Include="ASProject\Support\LoadedFileInfo.cs" />
     <Compile Include="ASProject\Support\Plugin.cs" />
     <Compile Include="ASProject\Support\Props.cs" />
-    <Compile Include="ASProject\Support\Setting.cs" />
+    <Compile Include="ASProject\Support\Settings.cs" />
     <Compile Include="ASProject\Support\ToolBase.cs" />
     <Compile Include="ASProject\TextEditWindow.cs">
       <SubType>Form</SubType>
@@ -225,6 +219,9 @@
     <Compile Include="ASProject\Dialogs\ReplaceWindow.Designer.cs">
       <DependentUpon>ReplaceWindow.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ASProject\AutoExecuteManageWindow.resx">
+      <DependentUpon>AutoExecuteManageWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ASProject\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>

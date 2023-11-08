@@ -66,6 +66,17 @@ namespace AlgodooStudio.ASProject
         }
 
 
+
+        /// <summary>
+        /// 启用VS渲染
+        /// </summary>
+        /// <param name="version"></param>
+        /// <param name="theme"></param>
+        public void EnableVSRenderer(VisualStudioToolStripExtender.VsVersion version, ThemeBase theme)
+        {
+            vsToolStripExtender.SetStyle(toolBar, version, theme);
+        }
+
         /// <summary>
         /// 初始化窗体属性
         /// </summary>
@@ -723,6 +734,17 @@ namespace AlgodooStudio.ASProject
         {
             ArriveFolder(Program.Setting.StudioPath);
             DisplayFilesAndFolders(Program.Setting.StudioPath, "*", displayExtension);
+        }
+
+        /// <summary>
+        /// 定位到场景存档根目录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void scenePostition_Click(object sender, EventArgs e)
+        {
+            ArriveFolder(Program.Setting.ScenePath);
+            DisplayFilesAndFolders(Program.Setting.ScenePath, "*", displayExtension);
         }
 
         /// <summary>

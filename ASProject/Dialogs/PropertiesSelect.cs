@@ -106,7 +106,7 @@ namespace AlgodooStudio.ASProject.Dialogs
                         if (IsNameValid(customProp.Text))
                         {
                             propName = customProp.Text;
-                            value = valueInput.Text;
+                            value = valueInput.Text == "" ? "null" : valueInput.Text;
                             DialogResult = DialogResult.OK;
                         }
                         else

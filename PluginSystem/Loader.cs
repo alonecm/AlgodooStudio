@@ -1,4 +1,5 @@
-﻿using AlgodooStudio.ASProject.Support;
+﻿using AlgodooStudio.ASProject;
+using AlgodooStudio.ASProject.Support;
 using Dex.Common;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,10 @@ namespace AlgodooStudio.PluginSystem
                     item.OnEnabled();
                     EnabledPlugins.Add(item);
                 }
-                catch{ }
+                catch(Exception e)
+                {
+                    MBox.ShowError($"加载插件 \"{item.Name}\" 时出现了 \"{e.Message}\"异常");/*，异常信息已经输出到\"{Environment.CurrentDirectory}\\Logs\"文件夹中");*/
+                }
             }
         }
     }

@@ -4,16 +4,22 @@ using System.IO;
 namespace AlgodooStudio.ASProject.Support
 {
     [ConfigObject]
-    internal class Setting
+    internal class Settings
     {
         /// <summary>
-        /// Algodoo所在路径
+        /// Algodoo文档根目录
+        /// </summary>
+        public string ScenePath { get; set; }
+        /// <summary>
+        /// Algodoo所在根目录
         /// </summary>
         public string AlgodooPath { get; set; }
+
+
         /// <summary>
-        /// AS所在目录
+        /// 工作室所在目录
         /// </summary>
-        public string StudioPath { get; internal set; } = ".\\";
+        internal string StudioPath { get; } = ".\\";
 
 
         /// <summary>

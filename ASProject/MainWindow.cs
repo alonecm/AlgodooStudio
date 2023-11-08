@@ -111,6 +111,7 @@ namespace AlgodooStudio.ASProject
             fileExploreWindow = new FileExploreWindow();
             propertyWindow = new PropertyWindow();
             toolBoxWindow = new ToolBoxWindow();
+            autoExecuteManageWindow = new AutoExecuteManageWindow();
         }
         /// <summary>
         /// 从记录字符串中获取停靠内容
@@ -131,7 +132,7 @@ namespace AlgodooStudio.ASProject
             else
             {
                 //不是则使用文本窗口打开
-                string[] parsedStrings = persistString.Split(new char[] { ',' });
+                string[] parsedStrings = persistString.Split(',');
                 if (parsedStrings.Length != 3)
                     return null;
                 if (parsedStrings[0] != typeof(TextEditWindow).ToString())
@@ -194,13 +195,18 @@ namespace AlgodooStudio.ASProject
             fileExploreWindow.DockPanel = null;
             propertyWindow.DockPanel = null;
             toolBoxWindow.DockPanel = null;
+            autoExecuteManageWindow.DockPanel = null;
 
             // 关闭所有文档窗口
             CloseAllDocuments();
 
             // 释放所有浮动窗口
-            foreach (var window in dockPanel.FloatWindows.ToList())
-                window.Dispose();
+            while (dockPanel.FloatWindows.Count>0)
+            {
+                var tmp = dockPanel.FloatWindows.FirstOrDefault();
+                if (tmp != null)
+                    tmp.Dispose();
+            }
         }
         /// <summary>
         /// 关闭所有文档窗口
@@ -224,6 +230,9 @@ namespace AlgodooStudio.ASProject
             vsToolStripExtender.SetStyle(mainMenu, version, theme);
             vsToolStripExtender.SetStyle(quickTools, version, theme);
             vsToolStripExtender.SetStyle(statusBar, version, theme);
+
+            autoExecuteManageWindow.EnableVSRenderer(version, theme);
+            fileExploreWindow.EnableVSRenderer(version, theme);
         }
         #endregion
 
@@ -465,7 +474,7 @@ namespace AlgodooStudio.ASProject
         #region 视图
         private void 文本编辑器ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TextEditWindow textEdit = new TextEditWindow();
+            TextEditWindow textEdit = new TextEditWindow("New","","",false);
             textEdit.Show(this.dockPanel, DockState.Document);
         }
         private void 场景视图ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -499,8 +508,11 @@ namespace AlgodooStudio.ASProject
         }
         private void 自启动管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //TODO: 打开自启动管理器
-            throw new NotImplementedException("未实现");
+            if (autoExecuteManageWindow.IsDisposed)
+            {
+                autoExecuteManageWindow = new AutoExecuteManageWindow();
+            }
+            autoExecuteManageWindow.Show(this.dockPanel, DockState.DockRight);
         }
         #endregion
         #region 工具
