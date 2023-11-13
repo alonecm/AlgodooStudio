@@ -3,13 +3,20 @@ using AlgodooStudio.ASProject.Support;
 using AlgodooStudio.PluginSystem;
 using Dex.IO.Config;
 using System;
+using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace AlgodooStudio
 {
     internal static class Program
     {
+        [DllImport("user32.dll")]//取设备场景
+        internal static extern IntPtr GetDC(IntPtr hwnd);//返回设备场景句柄
+        [DllImport("gdi32.dll")]//取指定点颜色
+        internal static extern int GetPixel(IntPtr hdc, Point p);
+
         /// <summary>
         /// 当前设置文件的所在路径
         /// </summary>

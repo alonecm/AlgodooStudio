@@ -930,7 +930,6 @@ namespace AlgodooStudio.ASProject
         }
 
         #region 文件展示区右键菜单
-
         /// <summary>
         /// 重置所有菜单项
         /// </summary>
@@ -939,6 +938,7 @@ namespace AlgodooStudio.ASProject
             刷新ToolStripMenuItem.Visible =
                 查看ToolStripMenuItem.Visible =
                 新建ToolStripMenuItem1.Visible =
+                在Algodoo中打开ToolStripMenuItem.Visible =
                 打开ToolStripMenuItem.Visible =
                 剪切ToolStripMenuItem1.Visible =
                 复制ToolStripMenuItem1.Visible =
@@ -973,6 +973,7 @@ namespace AlgodooStudio.ASProject
                 {
                     //如果这个文件是.phz文件则特殊对待
                     打开ToolStripMenuItem.Visible = true;
+                    在Algodoo中打开ToolStripMenuItem.Visible = true;
                     复制ToolStripMenuItem1.Visible = true;
                     剪切ToolStripMenuItem1.Visible = true;
                     删除ToolStripMenuItem1.Visible = true;
@@ -983,6 +984,7 @@ namespace AlgodooStudio.ASProject
                 {
                     //如果这个文件是.phn文件则特殊对待
                     打开ToolStripMenuItem.Visible = true;
+                    在Algodoo中打开ToolStripMenuItem.Visible = true;
                     复制ToolStripMenuItem1.Visible = true;
                     剪切ToolStripMenuItem1.Visible = true;
                     删除ToolStripMenuItem1.Visible = true;
@@ -991,7 +993,7 @@ namespace AlgodooStudio.ASProject
                 }
                 else
                 {
-                    //如果这个文件是.phz文件则特殊对待
+                    //如果这个文件是普通文件
                     打开ToolStripMenuItem.Visible = true;
                     复制ToolStripMenuItem1.Visible = true;
                     剪切ToolStripMenuItem1.Visible = true;
@@ -1044,7 +1046,12 @@ namespace AlgodooStudio.ASProject
         {
             Open(fViewer.SelectedItems[0].Tag.ToString());
         }
-
+        
+        private void 在Algodoo中打开ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process scene = Process.Start(Program.Setting.AlgodooPath + "\\Algodoo.exe", fViewer.SelectedItems[0].Tag.ToString());
+        }
+        
         private void 剪切ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             string path = fViewer.SelectedItems[0].Tag.ToString();

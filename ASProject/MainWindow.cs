@@ -1,4 +1,5 @@
-﻿using AlgodooStudio.ASProject.Interface;
+﻿using AlgodooStudio.ASProject.Dialogs;
+using AlgodooStudio.ASProject.Interface;
 using AlgodooStudio.ASProject.Support;
 using AlgodooStudio.PluginSystem;
 using PhunSharp;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -43,9 +45,9 @@ namespace AlgodooStudio.ASProject
         /// </summary>
         private ToolBoxWindow toolBoxWindow;
         /// <summary>
-        /// 自启动窗口
+        /// 取色器
         /// </summary>
-        private AutoExecuteManageWindow autoExecuteManageWindow;
+        private ColorPicker colorPicker;
         /// <summary>
         /// 工具栏渲染
         /// </summary>
@@ -97,6 +99,9 @@ namespace AlgodooStudio.ASProject
             //为最近打开创建MRU管理器
             this.mruManager = new MRUManager(this.最近打开ToolStripMenuItem, this.MRU_Open);
 
+            //创建取色器
+            colorPicker=new ColorPicker();
+
             //加载插件
             ShowPlugins();
         }
@@ -111,7 +116,6 @@ namespace AlgodooStudio.ASProject
             fileExploreWindow = new FileExploreWindow();
             propertyWindow = new PropertyWindow();
             toolBoxWindow = new ToolBoxWindow();
-            autoExecuteManageWindow = new AutoExecuteManageWindow();
         }
         /// <summary>
         /// 从记录字符串中获取停靠内容
@@ -127,8 +131,6 @@ namespace AlgodooStudio.ASProject
                 return propertyWindow;
             else if (persistString == typeof(ToolBoxWindow).ToString())
                 return toolBoxWindow;
-            else if (persistString == typeof(AutoExecuteManageWindow).ToString())
-                return autoExecuteManageWindow;
             else
             {
                 //不是则使用文本窗口打开
@@ -195,8 +197,6 @@ namespace AlgodooStudio.ASProject
             fileExploreWindow.DockPanel = null;
             propertyWindow.DockPanel = null;
             toolBoxWindow.DockPanel = null;
-            autoExecuteManageWindow.DockPanel = null;
-
             // 关闭所有文档窗口
             CloseAllDocuments();
 
@@ -230,13 +230,30 @@ namespace AlgodooStudio.ASProject
             vsToolStripExtender.SetStyle(mainMenu, version, theme);
             vsToolStripExtender.SetStyle(quickTools, version, theme);
             vsToolStripExtender.SetStyle(statusBar, version, theme);
-
-            autoExecuteManageWindow.EnableVSRenderer(version, theme);
             fileExploreWindow.EnableVSRenderer(version, theme);
         }
         #endregion
 
         #region 其他部分
+        /// <summary>
+        /// 启动Algodoo
+        /// </summary>
+        private void StartAlgodoo()
+        {
+            //TODO: 启动ALGODOO
+            var algodoo = Process.Start(Program.Setting.AlgodooPath + "\\Algodoo.exe");
+            this.StatusMessage = "正在启动Algodoo...";
+            algodoo.WaitForExit(5000);
+            this.StatusMessage = "就绪";
+        }
+        /// <summary>
+        /// 创建新的文件
+        /// </summary>
+        private void CreateNewFile()
+        {
+            TextEditWindow te = new TextEditWindow("New", "", "", false);
+            te.Show(this.dockPanel, DockState.Document);
+        }
         /// <summary>
         /// 设定属性编辑对象
         /// </summary>
@@ -283,7 +300,7 @@ namespace AlgodooStudio.ASProject
             Open(fileName);
         }
         /// <summary>
-        /// 打开文件
+        /// 打开文件辅助
         /// </summary>
         /// <param name="fileName">filename</param>
         private void Open(string fileName)
@@ -312,6 +329,54 @@ namespace AlgodooStudio.ASProject
             textEditor.Show(this.dockPanel, DockState.Document);
             this.Cursor = Cursors.Default;
             StatusMessage = "就绪";
+        }
+        /// <summary>
+        /// 打开文件
+        /// </summary>
+        private void OpenFile()
+        {
+            using (OpenFileDialog ofd = new OpenFileDialog())
+            {
+                ofd.Title = "选择文件...";
+                ofd.Multiselect = true;
+                ofd.Filter = "Thyme脚本 cfg配置文件 Phun文件 存档文件|*.thm;*.cfg;*.phn;*.phz|其他文件|*.*";
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    foreach (var item in ofd.FileNames)
+                    {
+                        //打开文件
+                        Open(item);
+                        //添加最近打开项目
+                        this.mruManager.AddRecentFile(item);
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 保存文件
+        /// </summary>
+        private void SaveFile()
+        {
+            //保存当前激活的且可以保存的窗口
+            if (dockPanel.ActiveContent is ISaveable)
+            {
+                (dockPanel.ActiveContent as ISaveable).Save();
+            }
+        }
+        /// <summary>
+        /// 保存所有
+        /// </summary>
+        private void SaveAll()
+        {
+            //对当前获得焦点的页面执行保存功能（如果有保存功能）
+            foreach (var item in dockPanel.Contents)
+            {
+                //是可以保存的窗口则保存
+                if (item is ISaveable)
+                {
+                    (item as ISaveable).Save();
+                }
+            }
         }
         #endregion
 
@@ -345,27 +410,11 @@ namespace AlgodooStudio.ASProject
         #region 文件
         private void 打开ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog ofd = new OpenFileDialog())
-            {
-                ofd.Title = "选择文件...";
-                ofd.Multiselect = true;
-                ofd.Filter = "Thyme脚本 cfg配置文件 Phun文件 存档文件|*.thm;*.cfg;*.phn;*.phz|其他文件|*.*";
-                if (ofd.ShowDialog() == DialogResult.OK)
-                {
-                    foreach (var item in ofd.FileNames)
-                    {
-                        //打开文件
-                        Open(item);
-                        //添加最近打开项目
-                        this.mruManager.AddRecentFile(item);
-                    }
-                }
-            }
+            OpenFile();
         }
         private void 文本文件ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TextEditWindow te = new TextEditWindow("New", "", "", false);
-            te.Show(this.dockPanel, DockState.Document);
+            CreateNewFile();
         }
         private void 场景ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -378,15 +427,7 @@ namespace AlgodooStudio.ASProject
         }
         private void 全部保存ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //对当前获得焦点的页面执行保存功能（如果有保存功能）
-            foreach (var item in dockPanel.Contents)
-            {
-                //是可以保存的窗口则保存
-                if (item is ISaveable)
-                {
-                    (item as ISaveable).Save();
-                }
-            }
+            SaveAll();
         }
         private void 另存为ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -398,13 +439,10 @@ namespace AlgodooStudio.ASProject
         }
         private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //保存当前激活的且可以保存的窗口
-            if (dockPanel.ActiveContent is ISaveable)
-            {
-                (dockPanel.ActiveContent as ISaveable).Save();
-            }
+            SaveFile();
         }
         #endregion
+
         #region 编辑
         private void 查找ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -506,30 +544,27 @@ namespace AlgodooStudio.ASProject
             }
             propertyWindow.Show(this.dockPanel, DockState.DockRight);
         }
-        private void 自启动管理ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (autoExecuteManageWindow.IsDisposed)
-            {
-                autoExecuteManageWindow = new AutoExecuteManageWindow();
-            }
-            autoExecuteManageWindow.Show(this.dockPanel, DockState.DockRight);
-        }
         #endregion
         #region 工具
         private void 启动AlgodooToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //TODO: 启动ALGODOO
-            throw new NotImplementedException("未实现");
+            StartAlgodoo();
         }
         private void 重置AlgodooToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //TODO: 重置ALGODOO
-            throw new NotImplementedException("未实现");
+            var algodoo = Process.Start(Program.Setting.AlgodooPath + "\\Algodoo.exe","-reset");
+            this.StatusMessage = "正在重置Algodoo...";
+            algodoo.WaitForExit();
+            this.StatusMessage = "就绪";
         }
         private void 取色器ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //TODO: 打开取色器
-            throw new NotImplementedException("未实现");
+            if (colorPicker.IsDisposed)
+            {
+                colorPicker = new ColorPicker();
+            }
+            colorPicker.Show();
         }
         private void 插件管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -565,12 +600,35 @@ namespace AlgodooStudio.ASProject
         }
         #endregion
         #region 插件
+
         #endregion
         #region 关于
         private void 关于ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             About window = new About();
             window.ShowDialog();
+        }
+        #endregion
+        #region 工具栏功能
+        private void newScript_Click(object sender, EventArgs e)
+        {
+            CreateNewFile();
+        }
+        private void start_Click(object sender, EventArgs e)
+        {
+            StartAlgodoo();
+        }
+        private void open_Click(object sender, EventArgs e)
+        {
+            OpenFile();
+        }
+        private void save_Click(object sender, EventArgs e)
+        {
+            SaveFile();
+        }
+        private void allSave_Click(object sender, EventArgs e)
+        {
+            SaveAll();
         }
         #endregion
         #endregion

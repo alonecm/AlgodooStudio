@@ -34,6 +34,7 @@ namespace AlgodooStudio.ASProject
             this.menuSpliter = new System.Windows.Forms.SplitContainer();
             this.toolBar = new System.Windows.Forms.ToolStrip();
             this.algodooPosition = new System.Windows.Forms.ToolStripButton();
+            this.scenePostition = new System.Windows.Forms.ToolStripButton();
             this.studioPosition = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.refreshTree = new System.Windows.Forms.ToolStripButton();
@@ -82,7 +83,7 @@ namespace AlgodooStudio.ASProject
             this.imageListForfViewer_S = new System.Windows.Forms.ImageList(this.components);
             this.fileTip = new System.Windows.Forms.ToolTip(this.components);
             this.vsToolStripExtender = new WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender(this.components);
-            this.scenePostition = new System.Windows.Forms.ToolStripButton();
+            this.在Algodoo中打开ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.menuSpliter)).BeginInit();
             this.menuSpliter.Panel1.SuspendLayout();
             this.menuSpliter.Panel2.SuspendLayout();
@@ -151,6 +152,16 @@ namespace AlgodooStudio.ASProject
             this.algodooPosition.Size = new System.Drawing.Size(23, 25);
             this.algodooPosition.Text = "定位到Algodoo根目录";
             this.algodooPosition.Click += new System.EventHandler(this.algodooPosition_Click);
+            // 
+            // scenePostition
+            // 
+            this.scenePostition.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.scenePostition.Image = ((System.Drawing.Image)(resources.GetObject("scenePostition.Image")));
+            this.scenePostition.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.scenePostition.Name = "scenePostition";
+            this.scenePostition.Size = new System.Drawing.Size(23, 25);
+            this.scenePostition.Text = "定位到场景根目录";
+            this.scenePostition.Click += new System.EventHandler(this.scenePostition_Click);
             // 
             // studioPosition
             // 
@@ -394,6 +405,7 @@ namespace AlgodooStudio.ASProject
             this.查看ToolStripMenuItem,
             this.刷新ToolStripMenuItem,
             this.打开ToolStripMenuItem,
+            this.在Algodoo中打开ToolStripMenuItem,
             this.toolStripSeparator9,
             this.剪切ToolStripMenuItem1,
             this.复制ToolStripMenuItem1,
@@ -405,7 +417,7 @@ namespace AlgodooStudio.ASProject
             this.在新管理器中打开ToolStripMenuItem1,
             this.在资源管理器中打开ToolStripMenuItem1});
             this.fViewerContextMenu.Name = "treeContextMenu";
-            this.fViewerContextMenu.Size = new System.Drawing.Size(185, 280);
+            this.fViewerContextMenu.Size = new System.Drawing.Size(185, 324);
             this.fViewerContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.fViewerContextMenu_Opening);
             // 
             // 新建ToolStripMenuItem1
@@ -558,15 +570,12 @@ namespace AlgodooStudio.ASProject
             // 
             this.vsToolStripExtender.DefaultRenderer = null;
             // 
-            // scenePostition
+            // 在Algodoo中打开ToolStripMenuItem
             // 
-            this.scenePostition.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.scenePostition.Image = ((System.Drawing.Image)(resources.GetObject("scenePostition.Image")));
-            this.scenePostition.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.scenePostition.Name = "scenePostition";
-            this.scenePostition.Size = new System.Drawing.Size(23, 25);
-            this.scenePostition.Text = "定位到场景根目录";
-            this.scenePostition.Click += new System.EventHandler(this.scenePostition_Click);
+            this.在Algodoo中打开ToolStripMenuItem.Name = "在Algodoo中打开ToolStripMenuItem";
+            this.在Algodoo中打开ToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.在Algodoo中打开ToolStripMenuItem.Text = "在Algodoo中打开...";
+            this.在Algodoo中打开ToolStripMenuItem.Click += new System.EventHandler(this.在Algodoo中打开ToolStripMenuItem_Click);
             // 
             // FileExploreWindow
             // 
@@ -650,5 +659,6 @@ namespace AlgodooStudio.ASProject
         private System.Windows.Forms.TreeView folderTree;
         private WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender vsToolStripExtender;
         private System.Windows.Forms.ToolStripButton scenePostition;
+        private System.Windows.Forms.ToolStripMenuItem 在Algodoo中打开ToolStripMenuItem;
     }
 }

@@ -214,7 +214,7 @@ namespace AlgodooStudio.ASProject.Dialogs
             if (cd.ShowDialog() == DialogResult.OK)
             {
                 colorSelect.BackColor = cd.Color;
-                valueInput.Text = "[" + cd.Color.R / 255f + "," + cd.Color.B / 255f + "," + cd.Color.G / 255f + "," + cd.Color.A / 255f + "]";
+                valueInput.Text = "[" + cd.Color.R / 255f + "," + cd.Color.G / 255f + "," + cd.Color.B / 255f + "," + cd.Color.A / 255f + "]";
             }
             cd.Dispose();
             cd = null;
