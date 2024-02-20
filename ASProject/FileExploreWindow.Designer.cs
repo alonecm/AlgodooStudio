@@ -44,8 +44,6 @@ namespace AlgodooStudio.ASProject
             this.bigView = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.returnUp = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.debugButton = new System.Windows.Forms.ToolStripButton();
             this.contentSpilter = new System.Windows.Forms.SplitContainer();
             this.folderTree = new System.Windows.Forms.TreeView();
             this.treeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -69,6 +67,7 @@ namespace AlgodooStudio.ASProject
             this.平铺ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.刷新ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.打开ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.在Algodoo中打开ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.剪切ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.复制ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,7 +82,6 @@ namespace AlgodooStudio.ASProject
             this.imageListForfViewer_S = new System.Windows.Forms.ImageList(this.components);
             this.fileTip = new System.Windows.Forms.ToolTip(this.components);
             this.vsToolStripExtender = new WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender(this.components);
-            this.在Algodoo中打开ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.menuSpliter)).BeginInit();
             this.menuSpliter.Panel1.SuspendLayout();
             this.menuSpliter.Panel2.SuspendLayout();
@@ -133,9 +131,7 @@ namespace AlgodooStudio.ASProject
             this.listView,
             this.bigView,
             this.toolStripSeparator3,
-            this.returnUp,
-            this.toolStripSeparator4,
-            this.debugButton});
+            this.returnUp});
             this.toolBar.Location = new System.Drawing.Point(0, 0);
             this.toolBar.Name = "toolBar";
             this.toolBar.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -146,7 +142,7 @@ namespace AlgodooStudio.ASProject
             // algodooPosition
             // 
             this.algodooPosition.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.algodooPosition.Image = ((System.Drawing.Image)(resources.GetObject("algodooPosition.Image")));
+            this.algodooPosition.Image = global::AlgodooStudio.Properties.Resources.agfolder;
             this.algodooPosition.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.algodooPosition.Name = "algodooPosition";
             this.algodooPosition.Size = new System.Drawing.Size(23, 25);
@@ -156,7 +152,7 @@ namespace AlgodooStudio.ASProject
             // scenePostition
             // 
             this.scenePostition.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.scenePostition.Image = ((System.Drawing.Image)(resources.GetObject("scenePostition.Image")));
+            this.scenePostition.Image = global::AlgodooStudio.Properties.Resources.scenefolder;
             this.scenePostition.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.scenePostition.Name = "scenePostition";
             this.scenePostition.Size = new System.Drawing.Size(23, 25);
@@ -166,7 +162,7 @@ namespace AlgodooStudio.ASProject
             // studioPosition
             // 
             this.studioPosition.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.studioPosition.Image = ((System.Drawing.Image)(resources.GetObject("studioPosition.Image")));
+            this.studioPosition.Image = global::AlgodooStudio.Properties.Resources.studiofolder;
             this.studioPosition.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.studioPosition.Name = "studioPosition";
             this.studioPosition.Size = new System.Drawing.Size(23, 25);
@@ -181,7 +177,7 @@ namespace AlgodooStudio.ASProject
             // refreshTree
             // 
             this.refreshTree.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.refreshTree.Image = ((System.Drawing.Image)(resources.GetObject("refreshTree.Image")));
+            this.refreshTree.Image = global::AlgodooStudio.Properties.Resources.refresh;
             this.refreshTree.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.refreshTree.Name = "refreshTree";
             this.refreshTree.Size = new System.Drawing.Size(23, 25);
@@ -206,7 +202,7 @@ namespace AlgodooStudio.ASProject
             // listView
             // 
             this.listView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.listView.Image = ((System.Drawing.Image)(resources.GetObject("listView.Image")));
+            this.listView.Image = global::AlgodooStudio.Properties.Resources.listview;
             this.listView.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.listView.Name = "listView";
             this.listView.Size = new System.Drawing.Size(23, 25);
@@ -216,7 +212,7 @@ namespace AlgodooStudio.ASProject
             // bigView
             // 
             this.bigView.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.bigView.Image = ((System.Drawing.Image)(resources.GetObject("bigView.Image")));
+            this.bigView.Image = global::AlgodooStudio.Properties.Resources.bigview;
             this.bigView.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.bigView.Name = "bigView";
             this.bigView.Size = new System.Drawing.Size(23, 25);
@@ -231,26 +227,12 @@ namespace AlgodooStudio.ASProject
             // returnUp
             // 
             this.returnUp.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.returnUp.Image = ((System.Drawing.Image)(resources.GetObject("returnUp.Image")));
+            this.returnUp.Image = global::AlgodooStudio.Properties.Resources.returnUp;
             this.returnUp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.returnUp.Name = "returnUp";
             this.returnUp.Size = new System.Drawing.Size(23, 25);
             this.returnUp.Text = "返回上一级";
             this.returnUp.Click += new System.EventHandler(this.returnUp_Click);
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 28);
-            // 
-            // debugButton
-            // 
-            this.debugButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.debugButton.Image = ((System.Drawing.Image)(resources.GetObject("debugButton.Image")));
-            this.debugButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.debugButton.Name = "debugButton";
-            this.debugButton.Size = new System.Drawing.Size(23, 25);
-            this.debugButton.Text = "DebugButton";
             // 
             // contentSpilter
             // 
@@ -282,6 +264,10 @@ namespace AlgodooStudio.ASProject
             this.folderTree.SelectedImageIndex = 0;
             this.folderTree.Size = new System.Drawing.Size(244, 421);
             this.folderTree.TabIndex = 1;
+            this.folderTree.AfterCollapse += new System.Windows.Forms.TreeViewEventHandler(this.folderTree_AfterCollapse);
+            this.folderTree.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.folderTree_BeforeExpand);
+            this.folderTree.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.folderTree_BeforeSelect);
+            this.folderTree.MouseDown += new System.Windows.Forms.MouseEventHandler(this.folderTree_MouseDown);
             // 
             // treeContextMenu
             // 
@@ -417,7 +403,7 @@ namespace AlgodooStudio.ASProject
             this.在新管理器中打开ToolStripMenuItem1,
             this.在资源管理器中打开ToolStripMenuItem1});
             this.fViewerContextMenu.Name = "treeContextMenu";
-            this.fViewerContextMenu.Size = new System.Drawing.Size(185, 324);
+            this.fViewerContextMenu.Size = new System.Drawing.Size(185, 302);
             this.fViewerContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.fViewerContextMenu_Opening);
             // 
             // 新建ToolStripMenuItem1
@@ -473,6 +459,13 @@ namespace AlgodooStudio.ASProject
             this.打开ToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.打开ToolStripMenuItem.Text = "打开";
             this.打开ToolStripMenuItem.Click += new System.EventHandler(this.打开ToolStripMenuItem_Click);
+            // 
+            // 在Algodoo中打开ToolStripMenuItem
+            // 
+            this.在Algodoo中打开ToolStripMenuItem.Name = "在Algodoo中打开ToolStripMenuItem";
+            this.在Algodoo中打开ToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.在Algodoo中打开ToolStripMenuItem.Text = "在Algodoo中打开...";
+            this.在Algodoo中打开ToolStripMenuItem.Click += new System.EventHandler(this.在Algodoo中打开ToolStripMenuItem_Click);
             // 
             // toolStripSeparator9
             // 
@@ -570,13 +563,6 @@ namespace AlgodooStudio.ASProject
             // 
             this.vsToolStripExtender.DefaultRenderer = null;
             // 
-            // 在Algodoo中打开ToolStripMenuItem
-            // 
-            this.在Algodoo中打开ToolStripMenuItem.Name = "在Algodoo中打开ToolStripMenuItem";
-            this.在Algodoo中打开ToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.在Algodoo中打开ToolStripMenuItem.Text = "在Algodoo中打开...";
-            this.在Algodoo中打开ToolStripMenuItem.Click += new System.EventHandler(this.在Algodoo中打开ToolStripMenuItem_Click);
-            // 
             // FileExploreWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -618,14 +604,12 @@ namespace AlgodooStudio.ASProject
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton listView;
         private System.Windows.Forms.ToolStripButton bigView;
-        private System.Windows.Forms.ToolStripButton debugButton;
         private System.Windows.Forms.ImageList imageListForTree;
         private System.Windows.Forms.ListView fViewer;
         private System.Windows.Forms.ImageList imageListForfViewer_B;
         private System.Windows.Forms.ImageList imageListForfViewer_S;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton returnUp;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ContextMenuStrip treeContextMenu;
         private System.Windows.Forms.ContextMenuStrip fViewerContextMenu;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;

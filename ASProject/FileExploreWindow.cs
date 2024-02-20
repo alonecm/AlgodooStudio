@@ -359,7 +359,7 @@ namespace AlgodooStudio.ASProject
         }
 
         /// <summary>
-        /// 文件夹是否未源文件夹
+        /// 文件夹是否是源文件夹
         /// </summary>
         /// <param name="targetPath"></param>
         /// <param name="sourcePath"></param>

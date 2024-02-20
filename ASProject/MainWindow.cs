@@ -398,7 +398,7 @@ namespace AlgodooStudio.ASProject
         /// <param name="e"></param>
         private void dockPanel_ActiveContentChanged(object sender, EventArgs e)
         {
-            toolStripSeparator2.Visible = 全部保存ToolStripMenuItem.Visible = 另存为ToolStripMenuItem.Visible = 保存ToolStripMenuItem.Visible = (dockPanel.ActiveContent is ISaveable);
+            allSave.Visible = save.Visible = toolStripSeparator2.Visible = 全部保存ToolStripMenuItem.Visible = 另存为ToolStripMenuItem.Visible = 保存ToolStripMenuItem.Visible = (dockPanel.ActiveContent is ISaveable);
             编辑ToolStripMenuItem.Visible = (dockPanel.ActiveContent is IEditable);
             替换ToolStripMenuItem.Visible = (dockPanel.ActiveContent is IReplaceable);
             查找ToolStripMenuItem.Visible = (dockPanel.ActiveContent is ISearchable);

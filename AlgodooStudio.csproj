@@ -65,6 +65,9 @@
   <PropertyGroup>
     <ApplicationIcon>Resources\icon32.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dex.Analysis, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -102,6 +105,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -229,6 +233,11 @@
     <Compile Include="ASProject\Dialogs\ReplaceWindow.Designer.cs">
       <DependentUpon>ReplaceWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="ASProject\Dialogs\ColorPicker.resx">
       <DependentUpon>ColorPicker.cs</DependentUpon>
     </EmbeddedResource>
@@ -264,14 +273,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="ASProject\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
@@ -285,7 +289,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\app.manifest" />
-    <None Include="Resources\deSelectAll.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\logo.png" />
@@ -295,9 +298,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\run.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\selectAll.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\setting.png" />
@@ -313,12 +313,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\setting.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\zoomWhite.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\zoomBlack.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\_res\imageList\_ri_0.png" />
@@ -337,6 +331,42 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\agfolder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bigview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\collapse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\listview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\newfile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\returnUp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\saveAll.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\scenefolder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\studiofolder.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
