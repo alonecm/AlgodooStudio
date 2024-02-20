@@ -154,8 +154,10 @@ namespace AlgodooStudio.ASProject.Dialogs
             // 
             // PropertiesSelect
             // 
+            this.AcceptButton = this.ok;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.cancel;
             this.ClientSize = new System.Drawing.Size(226, 117);
             this.Controls.Add(this.colorSelect);
             this.Controls.Add(this.customProp);

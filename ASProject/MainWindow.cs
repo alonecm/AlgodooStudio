@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -24,10 +25,6 @@ namespace AlgodooStudio.ASProject
     /// </summary>
     internal partial class MainWindow : Form
     {
-        /// <summary>
-        /// 是否保存当前布局
-        /// </summary>
-        private bool isSaveLayout = true;
         /// <summary>
         /// 反序列化悬停内容
         /// </summary>
@@ -133,11 +130,11 @@ namespace AlgodooStudio.ASProject
                 return toolBoxWindow;
             else
             {
-                //不是则使用文本窗口打开
+                //不为固定窗口则使用文本窗口打开
                 string[] parsedStrings = persistString.Split(',');
-                if (parsedStrings.Length != 3)
+                if (parsedStrings.Length != 3)//转换字符串长度不是3则返回空
                     return null;
-                if (parsedStrings[0] != typeof(TextEditWindow).ToString())
+                if (parsedStrings[0] != typeof(TextEditWindow).ToString())//类型标记不是文本编辑器则返回空
                     return null;
                 TextEditWindow textEdit = new TextEditWindow();
                 if (parsedStrings[1] != string.Empty)
@@ -240,7 +237,7 @@ namespace AlgodooStudio.ASProject
         /// </summary>
         private void StartAlgodoo()
         {
-            //TODO: 启动ALGODOO
+            //NOTE: 启动ALGODOO
             var algodoo = Process.Start(Program.Setting.AlgodooPath + "\\Algodoo.exe");
             this.StatusMessage = "正在启动Algodoo...";
             algodoo.WaitForExit(5000);
@@ -388,7 +385,8 @@ namespace AlgodooStudio.ASProject
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
-            if (isSaveLayout)
+            //如果需要则保存布局
+            if (Program.Setting.IsSavingLayout)
                 dockPanel.SaveAsXml(configFile);
             else if (File.Exists(configFile))
                 File.Delete(configFile);
@@ -400,6 +398,7 @@ namespace AlgodooStudio.ASProject
         /// <param name="e"></param>
         private void dockPanel_ActiveContentChanged(object sender, EventArgs e)
         {
+            toolStripSeparator2.Visible = 全部保存ToolStripMenuItem.Visible = 另存为ToolStripMenuItem.Visible = 保存ToolStripMenuItem.Visible = (dockPanel.ActiveContent is ISaveable);
             编辑ToolStripMenuItem.Visible = (dockPanel.ActiveContent is IEditable);
             替换ToolStripMenuItem.Visible = (dockPanel.ActiveContent is IReplaceable);
             查找ToolStripMenuItem.Visible = (dockPanel.ActiveContent is ISearchable);
@@ -552,7 +551,7 @@ namespace AlgodooStudio.ASProject
         }
         private void 重置AlgodooToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //TODO: 重置ALGODOO
+            //NOTE: 重置ALGODOO
             var algodoo = Process.Start(Program.Setting.AlgodooPath + "\\Algodoo.exe","-reset");
             this.StatusMessage = "正在重置Algodoo...";
             algodoo.WaitForExit();
@@ -573,8 +572,10 @@ namespace AlgodooStudio.ASProject
         }
         private void 设置ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //TODO: 打开设置
-            throw new NotImplementedException("未实现");
+            using (SettingsDialog setting = new SettingsDialog())
+            {
+                setting.ShowDialog();
+            }
         }
         #endregion
         #region 窗口

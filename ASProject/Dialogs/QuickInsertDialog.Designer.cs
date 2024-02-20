@@ -116,7 +116,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(333, 471);
+            this.tabControl1.Size = new System.Drawing.Size(333, 474);
             this.tabControl1.TabIndex = 1;
             // 
             // entityPage
@@ -128,7 +128,7 @@
             this.entityPage.Location = new System.Drawing.Point(4, 22);
             this.entityPage.Name = "entityPage";
             this.entityPage.Padding = new System.Windows.Forms.Padding(3);
-            this.entityPage.Size = new System.Drawing.Size(325, 445);
+            this.entityPage.Size = new System.Drawing.Size(325, 448);
             this.entityPage.TabIndex = 0;
             this.entityPage.Text = "实体";
             this.entityPage.UseVisualStyleBackColor = true;
@@ -525,7 +525,7 @@
             this.scriptPage.Location = new System.Drawing.Point(4, 22);
             this.scriptPage.Name = "scriptPage";
             this.scriptPage.Padding = new System.Windows.Forms.Padding(3);
-            this.scriptPage.Size = new System.Drawing.Size(325, 445);
+            this.scriptPage.Size = new System.Drawing.Size(325, 448);
             this.scriptPage.TabIndex = 1;
             this.scriptPage.Text = "脚本";
             this.scriptPage.UseVisualStyleBackColor = true;
@@ -787,7 +787,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.cancel);
             this.splitContainer1.Panel2.Controls.Add(this.ok);
             this.splitContainer1.Size = new System.Drawing.Size(333, 508);
-            this.splitContainer1.SplitterDistance = 471;
+            this.splitContainer1.SplitterDistance = 474;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 2;
             // 
@@ -813,8 +813,10 @@
             // 
             // QuickInsertDialog
             // 
+            this.AcceptButton = this.ok;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.cancel;
             this.ClientSize = new System.Drawing.Size(333, 508);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

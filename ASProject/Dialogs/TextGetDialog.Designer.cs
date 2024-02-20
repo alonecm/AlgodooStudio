@@ -83,8 +83,10 @@ namespace AlgodooStudio.ASProject.Dialogs
             // 
             // TextGetDialog
             // 
+            this.AcceptButton = this.ok;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.cancel;
             this.ClientSize = new System.Drawing.Size(305, 73);
             this.Controls.Add(this.allGet);
             this.Controls.Add(this.label1);

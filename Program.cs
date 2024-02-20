@@ -6,6 +6,7 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 
 namespace AlgodooStudio
@@ -54,7 +55,7 @@ namespace AlgodooStudio
             }
             //读取设置
             var sc = new SimpleConfig();
-            sc.Read(settingPath);
+            sc.Read(settingPath,Encoding.Default);
             setting = (Settings)sc.Objects[0];
             //检查相关路径是否存在
             CheckPath();
@@ -68,7 +69,7 @@ namespace AlgodooStudio
         public static void SaveSetting()
         {
             //直接写入
-            new SimpleConfig(setting).Write(settingPath);
+            new SimpleConfig(setting).Write(settingPath, Encoding.Default);
         }
 
         /// <summary>

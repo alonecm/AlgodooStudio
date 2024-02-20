@@ -1,5 +1,6 @@
 ﻿using Dex.Attribute;
 using System.IO;
+using System.Numerics;
 
 namespace AlgodooStudio.ASProject.Support
 {
@@ -14,7 +15,10 @@ namespace AlgodooStudio.ASProject.Support
         /// Algodoo所在根目录
         /// </summary>
         public string AlgodooPath { get; set; }
-
+        /// <summary>
+        /// 是否保存当前布局
+        /// </summary>
+        public bool IsSavingLayout { get; set; } = true;
 
         /// <summary>
         /// 工作室所在目录

@@ -215,7 +215,7 @@ namespace AlgodooStudio.ASProject
             this.ContextMenuStrip = this.rightMenu;
             this.Controls.Add(this.sp);
             this.Name = "TextEditWindow";
-            this.Text = "文字编辑器";
+            this.Text = "文本编辑器";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ScriptEditor_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ScriptEditor_FormClosed);
             this.sp.Panel1.ResumeLayout(false);

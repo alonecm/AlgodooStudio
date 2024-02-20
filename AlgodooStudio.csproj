@@ -58,9 +58,7 @@
   <PropertyGroup>
     <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
     <StartupObject>AlgodooStudio.Program</StartupObject>
   </PropertyGroup>
@@ -70,27 +68,27 @@
   <ItemGroup>
     <Reference Include="Dex.Analysis, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ClassLibrary\PhunSharp\PhunSharp\bin\Debug\Dex.Analysis.dll</HintPath>
+      <HintPath>..\..\类库\Dex.NET\Test\bin\Debug\Dex.Analysis.dll</HintPath>
     </Reference>
     <Reference Include="Dex.Attribute, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ClassLibrary\PhunSharp\PhunSharp\bin\Debug\Dex.Attribute.dll</HintPath>
+      <HintPath>..\..\类库\Dex.NET\Test\bin\Debug\Dex.Attribute.dll</HintPath>
     </Reference>
     <Reference Include="Dex.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ClassLibrary\PhunSharp\PhunSharp\bin\Debug\Dex.Common.dll</HintPath>
+      <HintPath>..\..\类库\Dex.NET\Test\bin\Debug\Dex.Common.dll</HintPath>
     </Reference>
     <Reference Include="Dex.Interfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ClassLibrary\PhunSharp\PhunSharp\bin\Debug\Dex.Interfaces.dll</HintPath>
+      <HintPath>..\..\类库\Dex.NET\Test\bin\Debug\Dex.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="Dex.IO, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ClassLibrary\PhunSharp\PhunSharp\bin\Debug\Dex.IO.dll</HintPath>
+      <HintPath>..\..\类库\Dex.NET\Test\bin\Debug\Dex.IO.dll</HintPath>
     </Reference>
     <Reference Include="Dex.Utils, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ClassLibrary\Dex.NET\Dex.Utils\bin\Debug\Dex.Utils.dll</HintPath>
+      <HintPath>..\..\类库\Dex.NET\Test\bin\Debug\Dex.Utils.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.AvalonEdit, Version=6.2.0.78, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
       <HintPath>packages\AvalonEdit.6.2.0.78\lib\net462\ICSharpCode.AvalonEdit.dll</HintPath>
@@ -98,7 +96,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PhunSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\ClassLibrary\PhunSharp\PhunSharp\bin\Debug\PhunSharp.dll</HintPath>
+      <HintPath>..\..\类库\PhunSharp\PhunSharp\bin\Debug\PhunSharp.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -138,6 +136,12 @@
     </Compile>
     <Compile Include="ASProject\Dialogs\ColorPicker.Designer.cs">
       <DependentUpon>ColorPicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ASProject\Dialogs\SettingsDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ASProject\Dialogs\SettingsDialog.Designer.cs">
+      <DependentUpon>SettingsDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="ASProject\Interface\IEditable.cs" />
     <Compile Include="ASProject\Interface\IReplaceable.cs" />
@@ -221,6 +225,9 @@
     </Compile>
     <EmbeddedResource Include="ASProject\Dialogs\ColorPicker.resx">
       <DependentUpon>ColorPicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ASProject\Dialogs\SettingsDialog.resx">
+      <DependentUpon>SettingsDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ASProject\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
