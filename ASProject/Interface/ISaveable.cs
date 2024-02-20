@@ -1,6 +1,6 @@
 ﻿namespace AlgodooStudio.ASProject.Interface
 {
-    internal interface ISaveable
+    public interface ISaveable
     {
         /// <summary>
         /// 保存

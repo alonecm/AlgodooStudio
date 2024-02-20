@@ -14,7 +14,7 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace AlgodooStudio.ASProject
 {
-    public partial class TextEditWindow : DockContent, IEditable, IReplaceable, ISearchable, ISaveable
+    internal partial class TextEditWindow : DockContent, IEditable, IReplaceable, ISearchable, ISaveable
     {
         /// <summary>
         /// Avalon文字编辑器

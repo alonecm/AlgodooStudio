@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace AlgodooStudio.ASProject.Dialogs
 {
-    internal partial class QuickInsertDialog : Form
+    public partial class QuickInsertDialog : Form
     {
         /// <summary>
         /// 合并后的脚本代码

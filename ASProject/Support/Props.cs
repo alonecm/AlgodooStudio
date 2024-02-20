@@ -3,9 +3,9 @@
     /// <summary>
     /// 实体的基本属性值
     /// </summary>
-    internal static class Props
+    public static class Props
     {
-        internal static string[] circle = {"adhesion","airFrictionMult","angle",
+        public static readonly string[] circle = {"adhesion","airFrictionMult","angle",
             "angvel","attraction","attractionType","collideSet","collideWater",
             "color","colorHSVA","controllerAcc","controllerInvertX","controllerInvertY",
             "controllerReverseXY","density","drawBorder","drawCake","edgeBlur","friction","glued",
@@ -17,7 +17,7 @@
             "vel","velocityDamping","zDepth"
         };
 
-        internal static string[] box = {"adhesion","airFrictionMult","angle",
+        public static readonly string[] box = {"adhesion","airFrictionMult","angle",
             "angvel","attraction","attractionType","collideSet","collideWater",
             "color","colorHSVA","controllerAcc","controllerInvertX","controllerInvertY",
             "controllerReverseXY","density","drawBorder","edgeBlur","friction","glued",
@@ -30,7 +30,7 @@
             "vel","velocityDamping","zDepth"
         };
 
-        internal static string[] polygon = {"adhesion","airFrictionMult","angle",
+        public static readonly string[] polygon = {"adhesion","airFrictionMult","angle",
             "angvel","attraction","attractionType","collideSet","collideWater",
             "color","colorHSVA","controllerAcc","controllerInvertX","controllerInvertY",
             "controllerReverseXY","density","drawBorder","edgeBlur","forceVertexDrawing","friction","glued",
@@ -42,7 +42,7 @@
             "vel","velocityDamping","zDepth"
         };
 
-        internal static string[] plane = {"adhesion","angle",
+        public static readonly string[] plane = {"adhesion","angle",
             "attraction","attractionType","collideSet","collideWater",
             "color","colorHSVA","drawBorder","edgeBlur","friction","glued",
             "heteroCollide","immortal","Killer","materialVelocity",
@@ -52,21 +52,21 @@
             "velocityDamping","zDepth"
         };
 
-        internal static string[] laser = {"collideSet","collideWater",
+        public static readonly string[] laser = {"collideSet","collideWater",
             "color","colorHSVA","cutter","fadeDist","followGeometry","legacyMode",
             "maxCuts","maxRays","onClick","onDie","onKey","onLaserHit","onSpawn",
             "opaqueBorders","pos","postStep","resources","rotation","showLaserBodyAttrib",
             "size","timetolive","update","velocity","zDepth"
         };
 
-        internal static string[] pen = {"color","colorHSVA","fadeTime",
+        public static readonly string[] pen = {"color","colorHSVA","fadeTime",
            "onClick","onDie","onKey","onSpawn",
             "opaqueBorders","pos","postStep",
             "resources","rotation","size","timetolive",
             "update","zDepth"
         };
 
-        internal static string[] hinge = {"allowDirectSolve","autoBend",
+        public static readonly string[] hinge = {"allowDirectSolve","autoBend",
             "autoBrake","bend","bendConstant","bendTarget","ccw","color",
             "colorHSVA","distanceLimit","forceDirectSolve","hingeConstant",
             "ImpulseLimit","legacyMode","motor","motorSpeed","motorTorque",
@@ -74,16 +74,16 @@
             "resources","size","timetolive","update","zDepth"
         };
 
-        internal static string[] fixjoint = {"color","colorHSVA","onClick",
+        public static readonly string[] fixjoint = {"color","colorHSVA","onClick",
             "onDie","onKey","onSpawn","opaqueBorders","postStep","resources",
             "size","timetolive","update","zDepth"
         };
 
-        internal static string[] thruster = {"color","colorHSVA","followGeometry",
+        public static readonly string[] thruster = {"color","colorHSVA","followGeometry",
             "force","onClick","onDie","onKey","onSpawn","opaqueBorders","pos",
             "postStep","resources","rotation","size","timetolive","update","zDepth"
         };
 
-        internal static string[] water = { "vecs", "version" };
+        public static readonly string[] water = { "vecs", "version" };
     }
 }

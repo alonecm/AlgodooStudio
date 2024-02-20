@@ -5,7 +5,7 @@ namespace AlgodooStudio.ASProject
     /// <summary>
     /// 信息框
     /// </summary>
-    public static class MBox
+    internal static class MBox
     {
         /// <summary>
         /// 显示信息框

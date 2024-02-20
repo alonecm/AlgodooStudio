@@ -3,7 +3,7 @@
     /// <summary>
     /// 替换接口
     /// </summary>
-    internal interface IReplaceable
+    public interface IReplaceable
     {
         /// <summary>
         /// 替换

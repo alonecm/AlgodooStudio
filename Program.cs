@@ -128,17 +128,10 @@ namespace AlgodooStudio
             var files = new DirectoryInfo(".\\Plugins").GetFiles("*.dll");
             foreach (var item in files)
             {
-                try
-                {
-                    Loader.Regist(item.FullName);
-                }
-                catch (Exception e)
-                {
-                    MBox.ShowError($"加载插件 \"{item.Name}\" 时出现了 \"{e.Message}\"异常");/*，异常信息已经输出到\"{Environment.CurrentDirectory}\\Logs\"文件夹中");*/
-                }
+                Loader.Load(item.FullName);
             }
-            //启用全部插件
-            Loader.EnabledAllPlugin();
+            //跟随记录启用插件
+            Loader.EnablePlugins();
         }
 
         [STAThread]

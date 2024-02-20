@@ -137,6 +137,12 @@
     <Compile Include="ASProject\Dialogs\ColorPicker.Designer.cs">
       <DependentUpon>ColorPicker.cs</DependentUpon>
     </Compile>
+    <Compile Include="ASProject\Dialogs\PluginManageDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ASProject\Dialogs\PluginManageDialog.Designer.cs">
+      <DependentUpon>PluginManageDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ASProject\Dialogs\SettingsDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,6 +153,8 @@
     <Compile Include="ASProject\Interface\IReplaceable.cs" />
     <Compile Include="ASProject\Interface\ISaveable.cs" />
     <Compile Include="ASProject\Interface\ISearchable.cs" />
+    <Compile Include="ASProject\LogWriter.cs" />
+    <Compile Include="PluginSystem\Loader.cs" />
     <Compile Include="ASProject\MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -181,7 +189,6 @@
     </Compile>
     <Compile Include="ASProject\Support\EntityType.cs" />
     <Compile Include="ASProject\Support\LoadedFileInfo.cs" />
-    <Compile Include="ASProject\Support\Plugin.cs" />
     <Compile Include="ASProject\Support\Props.cs" />
     <Compile Include="ASProject\Support\Settings.cs" />
     <Compile Include="ASProject\Support\ToolBase.cs" />
@@ -204,7 +211,7 @@
       <DependentUpon>ToolBoxWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="PluginSystem\API.cs" />
-    <Compile Include="PluginSystem\Loader.cs" />
+    <Compile Include="ASProject\Support\Plugin.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ASProject\About.cs">
@@ -225,6 +232,9 @@
     </Compile>
     <EmbeddedResource Include="ASProject\Dialogs\ColorPicker.resx">
       <DependentUpon>ColorPicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ASProject\Dialogs\PluginManageDialog.resx">
+      <DependentUpon>PluginManageDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ASProject\Dialogs\SettingsDialog.resx">
       <DependentUpon>SettingsDialog.cs</DependentUpon>
@@ -329,6 +339,5 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

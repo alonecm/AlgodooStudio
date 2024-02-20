@@ -3,8 +3,8 @@
     /// <summary>
     /// 提醒器列表
     /// </summary>
-    internal static class ReminderList
+    public static class ReminderList
     {
-        internal static string keywords = "alloc,widgets,math,app,system";
+        public static readonly string keywords = "alloc,widgets,math,app,system";
     }
 }

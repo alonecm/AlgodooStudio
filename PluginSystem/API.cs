@@ -1,4 +1,6 @@
-﻿using AlgodooStudio.ASProject;
+﻿
+using AlgodooStudio.ASProject;
+using System.Windows.Forms;
 
 namespace AlgodooStudio.PluginSystem
 {
@@ -11,27 +13,27 @@ namespace AlgodooStudio.PluginSystem
         /// 显示消息框
         /// </summary>
         /// <param name="message"></param>
-        public static void ShowLog(string message)
+        public static DialogResult ShowLog(string message)
         {
-            MBox.Showlog(message);
+            return MBox.Showlog(message);
         }
 
         /// <summary>
         /// 显示消息框
         /// </summary>
         /// <param name="message"></param>
-        public static void ShowWarning(string message)
+        public static DialogResult ShowWarning(string message)
         {
-            MBox.ShowWarning(message);
+            return MBox.ShowWarning(message);
         }
 
         /// <summary>
         /// 显示消息框
         /// </summary>
         /// <param name="message"></param>
-        public static void ShowError(string message)
+        public static DialogResult ShowError(string message)
         {
-            MBox.ShowError(message);
+            return MBox.ShowError(message);
         }
     }
 }

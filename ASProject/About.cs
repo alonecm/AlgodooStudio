@@ -6,7 +6,7 @@ namespace AlgodooStudio.ASProject
 {
     internal partial class About : Form
     {
-        public About()
+        internal About()
         {
             InitializeComponent();
             this.Text = String.Format("关于 {0}", AssemblyTitle);

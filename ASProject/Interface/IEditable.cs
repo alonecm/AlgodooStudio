@@ -9,7 +9,7 @@ namespace AlgodooStudio.ASProject.Interface
     /// <summary>
     /// 编辑接口
     /// </summary>
-    internal interface IEditable
+    public interface IEditable
     {
         /// <summary>
         /// 复制

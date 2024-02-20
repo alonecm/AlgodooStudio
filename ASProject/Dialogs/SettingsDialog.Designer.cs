@@ -231,6 +231,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsDialog";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "设置";
             this.sp.Panel1.ResumeLayout(false);
             this.sp.Panel2.ResumeLayout(false);

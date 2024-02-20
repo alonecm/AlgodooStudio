@@ -1,6 +1,4 @@
-﻿using Dex.Interfaces;
-
-namespace AlgodooStudio.ASProject.Support
+﻿namespace AlgodooStudio.ASProject.Support
 {
     /// <summary>
     /// 插件
@@ -16,6 +14,7 @@ namespace AlgodooStudio.ASProject.Support
         /// </summary>
         private bool isError = false;
 
+
         /// <summary>
         /// 名称
         /// </summary>
@@ -25,13 +24,16 @@ namespace AlgodooStudio.ASProject.Support
         /// </summary>
         public string Version { get; }
         /// <summary>
+        /// 作者
+        /// </summary>
+        public string Author { get; }
+
+
+        /// <summary>
         /// 是否启用
         /// </summary>
         public bool IsEnabled => isEnabled;
-        /// <summary>
-        /// 是否错误
-        /// </summary>
-        public bool IsError => isError;
+
         
         protected Plugin() { }
         /// <summary>
@@ -40,10 +42,11 @@ namespace AlgodooStudio.ASProject.Support
         /// <param name="id">编号</param>
         /// <param name="name">名称</param>
         /// <param name="version">版本号</param>
-        protected Plugin(string name = "MyPlugin", string version = "1.0.0")
+        protected Plugin(string name = "MyPlugin", string version = "1.0.0", string author = "")
         {
             Name = name;
             Version = version;
+            Author = author;
         }
 
         /// <summary>
@@ -52,6 +55,7 @@ namespace AlgodooStudio.ASProject.Support
         public void SetEnable()
         {
             isEnabled = true;
+            OnEnabled();
         }
         /// <summary>
         /// 设置为禁用
@@ -59,13 +63,7 @@ namespace AlgodooStudio.ASProject.Support
         public void SetDisable()
         {
             isEnabled = false;
-        }
-        /// <summary>
-        /// 不可逆地将插件标记为错误
-        /// </summary>
-        public void SetError()
-        {
-            isError = true;
+            OnDisabled();
         }
 
 
@@ -81,9 +79,5 @@ namespace AlgodooStudio.ASProject.Support
         /// 禁用时调用
         /// </summary>
         public abstract void OnDisabled();
-        /// <summary>
-        /// 卸载时调用
-        /// </summary>
-        public abstract void OnUnload();
     }
 }

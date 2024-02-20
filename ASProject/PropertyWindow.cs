@@ -14,10 +14,10 @@ namespace AlgodooStudio.ASProject
     /// <summary>
     /// 属性窗口
     /// </summary>
-    public partial class PropertyWindow : DockContent
+    internal partial class PropertyWindow : DockContent
     {
-        
-        public PropertyWindow()
+
+        internal PropertyWindow()
         {
             InitializeComponent();
         }

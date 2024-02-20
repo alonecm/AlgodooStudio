@@ -9,7 +9,7 @@ namespace AlgodooStudio.ASProject.Interface
     /// <summary>
     /// 搜索接口
     /// </summary>
-    internal interface ISearchable
+    public interface ISearchable
     {
         /// <summary>
         /// 查找

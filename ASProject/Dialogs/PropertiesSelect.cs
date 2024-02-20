@@ -17,7 +17,7 @@ namespace AlgodooStudio.ASProject.Dialogs
         /// 创建一个属性选择器
         /// </summary>
         /// <param name="type">需要赋值的实体类型</param>
-        internal PropertiesSelect(EntityType type)
+        public PropertiesSelect(EntityType type)
         {
             InitializeComponent();
             switch (type)
@@ -70,12 +70,12 @@ namespace AlgodooStudio.ASProject.Dialogs
         /// <summary>
         /// 属性的值
         /// </summary>
-        internal string Value { get => value; }
+        public string Value { get => value; }
 
         /// <summary>
         /// 属性的名称
         /// </summary>
-        internal string PropName { get => propName; }
+        public string PropName { get => propName; }
 
         /// <summary>
         /// 确认键

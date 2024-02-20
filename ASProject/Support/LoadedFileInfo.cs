@@ -11,7 +11,7 @@ namespace AlgodooStudio.ASProject.Support
     /// <summary>
     /// 已加载文件信息
     /// </summary>
-    internal class LoadedFileInfo
+    public class LoadedFileInfo
     {
         public LoadedFileInfo(ArchiveFile phn)
         {

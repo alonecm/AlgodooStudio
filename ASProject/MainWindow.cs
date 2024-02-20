@@ -74,7 +74,7 @@ namespace AlgodooStudio.ASProject
             }
         }
 
-        public MainWindow()
+        internal MainWindow()
         {
             InitializeComponent();
             //初始化固定窗口
@@ -273,7 +273,7 @@ namespace AlgodooStudio.ASProject
         private void ShowPlugins()
         {
             //已启用插件存在则允许显示
-            if (Loader.EnabledPlugins.Count>0)
+            if (Loader.LoadedPlugins.Count>0)
             {
                 this.插件ToolStripMenuItem.Visible = true;
             }
@@ -567,8 +567,10 @@ namespace AlgodooStudio.ASProject
         }
         private void 插件管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //TODO: 打开插件管理
-            throw new NotImplementedException("未实现");
+            using (PluginManageDialog pmd = new PluginManageDialog())
+            {
+                pmd.ShowDialog();
+            }
         }
         private void 设置ToolStripMenuItem_Click(object sender, EventArgs e)
         {

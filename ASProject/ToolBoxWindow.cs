@@ -6,11 +6,11 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace AlgodooStudio.ASProject
 {
-    public partial class ToolBoxWindow : DockContent
+    internal partial class ToolBoxWindow : DockContent
     {
         private Dictionary<string, ToolBase> tools;
 
-        public ToolBoxWindow()
+        internal ToolBoxWindow()
         {
             InitializeComponent();
 
