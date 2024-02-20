@@ -299,13 +299,12 @@ namespace RuFramework.MRU
                 else
                 {
                     MessageBox.Show("Error: Bad finename");
-
                 }
             }
             catch (Exception ex)
             {
                 Save(appSettings, mruDataPath);
-                MessageBox.Show(ex.Message + " but is new created!");
+                //MessageBox.Show(ex.Message + " but is new created!");
             }
             return appSettings;
         }

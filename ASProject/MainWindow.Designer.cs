@@ -289,6 +289,7 @@ namespace AlgodooStudio.ASProject
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(186, 6);
+            this.toolStripSeparator2.Visible = false;
             // 
             // 保存ToolStripMenuItem
             // 
@@ -296,6 +297,7 @@ namespace AlgodooStudio.ASProject
             this.保存ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.保存ToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.保存ToolStripMenuItem.Text = "保存";
+            this.保存ToolStripMenuItem.Visible = false;
             this.保存ToolStripMenuItem.Click += new System.EventHandler(this.保存ToolStripMenuItem_Click);
             // 
             // 另存为ToolStripMenuItem
@@ -305,6 +307,7 @@ namespace AlgodooStudio.ASProject
             | System.Windows.Forms.Keys.S)));
             this.另存为ToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.另存为ToolStripMenuItem.Text = "另存为...";
+            this.另存为ToolStripMenuItem.Visible = false;
             this.另存为ToolStripMenuItem.Click += new System.EventHandler(this.另存为ToolStripMenuItem_Click);
             // 
             // 全部保存ToolStripMenuItem
@@ -312,6 +315,7 @@ namespace AlgodooStudio.ASProject
             this.全部保存ToolStripMenuItem.Name = "全部保存ToolStripMenuItem";
             this.全部保存ToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.全部保存ToolStripMenuItem.Text = "全部保存";
+            this.全部保存ToolStripMenuItem.Visible = false;
             this.全部保存ToolStripMenuItem.Click += new System.EventHandler(this.全部保存ToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
