@@ -6,22 +6,22 @@ namespace AlgodooStudio.ASProject.Dialogs
 {
     public partial class TextGetDialog : Form
     {
-        private bool isExtraMode = false;
+        private bool isGlobalMode = false;
         private string inputText;
 
         /// <summary>
         /// 是否启用额外模式（启用就是开启全局模式的复选框）
         /// </summary>
-        public bool IsExtraMode
+        public bool IsGlobalMode
         {
             get
             {
-                return isExtraMode;
+                return isGlobalMode;
             }
             set
             {
-                isExtraMode = value;
-                if (isExtraMode)
+                isGlobalMode = value;
+                if (isGlobalMode)
                 {
                     allGet.Visible = true;
                 }
@@ -29,17 +29,6 @@ namespace AlgodooStudio.ASProject.Dialogs
                 {
                     allGet.Visible = false;
                 }
-            }
-        }
-
-        /// <summary>
-        /// 是否启用全局获取模式（修改文件名的时候反馈扩展名也一起修改）
-        /// </summary>
-        public bool IsGetAll
-        {
-            get
-            {
-                return allGet.Checked;
             }
         }
 
@@ -69,6 +58,11 @@ namespace AlgodooStudio.ASProject.Dialogs
         /// 窗口标题
         /// </summary>
         public string Title { get => Text; set => Text = value; }
+
+        /// <summary>
+        /// 当前是否是全局
+        /// </summary>
+        public bool IsGlobal { get => allGet.Checked; }
 
         public TextGetDialog()
         {
@@ -135,6 +129,11 @@ namespace AlgodooStudio.ASProject.Dialogs
                 }
             }
             return isFilename;
+        }
+
+        private void TextGetDialog_Shown(object sender, EventArgs e)
+        {
+            input.Focus();
         }
     }
 }

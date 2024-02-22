@@ -25,14 +25,5 @@ namespace AlgodooStudio.ASProject.Support
         /// </summary>
         internal string StudioPath { get; } = ".\\";
 
-
-        /// <summary>
-        /// 操作是否为剪切
-        /// </summary>
-        internal bool IsCutting { get; set; }
-        /// <summary>
-        /// 剪贴操作完成
-        /// </summary>
-        internal bool IsCopyFinished { get; set; }
     }
 }

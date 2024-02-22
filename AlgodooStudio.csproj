@@ -97,6 +97,7 @@
       <HintPath>packages\AvalonEdit.6.2.0.78\lib\net462\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="PhunSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\类库\PhunSharp\PhunSharp\bin\Debug\PhunSharp.dll</HintPath>
@@ -129,9 +130,6 @@
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
-    <Reference Include="Zero.Core">
-      <HintPath>..\..\类库\ZeroDev\Zero.Core\bin\Debug\Zero.Core.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ASProject\Dialogs\ColorPicker.cs">

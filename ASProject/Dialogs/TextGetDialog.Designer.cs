@@ -80,6 +80,7 @@ namespace AlgodooStudio.ASProject.Dialogs
             this.allGet.TabIndex = 4;
             this.allGet.Text = "全局修改";
             this.allGet.UseVisualStyleBackColor = true;
+            this.allGet.Visible = false;
             // 
             // TextGetDialog
             // 
@@ -101,6 +102,7 @@ namespace AlgodooStudio.ASProject.Dialogs
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "TextGetDialog";
+            this.Shown += new System.EventHandler(this.TextGetDialog_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
