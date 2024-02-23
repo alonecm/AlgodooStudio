@@ -44,6 +44,7 @@
             this.countNumber = new System.Windows.Forms.Button();
             this.tip = new System.Windows.Forms.ToolTip(this.components);
             this.search = new System.Windows.Forms.Button();
+            this.b_close = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // searchBox
@@ -183,12 +184,25 @@
             this.search.UseVisualStyleBackColor = true;
             this.search.Click += new System.EventHandler(this.search_Click);
             // 
+            // b_close
+            // 
+            this.b_close.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.b_close.Location = new System.Drawing.Point(100, 90);
+            this.b_close.Name = "b_close";
+            this.b_close.Size = new System.Drawing.Size(94, 21);
+            this.b_close.TabIndex = 12;
+            this.b_close.Text = "关闭";
+            this.b_close.UseVisualStyleBackColor = true;
+            this.b_close.Click += new System.EventHandler(this.b_close_Click);
+            // 
             // ReplaceWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.b_close;
             this.ClientSize = new System.Drawing.Size(406, 122);
             this.Controls.Add(this.search);
+            this.Controls.Add(this.b_close);
             this.Controls.Add(this.countNumber);
             this.Controls.Add(this.maxCount);
             this.Controls.Add(this.IndexDisplay);
@@ -233,5 +247,6 @@
         private System.Windows.Forms.Button countNumber;
         private System.Windows.Forms.ToolTip tip;
         private System.Windows.Forms.Button search;
+        private System.Windows.Forms.Button b_close;
     }
 }

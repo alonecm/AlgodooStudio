@@ -50,6 +50,7 @@
             this.version,
             this.author});
             this.list_plugins.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.list_plugins.FullRowSelect = true;
             this.list_plugins.GridLines = true;
             this.list_plugins.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.list_plugins.HideSelection = false;

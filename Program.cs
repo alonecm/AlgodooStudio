@@ -1,10 +1,14 @@
 ﻿using AlgodooStudio.ASProject;
 using AlgodooStudio.ASProject.Support;
 using AlgodooStudio.PluginSystem;
+using Dex.Common;
+using Dex.IO;
 using Dex.IO.Config;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
@@ -22,18 +26,19 @@ namespace AlgodooStudio
         /// 当前设置文件的所在路径
         /// </summary>
         private const string settingPath = ".\\settings.ini";
-
+        /// <summary>
+        /// 主窗口
+        /// </summary>
         private static MainWindow mainWindow;
-
         /// <summary>
         /// 软件设置
         /// </summary>
         private static Settings setting = new Settings();
+
         /// <summary>
         /// 设定信息
         /// </summary>
         public static Settings Setting => setting;
-
         /// <summary>
         /// 状态栏消息
         /// </summary>
@@ -42,6 +47,7 @@ namespace AlgodooStudio
             get => mainWindow.StatusMessage;
             set => mainWindow.StatusMessage = value;
         }
+
 
         /// <summary>
         /// 读取设置
@@ -62,7 +68,6 @@ namespace AlgodooStudio
             //假设路径发生了变动设置则需要再保存一次，没变动就保存一次以防万一
             SaveSetting();
         }
-
         /// <summary>
         /// 保存设置
         /// </summary>
@@ -71,7 +76,6 @@ namespace AlgodooStudio
             //直接写入
             new SimpleConfig(setting).Write(settingPath, Encoding.Default);
         }
-
         /// <summary>
         /// 设定可编辑属性对象的对象
         /// </summary>
@@ -80,7 +84,6 @@ namespace AlgodooStudio
         {
             mainWindow.SetPropertyEditObject(obj);
         }
-
         /// <summary>
         /// 设定可编辑属性对象的对象
         /// </summary>
@@ -89,7 +92,6 @@ namespace AlgodooStudio
         {
             mainWindow.SetPropertyEditObject(obj);
         }
-
         /// <summary>
         /// 检查路径信息
         /// </summary>
@@ -113,7 +115,6 @@ namespace AlgodooStudio
                 }
             }
         }
-
         /// <summary>
         /// 加载插件
         /// </summary>
@@ -133,6 +134,18 @@ namespace AlgodooStudio
             //跟随记录启用插件
             Loader.EnablePlugins();
         }
+        /// <summary>
+        /// 生成代码片段文件夹
+        /// </summary>
+        private static void CreateClipsFolder()
+        {
+            //如果文件夹不存在则创建文件夹
+            if (!Directory.Exists(".\\Clips"))
+            {
+                Directory.CreateDirectory(".\\Clips");
+            }
+        }
+        
 
         [STAThread]
         private static void Main()
@@ -144,6 +157,8 @@ namespace AlgodooStudio
             ReadSetting();
             //加载插件
             LoadPlugins();
+            //生成代码片段文件夹
+            CreateClipsFolder();
             //启动工作室
             Application.Run(mainWindow = new MainWindow());
         }

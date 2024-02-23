@@ -1,7 +1,9 @@
 ﻿using AlgodooStudio.ASProject;
 using AlgodooStudio.ASProject.Support;
+using Dex.IO;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -17,11 +19,14 @@ namespace AlgodooStudio.ASProject.Dialogs
         /// <summary>
         /// 合并后的脚本代码
         /// </summary>
-        public string Content { get => scriptContent; }
+        public string CombineContent { get => scriptContent; }
 
         public QuickInsertDialog()
         {
             InitializeComponent();
+
+            //加载片段路径到列表
+            RefreshClipsList();
         }
 
         #region 项目操作
@@ -403,7 +408,7 @@ namespace AlgodooStudio.ASProject.Dialogs
         private void OutText()
         {
             //检查是否以实体输出
-            if (tabControl1.SelectedTab.Text == "实体")
+            if (tabControl.SelectedTab.Text == "实体")
             {
                 //检查是否以几何实体形式输出
                 if (geomEntitySelect.Checked)
@@ -469,7 +474,7 @@ namespace AlgodooStudio.ASProject.Dialogs
                     }
                 }
             }
-            else
+            else if (tabControl.SelectedTab.Text == "脚本")
             {
                 //检查名称是否合理
                 if (IsNameValid(scriptName.Text))
@@ -497,6 +502,12 @@ namespace AlgodooStudio.ASProject.Dialogs
                 {
                     MBox.ShowInfo("请输入正确的名称！");
                 }
+            }
+            //其他
+            else
+            {
+                //片段
+                DialogResult = DialogResult.OK;
             }
         }
 
@@ -601,5 +612,116 @@ namespace AlgodooStudio.ASProject.Dialogs
         }
 
         #endregion 脚本生成控制
+
+        #region 片段处理
+
+        /// <summary>
+        /// 刷新片段列表
+        /// </summary>
+        private void RefreshClipsList()
+        {
+            list_clip.BeginUpdate();
+            list_clip.Items.Clear();
+            var clips = new DirectoryInfo(".\\Clips").GetFiles();
+            foreach (var clip in clips)
+            {
+                var c = SimpleSerializer.GetObjectFromBinaryFile<ScriptClip>(clip.FullName);
+                list_clip.Items.Add(new ListViewItem(new string[] { Path.GetFileNameWithoutExtension(clip.FullName), c.Description }) { Tag = c });
+            }
+            list_clip.EndUpdate();
+        }
+
+        /// <summary>
+        /// 修改片段
+        /// </summary>
+        private void ChangeClip()
+        {
+            if (list_clip.SelectedItems.Count > 0)
+            {
+                using (ClipEditDialog ced = new ClipEditDialog($".\\Clips\\{list_clip.SelectedItems[0].SubItems[0].Text}.clip"))
+                {
+                    ced.IsEdit = true;
+                    if (ced.ShowDialog() == DialogResult.OK)
+                    {
+                        //写入实际文件
+                        RefreshClipsList();
+                    }
+                }
+            }
+        }
+
+        private void b_addClip_Click(object sender, EventArgs e)
+        {
+            using (TextGetDialog tgd =new TextGetDialog())
+            {
+                tgd.Title = "创建片段";
+                tgd.InputText = "NewClip";
+                tgd.IsNameValidCheck = true;
+                //一直加载
+                while (tgd.ShowDialog() == DialogResult.OK)
+                {
+                    //确保片段不存在
+                    if (!File.Exists($".\\Clips\\{tgd.InputText}.clip"))
+                    {
+                        using (ClipEditDialog ced = new ClipEditDialog($".\\Clips\\{tgd.InputText}.clip"))
+                        {
+                            if (ced.ShowDialog() == DialogResult.OK)
+                            {
+                                RefreshClipsList();
+                            }
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        MBox.Showlog($"片段{tgd.InputText}已存在！");
+                        tgd.InputText = tgd.InputText;//用此方式重新选中那些文字
+                    }
+                }
+            }
+        }
+
+        private void b_removeClip_Click(object sender, EventArgs e)
+        {
+            if (list_clip.SelectedItems.Count > 0)
+            {
+                if (File.Exists($".\\Clips\\{list_clip.SelectedItems[0].SubItems[0].Text}.clip"))
+                {
+                    File.Delete($".\\Clips\\{list_clip.SelectedItems[0].SubItems[0].Text}.clip");
+                }
+                list_clip.Items.RemoveAt(list_clip.SelectedItems[0].Index);
+            }
+        }
+
+        private void list_clip_ItemActivate(object sender, EventArgs e)
+        {
+            ChangeClip();
+        }
+        
+        private void b_change_Click(object sender, EventArgs e)
+        {
+            ChangeClip();
+        }
+
+        private void list_clip_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (e.IsSelected)
+            {
+                var item = e.Item.Tag as ScriptClip;
+                scriptContent = item.Script;
+                l_clipName.Text = e.Item.SubItems[0].Text;
+                b_change.Enabled = true;
+                b_removeClip.Enabled = true;
+            }
+            else
+            {
+                scriptContent = string.Empty;
+                l_clipName.Text = "未选定";
+                b_change.Enabled = false;
+                b_removeClip.Enabled = false;
+            }
+        }
+
+        #endregion
     }
 }

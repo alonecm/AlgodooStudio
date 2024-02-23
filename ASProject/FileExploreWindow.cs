@@ -41,7 +41,7 @@ namespace AlgodooStudio.ASProject
         /// <summary>
         /// 用来展示的文件扩展名
         /// </summary>
-        private string extension = "*.png|*.cfg|*.thm|*.phz|*.phn";
+        private string extension = "*.png|*.cfg|*.thm|*.phz|*.phn|*.clip";
         /// <summary>
         /// Phun存档缓冲，用于控制输出与写入情况
         /// </summary>
@@ -203,8 +203,13 @@ namespace AlgodooStudio.ASProject
                         otherTextEditor.FilePath = path;
                         otherTextEditor.Show(this.DockPanel, DockState.Document);
                         break;
+                    case ".clip":
+                        using (ClipEditDialog ced = new ClipEditDialog(path))
+                        {
+                            ced.ShowDialog();
+                        }
+                        break;
                     default:
-                    case ".png":
                         Process.Start("explorer.exe",path);
                         break;
                 }

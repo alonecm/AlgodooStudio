@@ -371,5 +371,15 @@ namespace AlgodooStudio.ASProject.Dialogs
                 tip.Show("请输入要查找的文本", this.searchBox);
             }
         }
+
+        /// <summary>
+        /// 关闭
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void b_close_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
     }
 }

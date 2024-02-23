@@ -376,7 +376,7 @@ namespace AlgodooStudio.ASProject
             {
                 if (dialog.ShowDialog() == DialogResult.OK)
                 {
-                    this.Insert(dialog.Content);
+                    this.Insert(dialog.CombineContent);
                 }
             }
         }
@@ -591,6 +591,48 @@ namespace AlgodooStudio.ASProject
             else
             {
                 _editor.Document.Insert(pos, str);
+            }
+        }
+
+        private void rightMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (Clipboard.ContainsText())
+            {
+                粘贴ToolStripMenuItem.Visible = true;
+            }
+
+            将选定文字保存为片段ToolStripMenuItem.Visible =
+            toolStripSeparator5.Visible =
+            复制ToolStripMenuItem.Visible =
+            剪切ToolStripMenuItem.Visible = (_editor.SelectionLength != 0);
+        }
+
+        private void 将选定文字保存为片段ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (TextGetDialog tgd = new TextGetDialog())
+            {
+                tgd.Title = "创建片段";
+                tgd.InputText = "NewClip";
+                tgd.IsNameValidCheck = true;
+                //一直加载
+                while (tgd.ShowDialog() == DialogResult.OK)
+                {
+                    //确保片段不存在
+                    if (!File.Exists($".\\Clips\\{tgd.InputText}.clip"))
+                    {
+                        using (ClipEditDialog ced = new ClipEditDialog($".\\Clips\\{tgd.InputText}.clip"))
+                        {
+                            ced.InitialText = _editor.SelectedText;
+                            ced.ShowDialog();
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        MBox.Showlog($"片段{tgd.InputText}已存在！");
+                        tgd.InputText = tgd.InputText;//用此方式重新选中那些文字
+                    }
+                }
             }
         }
     }

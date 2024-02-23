@@ -132,6 +132,12 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ASProject\Dialogs\ClipEditDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ASProject\Dialogs\ClipEditDialog.Designer.cs">
+      <DependentUpon>ClipEditDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ASProject\Dialogs\ColorPicker.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,6 +161,7 @@
     <Compile Include="ASProject\Interface\ISaveable.cs" />
     <Compile Include="ASProject\Interface\ISearchable.cs" />
     <Compile Include="ASProject\LogWriter.cs" />
+    <Compile Include="ASProject\Support\ScriptClip.cs" />
     <Compile Include="PluginSystem\Loader.cs" />
     <Compile Include="ASProject\MainWindow.cs">
       <SubType>Form</SubType>
@@ -236,6 +243,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ASProject\Dialogs\ClipEditDialog.resx">
+      <DependentUpon>ClipEditDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ASProject\Dialogs\ColorPicker.resx">
       <DependentUpon>ColorPicker.cs</DependentUpon>
     </EmbeddedResource>

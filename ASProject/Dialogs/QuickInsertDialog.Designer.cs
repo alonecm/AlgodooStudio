@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabControl = new System.Windows.Forms.TabControl();
             this.entityPage = new System.Windows.Forms.TabPage();
             this.nongeomEntitySelect = new System.Windows.Forms.RadioButton();
             this.geomEntitySelect = new System.Windows.Forms.RadioButton();
@@ -86,10 +86,19 @@
             this.label10 = new System.Windows.Forms.Label();
             this.typeSelector4 = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
+            this.otherPage = new System.Windows.Forms.TabPage();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.l_clipName = new System.Windows.Forms.Label();
+            this.b_change = new System.Windows.Forms.Button();
+            this.b_removeClip = new System.Windows.Forms.Button();
+            this.b_addClip = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.cancel = new System.Windows.Forms.Button();
             this.ok = new System.Windows.Forms.Button();
-            this.tabControl1.SuspendLayout();
+            this.list_clip = new System.Windows.Forms.ListView();
+            this.name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.description = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.tabControl.SuspendLayout();
             this.entityPage.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -102,22 +111,25 @@
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paramNumber)).BeginInit();
             this.groupBox6.SuspendLayout();
+            this.otherPage.SuspendLayout();
+            this.groupBox9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tabControl1
+            // tabControl
             // 
-            this.tabControl1.Controls.Add(this.entityPage);
-            this.tabControl1.Controls.Add(this.scriptPage);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(333, 474);
-            this.tabControl1.TabIndex = 1;
+            this.tabControl.Controls.Add(this.entityPage);
+            this.tabControl.Controls.Add(this.scriptPage);
+            this.tabControl.Controls.Add(this.otherPage);
+            this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl.Location = new System.Drawing.Point(0, 0);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(333, 465);
+            this.tabControl.TabIndex = 1;
             // 
             // entityPage
             // 
@@ -128,7 +140,7 @@
             this.entityPage.Location = new System.Drawing.Point(4, 22);
             this.entityPage.Name = "entityPage";
             this.entityPage.Padding = new System.Windows.Forms.Padding(3);
-            this.entityPage.Size = new System.Drawing.Size(325, 448);
+            this.entityPage.Size = new System.Drawing.Size(325, 434);
             this.entityPage.TabIndex = 0;
             this.entityPage.Text = "实体";
             this.entityPage.UseVisualStyleBackColor = true;
@@ -525,7 +537,7 @@
             this.scriptPage.Location = new System.Drawing.Point(4, 22);
             this.scriptPage.Name = "scriptPage";
             this.scriptPage.Padding = new System.Windows.Forms.Padding(3);
-            this.scriptPage.Size = new System.Drawing.Size(325, 448);
+            this.scriptPage.Size = new System.Drawing.Size(325, 434);
             this.scriptPage.TabIndex = 1;
             this.scriptPage.Text = "脚本";
             this.scriptPage.UseVisualStyleBackColor = true;
@@ -769,6 +781,72 @@
             this.label9.TabIndex = 0;
             this.label9.Text = "类型";
             // 
+            // otherPage
+            // 
+            this.otherPage.Controls.Add(this.groupBox9);
+            this.otherPage.Location = new System.Drawing.Point(4, 22);
+            this.otherPage.Name = "otherPage";
+            this.otherPage.Padding = new System.Windows.Forms.Padding(3);
+            this.otherPage.Size = new System.Drawing.Size(325, 439);
+            this.otherPage.TabIndex = 2;
+            this.otherPage.Text = "其他";
+            this.otherPage.UseVisualStyleBackColor = true;
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.list_clip);
+            this.groupBox9.Controls.Add(this.l_clipName);
+            this.groupBox9.Controls.Add(this.b_change);
+            this.groupBox9.Controls.Add(this.b_removeClip);
+            this.groupBox9.Controls.Add(this.b_addClip);
+            this.groupBox9.Location = new System.Drawing.Point(15, 16);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(295, 415);
+            this.groupBox9.TabIndex = 1;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "代码片段";
+            // 
+            // l_clipName
+            // 
+            this.l_clipName.Location = new System.Drawing.Point(226, 265);
+            this.l_clipName.Name = "l_clipName";
+            this.l_clipName.Size = new System.Drawing.Size(63, 144);
+            this.l_clipName.TabIndex = 2;
+            this.l_clipName.Text = "未选定";
+            this.l_clipName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // b_change
+            // 
+            this.b_change.Enabled = false;
+            this.b_change.Location = new System.Drawing.Point(226, 96);
+            this.b_change.Name = "b_change";
+            this.b_change.Size = new System.Drawing.Size(63, 60);
+            this.b_change.TabIndex = 0;
+            this.b_change.Text = "修改片段";
+            this.b_change.UseVisualStyleBackColor = true;
+            this.b_change.Click += new System.EventHandler(this.b_change_Click);
+            // 
+            // b_removeClip
+            // 
+            this.b_removeClip.Enabled = false;
+            this.b_removeClip.Location = new System.Drawing.Point(226, 162);
+            this.b_removeClip.Name = "b_removeClip";
+            this.b_removeClip.Size = new System.Drawing.Size(63, 60);
+            this.b_removeClip.TabIndex = 0;
+            this.b_removeClip.Text = "删除片段";
+            this.b_removeClip.UseVisualStyleBackColor = true;
+            this.b_removeClip.Click += new System.EventHandler(this.b_removeClip_Click);
+            // 
+            // b_addClip
+            // 
+            this.b_addClip.Location = new System.Drawing.Point(226, 30);
+            this.b_addClip.Name = "b_addClip";
+            this.b_addClip.Size = new System.Drawing.Size(63, 60);
+            this.b_addClip.TabIndex = 0;
+            this.b_addClip.Text = "添加片段";
+            this.b_addClip.UseVisualStyleBackColor = true;
+            this.b_addClip.Click += new System.EventHandler(this.b_addClip_Click);
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -780,21 +858,21 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.tabControl1);
+            this.splitContainer1.Panel1.Controls.Add(this.tabControl);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.cancel);
             this.splitContainer1.Panel2.Controls.Add(this.ok);
-            this.splitContainer1.Size = new System.Drawing.Size(333, 508);
-            this.splitContainer1.SplitterDistance = 474;
+            this.splitContainer1.Size = new System.Drawing.Size(333, 498);
+            this.splitContainer1.SplitterDistance = 465;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 2;
             // 
             // cancel
             // 
             this.cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancel.Location = new System.Drawing.Point(237, 5);
+            this.cancel.Location = new System.Drawing.Point(237, 2);
             this.cancel.Name = "cancel";
             this.cancel.Size = new System.Drawing.Size(76, 27);
             this.cancel.TabIndex = 3;
@@ -803,7 +881,7 @@
             // 
             // ok
             // 
-            this.ok.Location = new System.Drawing.Point(155, 5);
+            this.ok.Location = new System.Drawing.Point(155, 2);
             this.ok.Name = "ok";
             this.ok.Size = new System.Drawing.Size(76, 27);
             this.ok.TabIndex = 2;
@@ -811,13 +889,42 @@
             this.ok.UseVisualStyleBackColor = true;
             this.ok.Click += new System.EventHandler(this.ok_Click);
             // 
+            // list_clip
+            // 
+            this.list_clip.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.name,
+            this.description});
+            this.list_clip.FullRowSelect = true;
+            this.list_clip.GridLines = true;
+            this.list_clip.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.list_clip.HideSelection = false;
+            this.list_clip.Location = new System.Drawing.Point(7, 20);
+            this.list_clip.MultiSelect = false;
+            this.list_clip.Name = "list_clip";
+            this.list_clip.Size = new System.Drawing.Size(213, 389);
+            this.list_clip.TabIndex = 3;
+            this.list_clip.UseCompatibleStateImageBehavior = false;
+            this.list_clip.View = System.Windows.Forms.View.Details;
+            this.list_clip.ItemActivate += new System.EventHandler(this.list_clip_ItemActivate);
+            this.list_clip.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.list_clip_ItemSelectionChanged);
+            // 
+            // name
+            // 
+            this.name.Text = "名称";
+            // 
+            // description
+            // 
+            this.description.Text = "描述";
+            this.description.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.description.Width = 145;
+            // 
             // QuickInsertDialog
             // 
             this.AcceptButton = this.ok;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancel;
-            this.ClientSize = new System.Drawing.Size(333, 508);
+            this.ClientSize = new System.Drawing.Size(333, 498);
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -827,7 +934,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "快速输入";
-            this.tabControl1.ResumeLayout(false);
+            this.tabControl.ResumeLayout(false);
             this.entityPage.ResumeLayout(false);
             this.entityPage.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -848,6 +955,8 @@
             this.groupBox7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.paramNumber)).EndInit();
             this.groupBox6.ResumeLayout(false);
+            this.otherPage.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -858,7 +967,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage entityPage;
         private System.Windows.Forms.RadioButton nongeomEntitySelect;
         private System.Windows.Forms.RadioButton geomEntitySelect;
@@ -919,5 +1028,14 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button cancel;
         private System.Windows.Forms.Button ok;
+        private System.Windows.Forms.TabPage otherPage;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.Button b_addClip;
+        private System.Windows.Forms.Button b_removeClip;
+        private System.Windows.Forms.Label l_clipName;
+        private System.Windows.Forms.Button b_change;
+        private System.Windows.Forms.ListView list_clip;
+        private System.Windows.Forms.ColumnHeader name;
+        private System.Windows.Forms.ColumnHeader description;
     }
 }
