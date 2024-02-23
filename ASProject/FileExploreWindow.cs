@@ -143,7 +143,6 @@ namespace AlgodooStudio.ASProject
                 currentFolder = dirPath;
                 //清空列表
                 fViewer.Clear();
-                //TODO:不能在空目录中右键
                 var fsm = new FileSystemManager(new DirectoryInfo(dirPath));
                 //加载子文件夹
                 var dirs = fsm.GetChildDirectories(FileAttributes.System|FileAttributes.Hidden);
