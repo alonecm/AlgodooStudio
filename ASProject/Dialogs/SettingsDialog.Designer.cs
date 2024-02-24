@@ -57,7 +57,8 @@
             // sp
             // 
             this.sp.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sp.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.sp.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
+            this.sp.IsSplitterFixed = true;
             this.sp.Location = new System.Drawing.Point(0, 0);
             this.sp.Name = "sp";
             this.sp.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -223,6 +224,7 @@
             this.AcceptButton = this.ok;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.CancelButton = this.cancel;
             this.ClientSize = new System.Drawing.Size(365, 267);
             this.Controls.Add(this.sp);

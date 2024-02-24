@@ -88,6 +88,9 @@
             this.label9 = new System.Windows.Forms.Label();
             this.otherPage = new System.Windows.Forms.TabPage();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.list_clip = new System.Windows.Forms.ListView();
+            this.name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.description = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.l_clipName = new System.Windows.Forms.Label();
             this.b_change = new System.Windows.Forms.Button();
             this.b_removeClip = new System.Windows.Forms.Button();
@@ -95,9 +98,6 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.cancel = new System.Windows.Forms.Button();
             this.ok = new System.Windows.Forms.Button();
-            this.list_clip = new System.Windows.Forms.ListView();
-            this.name = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.description = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabControl.SuspendLayout();
             this.entityPage.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -128,7 +128,7 @@
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(333, 465);
+            this.tabControl.Size = new System.Drawing.Size(333, 468);
             this.tabControl.TabIndex = 1;
             // 
             // entityPage
@@ -140,7 +140,7 @@
             this.entityPage.Location = new System.Drawing.Point(4, 22);
             this.entityPage.Name = "entityPage";
             this.entityPage.Padding = new System.Windows.Forms.Padding(3);
-            this.entityPage.Size = new System.Drawing.Size(325, 434);
+            this.entityPage.Size = new System.Drawing.Size(325, 442);
             this.entityPage.TabIndex = 0;
             this.entityPage.Text = "实体";
             this.entityPage.UseVisualStyleBackColor = true;
@@ -537,7 +537,7 @@
             this.scriptPage.Location = new System.Drawing.Point(4, 22);
             this.scriptPage.Name = "scriptPage";
             this.scriptPage.Padding = new System.Windows.Forms.Padding(3);
-            this.scriptPage.Size = new System.Drawing.Size(325, 434);
+            this.scriptPage.Size = new System.Drawing.Size(325, 439);
             this.scriptPage.TabIndex = 1;
             this.scriptPage.Text = "脚本";
             this.scriptPage.UseVisualStyleBackColor = true;
@@ -806,6 +806,35 @@
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "代码片段";
             // 
+            // list_clip
+            // 
+            this.list_clip.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.name,
+            this.description});
+            this.list_clip.FullRowSelect = true;
+            this.list_clip.GridLines = true;
+            this.list_clip.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.list_clip.HideSelection = false;
+            this.list_clip.Location = new System.Drawing.Point(7, 20);
+            this.list_clip.MultiSelect = false;
+            this.list_clip.Name = "list_clip";
+            this.list_clip.Size = new System.Drawing.Size(213, 389);
+            this.list_clip.TabIndex = 3;
+            this.list_clip.UseCompatibleStateImageBehavior = false;
+            this.list_clip.View = System.Windows.Forms.View.Details;
+            this.list_clip.ItemActivate += new System.EventHandler(this.list_clip_ItemActivate);
+            this.list_clip.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.list_clip_ItemSelectionChanged);
+            // 
+            // name
+            // 
+            this.name.Text = "名称";
+            // 
+            // description
+            // 
+            this.description.Text = "描述";
+            this.description.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.description.Width = 145;
+            // 
             // l_clipName
             // 
             this.l_clipName.Location = new System.Drawing.Point(226, 265);
@@ -865,7 +894,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.cancel);
             this.splitContainer1.Panel2.Controls.Add(this.ok);
             this.splitContainer1.Size = new System.Drawing.Size(333, 498);
-            this.splitContainer1.SplitterDistance = 465;
+            this.splitContainer1.SplitterDistance = 468;
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 2;
             // 
@@ -888,35 +917,6 @@
             this.ok.Text = "确认";
             this.ok.UseVisualStyleBackColor = true;
             this.ok.Click += new System.EventHandler(this.ok_Click);
-            // 
-            // list_clip
-            // 
-            this.list_clip.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.name,
-            this.description});
-            this.list_clip.FullRowSelect = true;
-            this.list_clip.GridLines = true;
-            this.list_clip.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.list_clip.HideSelection = false;
-            this.list_clip.Location = new System.Drawing.Point(7, 20);
-            this.list_clip.MultiSelect = false;
-            this.list_clip.Name = "list_clip";
-            this.list_clip.Size = new System.Drawing.Size(213, 389);
-            this.list_clip.TabIndex = 3;
-            this.list_clip.UseCompatibleStateImageBehavior = false;
-            this.list_clip.View = System.Windows.Forms.View.Details;
-            this.list_clip.ItemActivate += new System.EventHandler(this.list_clip_ItemActivate);
-            this.list_clip.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.list_clip_ItemSelectionChanged);
-            // 
-            // name
-            // 
-            this.name.Text = "名称";
-            // 
-            // description
-            // 
-            this.description.Text = "描述";
-            this.description.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.description.Width = 145;
             // 
             // QuickInsertDialog
             // 

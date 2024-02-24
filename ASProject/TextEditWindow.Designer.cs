@@ -30,6 +30,7 @@ namespace AlgodooStudio.ASProject
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TextEditWindow));
             this.sp = new System.Windows.Forms.SplitContainer();
             this.elementHost = new System.Windows.Forms.Integration.ElementHost();
             this.statusBar = new System.Windows.Forms.ToolStrip();
@@ -42,13 +43,13 @@ namespace AlgodooStudio.ASProject
             this.selectlength = new System.Windows.Forms.ToolStripLabel();
             this.scale = new System.Windows.Forms.ToolStripLabel();
             this.rightMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.将选定文字保存为片段ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.复制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.剪切ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.粘贴ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.快速输入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.将选定文字保存为片段ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.sp)).BeginInit();
             this.sp.Panel1.SuspendLayout();
             this.sp.Panel2.SuspendLayout();
@@ -92,6 +93,7 @@ namespace AlgodooStudio.ASProject
             // 
             this.statusBar.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.statusBar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.statusBar.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.col,
             this.toolStripSeparator1,
@@ -164,6 +166,7 @@ namespace AlgodooStudio.ASProject
             // 
             // rightMenu
             // 
+            this.rightMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.rightMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.将选定文字保存为片段ToolStripMenuItem,
             this.toolStripSeparator5,
@@ -173,8 +176,20 @@ namespace AlgodooStudio.ASProject
             this.toolStripSeparator3,
             this.快速输入ToolStripMenuItem});
             this.rightMenu.Name = "rightMenu";
-            this.rightMenu.Size = new System.Drawing.Size(206, 148);
+            this.rightMenu.Size = new System.Drawing.Size(206, 126);
             this.rightMenu.Opening += new System.ComponentModel.CancelEventHandler(this.rightMenu_Opening);
+            // 
+            // 将选定文字保存为片段ToolStripMenuItem
+            // 
+            this.将选定文字保存为片段ToolStripMenuItem.Name = "将选定文字保存为片段ToolStripMenuItem";
+            this.将选定文字保存为片段ToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.将选定文字保存为片段ToolStripMenuItem.Text = "将选定文字保存为片段...";
+            this.将选定文字保存为片段ToolStripMenuItem.Click += new System.EventHandler(this.将选定文字保存为片段ToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(202, 6);
             // 
             // 复制ToolStripMenuItem
             // 
@@ -212,18 +227,6 @@ namespace AlgodooStudio.ASProject
             this.快速输入ToolStripMenuItem.Text = "快速输入...";
             this.快速输入ToolStripMenuItem.Click += new System.EventHandler(this.快速输入ToolStripMenuItem_Click);
             // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(202, 6);
-            // 
-            // 将选定文字保存为片段ToolStripMenuItem
-            // 
-            this.将选定文字保存为片段ToolStripMenuItem.Name = "将选定文字保存为片段ToolStripMenuItem";
-            this.将选定文字保存为片段ToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
-            this.将选定文字保存为片段ToolStripMenuItem.Text = "将选定文字保存为片段...";
-            this.将选定文字保存为片段ToolStripMenuItem.Click += new System.EventHandler(this.将选定文字保存为片段ToolStripMenuItem_Click);
-            // 
             // TextEditWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -231,6 +234,7 @@ namespace AlgodooStudio.ASProject
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ContextMenuStrip = this.rightMenu;
             this.Controls.Add(this.sp);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TextEditWindow";
             this.Text = "文本编辑器";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ScriptEditor_FormClosing);

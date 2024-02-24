@@ -28,8 +28,11 @@ namespace AlgodooStudio.ASProject
         /// <param name="obj"></param>
         public void SetEdit(object obj)
         {
-            this.propertyGrid.SelectedObject = obj;
-            this.propertyGrid.Refresh();
+            if (!this.IsDisposed)
+            {
+                this.propertyGrid.SelectedObject = obj;
+                this.propertyGrid.Refresh();
+            }
         }
         /// <summary>
         /// 设定被编辑对象们的共有属性
@@ -37,8 +40,11 @@ namespace AlgodooStudio.ASProject
         /// <param name="obj"></param>
         public void SetEdit(object[] objs)
         {
-            this.propertyGrid.SelectedObjects = objs;
-            this.propertyGrid.Refresh();
+            if (!this.IsDisposed)
+            {
+                this.propertyGrid.SelectedObjects = objs;
+                this.propertyGrid.Refresh();
+            }
         }
     }
 }
