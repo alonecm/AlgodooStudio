@@ -237,11 +237,17 @@ namespace AlgodooStudio.ASProject
         /// </summary>
         private void StartAlgodoo()
         {
-            //NOTE: 启动ALGODOO
-            var algodoo = Process.Start(Program.Setting.AlgodooPath + "\\Algodoo.exe");
-            this.StatusMessage = "正在启动Algodoo...";
-            algodoo.WaitForExit(5000);
-            this.StatusMessage = "就绪";
+            if (File.Exists(Program.Setting.AlgodooPath + "\\Algodoo.exe"))
+            {
+                var algodoo = Process.Start(Program.Setting.AlgodooPath + "\\Algodoo.exe");
+                this.StatusMessage = "正在启动Algodoo...";
+                algodoo.WaitForExit(1000);
+                this.StatusMessage = "已启动";
+            }
+            else
+            {
+                MBox.ShowError("Algodoo路径尚未设置，请前往设置窗口进行设置！");
+            }
         }
         /// <summary>
         /// 创建新的文件
@@ -551,11 +557,17 @@ namespace AlgodooStudio.ASProject
         }
         private void 重置AlgodooToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //NOTE: 重置ALGODOO
-            var algodoo = Process.Start(Program.Setting.AlgodooPath + "\\Algodoo.exe","-reset");
-            this.StatusMessage = "正在重置Algodoo...";
-            algodoo.WaitForExit();
-            this.StatusMessage = "就绪";
+            if (File.Exists(Program.Setting.AlgodooPath + "\\Algodoo.exe"))
+            {
+                var algodoo = Process.Start(Program.Setting.AlgodooPath + "\\Algodoo.exe", "-reset");
+                this.StatusMessage = "正在重置Algodoo...";
+                algodoo.WaitForExit();
+                this.StatusMessage = "已重置";
+            }
+            else
+            {
+                MBox.ShowError("Algodoo路径尚未设置，请前往设置窗口进行设置！");
+            }
         }
         private void 取色器ToolStripMenuItem_Click(object sender, EventArgs e)
         {
