@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("AlgodooStudio")]
 [assembly: AssemblyCopyright("Copyright ©  2022-2024")]
-[assembly: AssemblyTrademark("Algoda")]
+[assembly: AssemblyTrademark("AloneCM")]
 [assembly: AssemblyCulture("")]
 
 // 将 ComVisible 设置为 false 会使此程序集中的类型
@@ -32,4 +32,4 @@ using System.Runtime.InteropServices;
 //通过使用 "*"，如下所示:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("0.30.3")]
-[assembly: AssemblyFileVersion("0.30.2")]
+[assembly: AssemblyFileVersion("0.30.3")]
