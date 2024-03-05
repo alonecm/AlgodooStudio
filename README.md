@@ -5,7 +5,7 @@
 主分支不能动！修改请提交到新的子分支！！
 
 # 开发环境
-所用软件：VisualStudio2019  
+所用软件：VisualStudio 2022  
 运行平台：DotNet Framework 4.8
 
 # 经过测试的操作系统
