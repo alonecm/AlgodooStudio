@@ -39,7 +39,7 @@
             "opaqueBorders","pos","postStep","reflectiveness","refractiveIndex",
             "resources","restitution","showForceArrows","showMomentum",
             "showVelocity","texture","textureClamped","textureMatrix","timetolive","update",
-            "vel","velocityDamping","zDepth"
+            "vel","velocityDamping","zDepth","surfaces"
         };
 
         public static readonly string[] plane = {"adhesion","angle",

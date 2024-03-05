@@ -37,10 +37,6 @@ namespace AlgodooStudio.ASProject
         /// </summary>
         private string _title;
         /// <summary>
-        /// 只读阅读模式
-        /// </summary>
-        private bool _readOnly;
-        /// <summary>
         /// 提醒器是否已经显示
         /// </summary>
         private bool _isReminderShow;
@@ -97,13 +93,13 @@ namespace AlgodooStudio.ASProject
         {
             get
             {
-                return _readOnly;
+                return this._editor.IsReadOnly;
             }
             set
             {
-                this._readOnly = value;
-                this._editor.IsReadOnly = this._readOnly;
-                this.快速输入ToolStripMenuItem.Enabled = !this._readOnly;
+                this._editor.IsReadOnly = value;
+                this.粘贴ToolStripMenuItem.Enabled = !value;
+                this.快速输入ToolStripMenuItem.Enabled = !value;
                 SetWindowTitle();//展示标题
             }
         }
@@ -211,7 +207,7 @@ namespace AlgodooStudio.ASProject
         /// <param name="e"></param>
         private void TextArea_TextEntered(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            if (!_readOnly)
+            if (!ReadOnly)
             {
                 //提词器未显示时检查内容
                 if (!_isReminderShow)
@@ -420,7 +416,7 @@ namespace AlgodooStudio.ASProject
         {
             string str = "";
             //如果只读
-            if (_readOnly)
+            if (ReadOnly)
             {
                 str+="[只读] ";
             }
@@ -580,7 +576,7 @@ namespace AlgodooStudio.ASProject
         /// <returns></returns>
         protected override string GetPersistString()
         {
-            return GetType().ToString() + "," + FilePath + "," + _readOnly;
+            return GetType().ToString() + "," + FilePath + "," + ReadOnly;
         }
         public void Insert(string str, int pos = -1)
         {
@@ -596,10 +592,9 @@ namespace AlgodooStudio.ASProject
 
         private void rightMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (Clipboard.ContainsText())
-            {
-                粘贴ToolStripMenuItem.Visible = true;
-            }
+            粘贴ToolStripMenuItem.Visible = 
+                toolStripSeparator5.Visible = 
+                Clipboard.ContainsText();
 
             将选定文字保存为片段ToolStripMenuItem.Visible =
             toolStripSeparator5.Visible =

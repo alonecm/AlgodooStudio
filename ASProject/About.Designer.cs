@@ -121,7 +121,7 @@
             this.labelCompanyName.Name = "labelCompanyName";
             this.labelCompanyName.Size = new System.Drawing.Size(271, 16);
             this.labelCompanyName.TabIndex = 22;
-            this.labelCompanyName.Text = "公司名称";
+            this.labelCompanyName.Text = "作者";
             this.labelCompanyName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // textBoxDescription

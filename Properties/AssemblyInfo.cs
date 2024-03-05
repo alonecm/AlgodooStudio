@@ -1,16 +1,17 @@
-﻿using System.Reflection;
+﻿using System.Resources;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("AlgodooStudio")]
-[assembly: AssemblyDescription("工程测试版")]
+[assembly: AssemblyDescription("开源软件，请勿用于商业用途！")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("AloneCM")]
 [assembly: AssemblyProduct("AlgodooStudio")]
-[assembly: AssemblyCopyright("Copyright ©  2022-2024")]
-[assembly: AssemblyTrademark("AloneCM")]
+[assembly: AssemblyCopyright("Copyright © 2022")]
+[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // 将 ComVisible 设置为 false 会使此程序集中的类型
@@ -31,5 +32,6 @@ using System.Runtime.InteropServices;
 //可以指定所有这些值，也可以使用“生成号”和“修订号”的默认值
 //通过使用 "*"，如下所示:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.30.3")]
-[assembly: AssemblyFileVersion("0.30.3")]
+[assembly: AssemblyVersion("0.1.4")]
+[assembly: AssemblyFileVersion("0.1.4")]
+[assembly: NeutralResourcesLanguage("zh-Hans")]
