@@ -45,7 +45,6 @@ namespace AlgodooStudio.ASProject
             this.文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.新建ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.文本文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.场景ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.打开ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.最近打开ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,7 +69,6 @@ namespace AlgodooStudio.ASProject
             this.全选ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.视图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.文本编辑器ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.场景视图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.文件浏览器ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.工具箱ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -96,9 +94,9 @@ namespace AlgodooStudio.ASProject
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.关于ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
-            this.vS2015BlueTheme1 = new WeifenLuo.WinFormsUI.Docking.VS2015BlueTheme();
-            this.vS2015DarkTheme1 = new WeifenLuo.WinFormsUI.Docking.VS2015DarkTheme();
-            this.vS2015LightTheme1 = new WeifenLuo.WinFormsUI.Docking.VS2015LightTheme();
+            this.vS2015BlueTheme = new WeifenLuo.WinFormsUI.Docking.VS2015BlueTheme();
+            this.vS2015DarkTheme = new WeifenLuo.WinFormsUI.Docking.VS2015DarkTheme();
+            this.vS2015LightTheme = new WeifenLuo.WinFormsUI.Docking.VS2015LightTheme();
             this.vsToolStripExtender = new WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender(this.components);
             this.sp = new System.Windows.Forms.SplitContainer();
             this.statusBar.SuspendLayout();
@@ -247,8 +245,7 @@ namespace AlgodooStudio.ASProject
             // 新建ToolStripMenuItem
             // 
             this.新建ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.文本文件ToolStripMenuItem,
-            this.场景ToolStripMenuItem});
+            this.文本文件ToolStripMenuItem});
             this.新建ToolStripMenuItem.Name = "新建ToolStripMenuItem";
             this.新建ToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.新建ToolStripMenuItem.Text = "新建";
@@ -260,14 +257,6 @@ namespace AlgodooStudio.ASProject
             this.文本文件ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.文本文件ToolStripMenuItem.Text = "文本文件";
             this.文本文件ToolStripMenuItem.Click += new System.EventHandler(this.文本文件ToolStripMenuItem_Click);
-            // 
-            // 场景ToolStripMenuItem
-            // 
-            this.场景ToolStripMenuItem.Name = "场景ToolStripMenuItem";
-            this.场景ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.场景ToolStripMenuItem.Text = "场景";
-            this.场景ToolStripMenuItem.Visible = false;
-            this.场景ToolStripMenuItem.Click += new System.EventHandler(this.场景ToolStripMenuItem_Click);
             // 
             // 打开ToolStripMenuItem
             // 
@@ -449,7 +438,6 @@ namespace AlgodooStudio.ASProject
             // 
             this.视图ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.文本编辑器ToolStripMenuItem,
-            this.场景视图ToolStripMenuItem,
             this.toolStripSeparator7,
             this.文件浏览器ToolStripMenuItem,
             this.工具箱ToolStripMenuItem,
@@ -465,14 +453,6 @@ namespace AlgodooStudio.ASProject
             this.文本编辑器ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.文本编辑器ToolStripMenuItem.Text = "文本编辑器";
             this.文本编辑器ToolStripMenuItem.Click += new System.EventHandler(this.文本编辑器ToolStripMenuItem_Click);
-            // 
-            // 场景视图ToolStripMenuItem
-            // 
-            this.场景视图ToolStripMenuItem.Name = "场景视图ToolStripMenuItem";
-            this.场景视图ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.场景视图ToolStripMenuItem.Text = "场景视图";
-            this.场景视图ToolStripMenuItem.Visible = false;
-            this.场景视图ToolStripMenuItem.Click += new System.EventHandler(this.场景视图ToolStripMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
@@ -767,9 +747,7 @@ namespace AlgodooStudio.ASProject
         private System.Windows.Forms.ToolStripMenuItem 关闭所有窗口ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 插件ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 文本文件ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 场景ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 文本编辑器ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 场景视图ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem 文件浏览器ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 工具箱ToolStripMenuItem;
@@ -779,9 +757,9 @@ namespace AlgodooStudio.ASProject
         private System.Windows.Forms.ToolStripMenuItem 全部浮动ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 关于ToolStripMenuItem;
         private WeifenLuo.WinFormsUI.Docking.DockPanel dockPanel;
-        private WeifenLuo.WinFormsUI.Docking.VS2015BlueTheme vS2015BlueTheme1;
-        private WeifenLuo.WinFormsUI.Docking.VS2015DarkTheme vS2015DarkTheme1;
-        private WeifenLuo.WinFormsUI.Docking.VS2015LightTheme vS2015LightTheme1;
+        private WeifenLuo.WinFormsUI.Docking.VS2015BlueTheme vS2015BlueTheme;
+        private WeifenLuo.WinFormsUI.Docking.VS2015DarkTheme vS2015DarkTheme;
+        private WeifenLuo.WinFormsUI.Docking.VS2015LightTheme vS2015LightTheme;
         private System.Windows.Forms.ToolStripMenuItem 蓝色ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 白色ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 黑色ToolStripMenuItem;

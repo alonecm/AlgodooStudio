@@ -73,17 +73,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\类库\Dex.NET\Test\bin\Debug\Dex.Analysis.dll</HintPath>
     </Reference>
-    <Reference Include="Dex.Attribute, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\类库\Dex.NET\Test\bin\Debug\Dex.Attribute.dll</HintPath>
-    </Reference>
     <Reference Include="Dex.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\类库\Dex.NET\Test\bin\Debug\Dex.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Dex.Interfaces, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\类库\Dex.NET\Test\bin\Debug\Dex.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="Dex.IO, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -161,6 +153,7 @@
     <Compile Include="ASProject\Interface\ISaveable.cs" />
     <Compile Include="ASProject\Interface\ISearchable.cs" />
     <Compile Include="ASProject\LogWriter.cs" />
+    <Compile Include="ASProject\Script\Parse\ThymeParser.cs" />
     <Compile Include="ASProject\Support\ScriptClip.cs" />
     <Compile Include="PluginSystem\Loader.cs" />
     <Compile Include="ASProject\MainWindow.cs">

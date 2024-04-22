@@ -23,7 +23,7 @@ namespace AlgodooStudio.ASProject.Dialogs
 
         private void colorBox_Click(object sender, EventArgs e)
         {
-            timer.Enabled = l_pickingTip.Visible = isPicking = !isPicking;
+            timer.Enabled = l_pickingTip.Visible = l_pickingTip2.Visible = isPicking = !isPicking;
         }
         private Color GetColor()
         {
@@ -49,7 +49,7 @@ namespace AlgodooStudio.ASProject.Dialogs
         /// <param name="e"></param>
         private void ColorPicker_Deactivate(object sender, EventArgs e)
         {
-            timer.Enabled = l_pickingTip.Visible = isPicking = false;
+            timer.Enabled = l_pickingTip.Visible = l_pickingTip2.Visible = isPicking = false;
         }
         /// <summary>
         /// 复制到剪贴板
@@ -59,6 +59,14 @@ namespace AlgodooStudio.ASProject.Dialogs
         private void copyToClipbroad_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(t_rgb.Text);
+        }
+
+        private void ColorPicker_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar=='c'&& timer.Enabled)
+            {
+                timer.Enabled = l_pickingTip.Visible = l_pickingTip2.Visible = isPicking = false;
+            }
         }
     }
 }

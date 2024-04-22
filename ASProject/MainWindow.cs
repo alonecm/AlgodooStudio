@@ -158,18 +158,18 @@ namespace AlgodooStudio.ASProject
             CloseAllContents();
             if (sender == this.蓝色ToolStripMenuItem)
             {
-                this.dockPanel.Theme = this.vS2015BlueTheme1;
-                this.EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2015, vS2015BlueTheme1);
+                this.dockPanel.Theme = this.vS2015BlueTheme;
+                this.EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2015, vS2015BlueTheme);
             }
             else if (sender == this.白色ToolStripMenuItem)
             {
-                this.dockPanel.Theme = this.vS2015LightTheme1;
-                this.EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2015, vS2015LightTheme1);
+                this.dockPanel.Theme = this.vS2015LightTheme;
+                this.EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2015, vS2015LightTheme);
             }
             else if (sender == this.黑色ToolStripMenuItem)
             {
-                this.dockPanel.Theme = this.vS2015DarkTheme1;
-                this.EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2015, vS2015DarkTheme1);
+                this.dockPanel.Theme = this.vS2015DarkTheme;
+                this.EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2015, vS2015DarkTheme);
             }
 
             白色ToolStripMenuItem.Checked = (sender == 白色ToolStripMenuItem);
@@ -180,6 +180,7 @@ namespace AlgodooStudio.ASProject
             {
                 statusBar.BackColor = dockPanel.Theme.ColorPalette.MainWindowStatusBarDefault.Background;
                 mainMenu.BackColor = dockPanel.Theme.ColorPalette.CommandBarMenuDefault.Background;
+                this.BackColor= dockPanel.Theme.ColorPalette.CommandBarMenuDefault.Background;
             }
 
             if (File.Exists(configFile))
@@ -239,9 +240,11 @@ namespace AlgodooStudio.ASProject
         {
             if (File.Exists(Program.Setting.AlgodooPath + "\\Algodoo.exe"))
             {
+                Cursor = Cursors.WaitCursor;
                 var algodoo = Process.Start(Program.Setting.AlgodooPath + "\\Algodoo.exe");
                 this.StatusMessage = "正在启动Algodoo...";
                 algodoo.WaitForExit(1000);
+                Cursor = Cursors.Default;
                 this.StatusMessage = "已启动";
             }
             else
@@ -254,8 +257,10 @@ namespace AlgodooStudio.ASProject
         /// </summary>
         private void CreateNewFile()
         {
+            this.Cursor = Cursors.WaitCursor;
             TextEditWindow te = new TextEditWindow("New", "", "", false);
             te.Show(this.dockPanel, DockState.Document);
+            this.Cursor = Cursors.Default;
         }
         /// <summary>
         /// 设定属性编辑对象
@@ -338,11 +343,13 @@ namespace AlgodooStudio.ASProject
         /// </summary>
         private void OpenFile()
         {
+            Cursor = Cursors.WaitCursor;
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 ofd.Title = "选择文件...";
                 ofd.Multiselect = true;
                 ofd.Filter = "Thyme脚本 cfg配置文件 Phun文件 存档文件|*.thm;*.cfg;*.phn;*.phz|其他文件|*.*";
+                Cursor = Cursors.Default;
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
                     foreach (var item in ofd.FileNames)
@@ -360,11 +367,13 @@ namespace AlgodooStudio.ASProject
         /// </summary>
         private void SaveFile()
         {
+            Cursor = Cursors.WaitCursor;
             //保存当前激活的且可以保存的窗口
             if (dockPanel.ActiveContent is ISaveable)
             {
                 (dockPanel.ActiveContent as ISaveable).Save();
             }
+            Cursor = Cursors.Default;
         }
         /// <summary>
         /// 保存所有
@@ -420,11 +429,6 @@ namespace AlgodooStudio.ASProject
         private void 文本文件ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CreateNewFile();
-        }
-        private void 场景ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //TODO: 新建场景
-            throw new NotImplementedException("未实现");
         }
         private void 退出ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -517,37 +521,40 @@ namespace AlgodooStudio.ASProject
         #region 视图
         private void 文本编辑器ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             TextEditWindow textEdit = new TextEditWindow("New","","",false);
             textEdit.Show(this.dockPanel, DockState.Document);
-        }
-        private void 场景视图ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //TODO: 打开场景视图
-            throw new NotImplementedException("未实现");
+            Cursor = Cursors.Default;
         }
         private void 文件浏览器ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             if (fileExploreWindow.IsDisposed)
             {
                 fileExploreWindow = new FileExploreWindow();
             }
             fileExploreWindow.Show(this.dockPanel, DockState.DockRight);
+            Cursor = Cursors.Default;
         }
         private void 工具箱ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             if (toolBoxWindow.IsDisposed)
             {
                 toolBoxWindow = new ToolBoxWindow();
             }
             toolBoxWindow.Show(this.dockPanel, DockState.DockLeftAutoHide);
+            Cursor = Cursors.Default;
         }
         private void 属性窗口ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             if (propertyWindow.IsDisposed)
             {
                 propertyWindow = new PropertyWindow();
             }
             propertyWindow.Show(this.dockPanel, DockState.DockRight);
+            Cursor = Cursors.Default;
         }
         #endregion
         #region 工具
@@ -559,9 +566,11 @@ namespace AlgodooStudio.ASProject
         {
             if (File.Exists(Program.Setting.AlgodooPath + "\\Algodoo.exe"))
             {
+                Cursor = Cursors.WaitCursor;
                 var algodoo = Process.Start(Program.Setting.AlgodooPath + "\\Algodoo.exe", "-reset");
                 this.StatusMessage = "正在重置Algodoo...";
                 algodoo.WaitForExit();
+                Cursor = Cursors.Default;
                 this.StatusMessage = "已重置";
             }
             else
@@ -645,7 +654,11 @@ namespace AlgodooStudio.ASProject
         {
             SaveAll();
         }
+
         #endregion
+
         #endregion
+
+       
     }
 }
