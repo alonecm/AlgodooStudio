@@ -1,5 +1,7 @@
 ﻿using AlgodooStudio.ASProject.Dialogs;
 using AlgodooStudio.ASProject.Interface;
+using AlgodooStudio.ASProject.Script.Parse;
+using Dex.Common;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Folding;
@@ -60,7 +62,11 @@ namespace AlgodooStudio.ASProject
         /// 查找和替换窗口
         /// </summary>
         private ReplaceWindow _replaceWindow;
-    
+        /// <summary>
+        /// 词法解析器
+        /// </summary>
+        private ThymeTokenizer _tokenizer = new ThymeTokenizer();
+
         /// <summary>
         /// 获取和设置文件路径
         /// </summary>
@@ -184,6 +190,8 @@ namespace AlgodooStudio.ASProject
             //rightMenu.Renderer = ThemeToolStripRenderer.GetRenderer();
         }
 
+      
+
         #region 编辑器
         /// <summary>
         /// 文字变动事件
@@ -199,6 +207,7 @@ namespace AlgodooStudio.ASProject
                 _isSaved = false;//标记未保存
                 SetWindowTitle(true);//展示标题到窗口
             }
+            errorCheckTimer.Enabled = true;
         }
         /// <summary>
         /// 文字输入事件
@@ -475,11 +484,13 @@ namespace AlgodooStudio.ASProject
                     _editor.Save(_filepath);
                     _isSaved = true; //标记已保存
                     SetWindowTitle();//展示标题到窗口
+                    ReCheck();//重新检查异常
                     return DialogResult.OK;
                 }
             }
             else
             {
+                ReCheck();//重新检查异常
                 return DialogResult.Cancel;
             }
         }
@@ -498,10 +509,12 @@ namespace AlgodooStudio.ASProject
                 _isSaved = true;//标记已保存
                 this._title = Path.GetFileName(sfd.FileName);//设置标题
                 SetWindowTitle();//展示标题到窗口
+                ReCheck();//重新检查异常
                 return DialogResult.OK;
             }
             else
             {
+                ReCheck();//重新检查异常
                 return DialogResult.Cancel;
             }
         }
@@ -523,6 +536,109 @@ namespace AlgodooStudio.ASProject
                 _replaceWindow = new ReplaceWindow(_editor.TextArea);
                 _replaceWindow.Show();
             }
+        }
+        /// <summary>
+        /// 获取当前窗口的保存字符串
+        /// </summary>
+        /// <returns></returns>
+        protected override string GetPersistString()
+        {
+            return GetType().ToString() + "," + FilePath + "," + ReadOnly;
+        }
+        /// <summary>
+        /// 在指定位置插入文字
+        /// </summary>
+        /// <param name="str"></param>
+        /// <param name="pos"></param>
+        public void Insert(string str, int pos = -1)
+        {
+            if (pos == -1)
+            {
+                _editor.Document.Insert(_editor.CaretOffset, str);
+            }
+            else
+            {
+                _editor.Document.Insert(pos, str);
+            }
+        }
+        /// <summary>
+        /// 右键菜单打开时的相关项目的显示控制
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void rightMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            粘贴ToolStripMenuItem.Visible =
+                toolStripSeparator5.Visible =
+                Clipboard.ContainsText();
+
+            将选定文字保存为片段ToolStripMenuItem.Visible =
+            toolStripSeparator5.Visible =
+            复制ToolStripMenuItem.Visible =
+            剪切ToolStripMenuItem.Visible = (_editor.SelectionLength != 0);
+        }
+        /// <summary>
+        /// 选定文字并允许保存
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 将选定文字保存为片段ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (TextGetDialog tgd = new TextGetDialog())
+            {
+                tgd.Title = "创建片段";
+                tgd.InputText = "NewClip";
+                tgd.IsNameValidCheck = true;
+                //一直加载
+                while (tgd.ShowDialog() == DialogResult.OK)
+                {
+                    //确保片段不存在
+                    if (!File.Exists($".\\Clips\\{tgd.InputText}.clip"))
+                    {
+                        using (ClipEditDialog ced = new ClipEditDialog($".\\Clips\\{tgd.InputText}.clip"))
+                        {
+                            ced.InitialText = _editor.SelectedText;
+                            ced.ShowDialog();
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        MBox.Showlog($"片段{tgd.InputText}已存在！");
+                        tgd.InputText = tgd.InputText;//用此方式重新选中那些文字
+                    }
+                }
+            }
+        }
+        /// <summary>
+        /// 异常检查
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void errorCheckTimer_Tick(object sender, EventArgs e)
+        {
+            if (!this.ReadOnly && (
+                Path.GetExtension(_title) == ".cfg*" ||
+                Path.GetExtension(_title) == ".thm*" ||
+                Path.GetExtension(_title) == ".cfg" || 
+                Path.GetExtension(_title) == ".thm"|| 
+                Path.GetExtension(_title) == ""))//只解析可编辑文档和cfg thm
+            {
+                var tos = _tokenizer.Tokenize(_editor.Text);
+                var parser = new ThymeParser(tos);
+                var result = parser.Parse();
+                //如果文件存在则按照文件名设置
+                if (File.Exists(_filepath))
+                {
+                    Program.UpdateErrors(_filepath, parser.Diagnostics);
+                }
+                else
+                {
+                    Program.UpdateErrors(_title, parser.Diagnostics);
+                }
+            }
+            //经过一次检查后自动结束
+            errorCheckTimer.Enabled = false;
         }
         #endregion 其他方法
 
@@ -570,65 +686,22 @@ namespace AlgodooStudio.ASProject
         {
             _Search();
         }
+       
         /// <summary>
-        /// 获取当前窗口的保存字符串
+        /// 选中错误位置
         /// </summary>
-        /// <returns></returns>
-        protected override string GetPersistString()
+        /// <param name="range"></param>
+        public void SelectErrorPos(Range range)
         {
-            return GetType().ToString() + "," + FilePath + "," + ReadOnly;
+            _editor.Select((int)range.Min, (int)(range.Max - range.Min));
+            _editor.ScrollTo(_editor.TextArea.Caret.Line, _editor.TextArea.Caret.Column);
         }
-        public void Insert(string str, int pos = -1)
+        /// <summary>
+        /// 重新检查
+        /// </summary>
+        public void ReCheck()
         {
-            if (pos == -1)
-            {
-                _editor.Document.Insert(_editor.CaretOffset, str);
-            }
-            else
-            {
-                _editor.Document.Insert(pos, str);
-            }
-        }
-
-        private void rightMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            粘贴ToolStripMenuItem.Visible = 
-                toolStripSeparator5.Visible = 
-                Clipboard.ContainsText();
-
-            将选定文字保存为片段ToolStripMenuItem.Visible =
-            toolStripSeparator5.Visible =
-            复制ToolStripMenuItem.Visible =
-            剪切ToolStripMenuItem.Visible = (_editor.SelectionLength != 0);
-        }
-
-        private void 将选定文字保存为片段ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            using (TextGetDialog tgd = new TextGetDialog())
-            {
-                tgd.Title = "创建片段";
-                tgd.InputText = "NewClip";
-                tgd.IsNameValidCheck = true;
-                //一直加载
-                while (tgd.ShowDialog() == DialogResult.OK)
-                {
-                    //确保片段不存在
-                    if (!File.Exists($".\\Clips\\{tgd.InputText}.clip"))
-                    {
-                        using (ClipEditDialog ced = new ClipEditDialog($".\\Clips\\{tgd.InputText}.clip"))
-                        {
-                            ced.InitialText = _editor.SelectedText;
-                            ced.ShowDialog();
-                        }
-                        break;
-                    }
-                    else
-                    {
-                        MBox.Showlog($"片段{tgd.InputText}已存在！");
-                        tgd.InputText = tgd.InputText;//用此方式重新选中那些文字
-                    }
-                }
-            }
+            errorCheckTimer.Enabled = true;
         }
     }
 }

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgodooStudio", "AlgodooStudio.csproj", "{96F0FAA0-723D-42F5-8619-A9927530372C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgodooStudio.TestConsole", "..\AlgodooStudioConsole\AlgodooStudio.TestConsole.csproj", "{9BF0FA0A-B983-4327-A057-83EED29889F5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{96F0FAA0-723D-42F5-8619-A9927530372C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96F0FAA0-723D-42F5-8619-A9927530372C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96F0FAA0-723D-42F5-8619-A9927530372C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BF0FA0A-B983-4327-A057-83EED29889F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BF0FA0A-B983-4327-A057-83EED29889F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BF0FA0A-B983-4327-A057-83EED29889F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BF0FA0A-B983-4327-A057-83EED29889F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

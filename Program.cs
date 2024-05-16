@@ -1,6 +1,8 @@
 ﻿using AlgodooStudio.ASProject;
+using AlgodooStudio.ASProject.Script.Parse;
 using AlgodooStudio.ASProject.Support;
 using AlgodooStudio.PluginSystem;
+using Dex.Analysis.Parse;
 using Dex.Common;
 using Dex.IO;
 using Dex.IO.Config;
@@ -91,6 +93,24 @@ namespace AlgodooStudio
         public static void SetPropertyEditObject(object[] obj)
         {
             mainWindow.SetPropertyEditObject(obj);
+        }
+        /// <summary>
+        /// 更新错误信息
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <param name="diagnostics"></param>
+        public static void UpdateErrors(string filename, DiagnosticsCollection diagnostics)
+        {
+            mainWindow.UpdateErrors(filename, diagnostics);
+        }
+        /// <summary>
+        /// 选中错误
+        /// </summary>
+        /// <param name="windowName"></param>
+        /// <param name="range"></param>
+        public static void SelectError(string windowName, Range range)
+        {
+            mainWindow.SelectError(windowName, range);
         }
         /// <summary>
         /// 检查路径信息

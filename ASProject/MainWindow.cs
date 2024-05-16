@@ -1,7 +1,10 @@
 ﻿using AlgodooStudio.ASProject.Dialogs;
 using AlgodooStudio.ASProject.Interface;
+using AlgodooStudio.ASProject.Script.Parse;
 using AlgodooStudio.ASProject.Support;
 using AlgodooStudio.PluginSystem;
+using Dex.Analysis.Parse;
+using Dex.Common;
 using PhunSharp;
 using RuFramework.MRU;
 using System;
@@ -37,6 +40,10 @@ namespace AlgodooStudio.ASProject
         /// 属性窗口
         /// </summary>
         private PropertyWindow propertyWindow;
+        /// <summary>
+        /// 错误列表窗口
+        /// </summary>
+        private ErrorListWindow errorListWindow;
         /// <summary>
         /// 工具窗口
         /// </summary>
@@ -113,6 +120,7 @@ namespace AlgodooStudio.ASProject
             fileExploreWindow = new FileExploreWindow();
             propertyWindow = new PropertyWindow();
             toolBoxWindow = new ToolBoxWindow();
+            errorListWindow = new ErrorListWindow();
         }
         /// <summary>
         /// 从记录字符串中获取停靠内容
@@ -278,6 +286,31 @@ namespace AlgodooStudio.ASProject
         {
             this.propertyWindow.SetEdit(obj);
         }
+
+        /// <summary>
+        /// 选中错误
+        /// </summary>
+        public void SelectError(string windowName, Range range)
+        {
+            foreach (var item in dockPanel.Contents)
+            {
+                if (item.DockHandler.TabText == windowName && item is TextEditWindow t)
+                {
+                    item.DockHandler.Activate();
+                    t.SelectErrorPos(range);
+                    return;
+                }
+            }
+        }
+        /// <summary>
+        /// 更新错误
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="diagnostic"></param>
+        public void UpdateErrors(string fileName, DiagnosticsCollection diagnostic)
+        {
+            errorListWindow.UpdateErrors(fileName, diagnostic);
+        }
         /// <summary>
         /// 展示插件
         /// </summary>
@@ -419,6 +452,12 @@ namespace AlgodooStudio.ASProject
             查找ToolStripMenuItem.Visible = (dockPanel.ActiveContent is ISearchable);
             toolStripSeparator5.Visible = (dockPanel.ActiveContent is IEditable) && ((dockPanel.ActiveContent is IReplaceable) || (dockPanel.ActiveContent is ISearchable));
             toolStripSeparator4.Visible = toolStripSeparator6.Visible = (dockPanel.ActiveContent is IEditable);
+
+            //文本编辑窗口变动时重新检查
+            if (dockPanel.ActiveContent is TextEditWindow te)
+            {
+                te.ReCheck();
+            }
         }
 
         #region 文件
@@ -556,7 +595,18 @@ namespace AlgodooStudio.ASProject
             propertyWindow.Show(this.dockPanel, DockState.DockRight);
             Cursor = Cursors.Default;
         }
+        private void 错误列表ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Cursor = Cursors.WaitCursor;
+            if (errorListWindow.IsDisposed)
+            {
+                errorListWindow = new ErrorListWindow();
+            }
+            errorListWindow.Show(this.dockPanel, DockState.DockBottom);
+            Cursor = Cursors.Default;
+        }
         #endregion
+
         #region 工具
         private void 启动AlgodooToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -601,6 +651,7 @@ namespace AlgodooStudio.ASProject
             }
         }
         #endregion
+
         #region 窗口
         private void 浮动ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -623,9 +674,11 @@ namespace AlgodooStudio.ASProject
             CloseAllContents();
         }
         #endregion
+
         #region 插件
 
         #endregion
+
         #region 关于
         private void 关于ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -633,6 +686,7 @@ namespace AlgodooStudio.ASProject
             window.ShowDialog();
         }
         #endregion
+
         #region 工具栏功能
         private void newScript_Click(object sender, EventArgs e)
         {
@@ -654,11 +708,10 @@ namespace AlgodooStudio.ASProject
         {
             SaveAll();
         }
-
         #endregion
 
         #endregion
 
-       
+        
     }
 }

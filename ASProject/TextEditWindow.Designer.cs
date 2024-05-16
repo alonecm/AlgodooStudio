@@ -50,6 +50,7 @@ namespace AlgodooStudio.ASProject
             this.粘贴ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.快速输入ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.errorCheckTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.sp)).BeginInit();
             this.sp.Panel1.SuspendLayout();
             this.sp.Panel2.SuspendLayout();
@@ -227,6 +228,11 @@ namespace AlgodooStudio.ASProject
             this.快速输入ToolStripMenuItem.Text = "快速输入...";
             this.快速输入ToolStripMenuItem.Click += new System.EventHandler(this.快速输入ToolStripMenuItem_Click);
             // 
+            // errorCheckTimer
+            // 
+            this.errorCheckTimer.Interval = 500;
+            this.errorCheckTimer.Tick += new System.EventHandler(this.errorCheckTimer_Tick);
+            // 
             // TextEditWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -272,5 +278,6 @@ namespace AlgodooStudio.ASProject
         private System.Windows.Forms.ToolStripMenuItem 快速输入ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 将选定文字保存为片段ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.Timer errorCheckTimer;
     }
 }

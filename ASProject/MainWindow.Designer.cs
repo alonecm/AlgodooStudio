@@ -99,6 +99,8 @@ namespace AlgodooStudio.ASProject
             this.vS2015LightTheme = new WeifenLuo.WinFormsUI.Docking.VS2015LightTheme();
             this.vsToolStripExtender = new WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender(this.components);
             this.sp = new System.Windows.Forms.SplitContainer();
+            this.错误列表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.statusBar.SuspendLayout();
             this.quickTools.SuspendLayout();
             this.mainMenu.SuspendLayout();
@@ -351,7 +353,7 @@ namespace AlgodooStudio.ASProject
             // 
             this.查找ToolStripMenuItem.Name = "查找ToolStripMenuItem";
             this.查找ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.查找ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.查找ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.查找ToolStripMenuItem.Text = "查找";
             this.查找ToolStripMenuItem.Click += new System.EventHandler(this.查找ToolStripMenuItem_Click);
             // 
@@ -359,20 +361,20 @@ namespace AlgodooStudio.ASProject
             // 
             this.替换ToolStripMenuItem.Name = "替换ToolStripMenuItem";
             this.替换ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.H)));
-            this.替换ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.替换ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.替换ToolStripMenuItem.Text = "替换";
             this.替换ToolStripMenuItem.Click += new System.EventHandler(this.替换ToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(177, 6);
             // 
             // 撤消ToolStripMenuItem
             // 
             this.撤消ToolStripMenuItem.Name = "撤消ToolStripMenuItem";
             this.撤消ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Z)));
-            this.撤消ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.撤消ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.撤消ToolStripMenuItem.Text = "撤消";
             this.撤消ToolStripMenuItem.Click += new System.EventHandler(this.撤消ToolStripMenuItem_Click);
             // 
@@ -380,20 +382,20 @@ namespace AlgodooStudio.ASProject
             // 
             this.重做ToolStripMenuItem.Name = "重做ToolStripMenuItem";
             this.重做ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Y)));
-            this.重做ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.重做ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.重做ToolStripMenuItem.Text = "重做";
             this.重做ToolStripMenuItem.Click += new System.EventHandler(this.重做ToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
             // 
             // 复制ToolStripMenuItem
             // 
             this.复制ToolStripMenuItem.Name = "复制ToolStripMenuItem";
             this.复制ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.复制ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.复制ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.复制ToolStripMenuItem.Text = "复制";
             this.复制ToolStripMenuItem.Click += new System.EventHandler(this.复制ToolStripMenuItem_Click);
             // 
@@ -401,7 +403,7 @@ namespace AlgodooStudio.ASProject
             // 
             this.剪切ToolStripMenuItem.Name = "剪切ToolStripMenuItem";
             this.剪切ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.剪切ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.剪切ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.剪切ToolStripMenuItem.Text = "剪切";
             this.剪切ToolStripMenuItem.Click += new System.EventHandler(this.剪切ToolStripMenuItem_Click);
             // 
@@ -409,7 +411,7 @@ namespace AlgodooStudio.ASProject
             // 
             this.粘贴ToolStripMenuItem.Name = "粘贴ToolStripMenuItem";
             this.粘贴ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.粘贴ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.粘贴ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.粘贴ToolStripMenuItem.Text = "粘贴";
             this.粘贴ToolStripMenuItem.Click += new System.EventHandler(this.粘贴ToolStripMenuItem_Click);
             // 
@@ -417,20 +419,20 @@ namespace AlgodooStudio.ASProject
             // 
             this.删除ToolStripMenuItem.Name = "删除ToolStripMenuItem";
             this.删除ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.删除ToolStripMenuItem.Text = "删除";
             this.删除ToolStripMenuItem.Click += new System.EventHandler(this.删除ToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(143, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(177, 6);
             // 
             // 全选ToolStripMenuItem
             // 
             this.全选ToolStripMenuItem.Name = "全选ToolStripMenuItem";
             this.全选ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
-            this.全选ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.全选ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.全选ToolStripMenuItem.Text = "全选";
             this.全选ToolStripMenuItem.Click += new System.EventHandler(this.全选ToolStripMenuItem_Click);
             // 
@@ -440,8 +442,10 @@ namespace AlgodooStudio.ASProject
             this.文本编辑器ToolStripMenuItem,
             this.toolStripSeparator7,
             this.文件浏览器ToolStripMenuItem,
+            this.属性窗口ToolStripMenuItem,
+            this.toolStripSeparator8,
             this.工具箱ToolStripMenuItem,
-            this.属性窗口ToolStripMenuItem});
+            this.错误列表ToolStripMenuItem});
             this.视图ToolStripMenuItem.ForeColor = System.Drawing.SystemColors.ControlText;
             this.视图ToolStripMenuItem.Name = "视图ToolStripMenuItem";
             this.视图ToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
@@ -450,33 +454,33 @@ namespace AlgodooStudio.ASProject
             // 文本编辑器ToolStripMenuItem
             // 
             this.文本编辑器ToolStripMenuItem.Name = "文本编辑器ToolStripMenuItem";
-            this.文本编辑器ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.文本编辑器ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.文本编辑器ToolStripMenuItem.Text = "文本编辑器";
             this.文本编辑器ToolStripMenuItem.Click += new System.EventHandler(this.文本编辑器ToolStripMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(133, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
             // 
             // 文件浏览器ToolStripMenuItem
             // 
             this.文件浏览器ToolStripMenuItem.Name = "文件浏览器ToolStripMenuItem";
-            this.文件浏览器ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.文件浏览器ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.文件浏览器ToolStripMenuItem.Text = "文件浏览器";
             this.文件浏览器ToolStripMenuItem.Click += new System.EventHandler(this.文件浏览器ToolStripMenuItem_Click);
             // 
             // 工具箱ToolStripMenuItem
             // 
             this.工具箱ToolStripMenuItem.Name = "工具箱ToolStripMenuItem";
-            this.工具箱ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.工具箱ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.工具箱ToolStripMenuItem.Text = "工具箱";
             this.工具箱ToolStripMenuItem.Click += new System.EventHandler(this.工具箱ToolStripMenuItem_Click);
             // 
             // 属性窗口ToolStripMenuItem
             // 
             this.属性窗口ToolStripMenuItem.Name = "属性窗口ToolStripMenuItem";
-            this.属性窗口ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.属性窗口ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.属性窗口ToolStripMenuItem.Text = "属性窗口";
             this.属性窗口ToolStripMenuItem.Click += new System.EventHandler(this.属性窗口ToolStripMenuItem_Click);
             // 
@@ -499,7 +503,7 @@ namespace AlgodooStudio.ASProject
             // 
             this.启动AlgodooToolStripMenuItem.Image = global::AlgodooStudio.Properties.Resources.run;
             this.启动AlgodooToolStripMenuItem.Name = "启动AlgodooToolStripMenuItem";
-            this.启动AlgodooToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.启动AlgodooToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.启动AlgodooToolStripMenuItem.Text = "启动Algodoo";
             this.启动AlgodooToolStripMenuItem.Click += new System.EventHandler(this.启动AlgodooToolStripMenuItem_Click);
             // 
@@ -507,38 +511,38 @@ namespace AlgodooStudio.ASProject
             // 
             this.重置AlgodooToolStripMenuItem.Image = global::AlgodooStudio.Properties.Resources.reset;
             this.重置AlgodooToolStripMenuItem.Name = "重置AlgodooToolStripMenuItem";
-            this.重置AlgodooToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.重置AlgodooToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.重置AlgodooToolStripMenuItem.Text = "重置Algodoo";
             this.重置AlgodooToolStripMenuItem.Click += new System.EventHandler(this.重置AlgodooToolStripMenuItem_Click);
             // 
             // toolStripSeparator14
             // 
             this.toolStripSeparator14.Name = "toolStripSeparator14";
-            this.toolStripSeparator14.Size = new System.Drawing.Size(148, 6);
+            this.toolStripSeparator14.Size = new System.Drawing.Size(177, 6);
             // 
             // 取色器ToolStripMenuItem
             // 
             this.取色器ToolStripMenuItem.Name = "取色器ToolStripMenuItem";
-            this.取色器ToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.取色器ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.取色器ToolStripMenuItem.Text = "取色器...";
             this.取色器ToolStripMenuItem.Click += new System.EventHandler(this.取色器ToolStripMenuItem_Click);
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(148, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(177, 6);
             // 
             // 插件管理ToolStripMenuItem
             // 
             this.插件管理ToolStripMenuItem.Name = "插件管理ToolStripMenuItem";
-            this.插件管理ToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.插件管理ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.插件管理ToolStripMenuItem.Text = "插件管理...";
             this.插件管理ToolStripMenuItem.Click += new System.EventHandler(this.插件管理ToolStripMenuItem_Click);
             // 
             // 设置ToolStripMenuItem
             // 
             this.设置ToolStripMenuItem.Name = "设置ToolStripMenuItem";
-            this.设置ToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.设置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.设置ToolStripMenuItem.Text = "设置...";
             this.设置ToolStripMenuItem.Click += new System.EventHandler(this.设置ToolStripMenuItem_Click);
             // 
@@ -667,6 +671,18 @@ namespace AlgodooStudio.ASProject
             this.sp.SplitterWidth = 1;
             this.sp.TabIndex = 13;
             // 
+            // 错误列表ToolStripMenuItem
+            // 
+            this.错误列表ToolStripMenuItem.Name = "错误列表ToolStripMenuItem";
+            this.错误列表ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.错误列表ToolStripMenuItem.Text = "错误列表";
+            this.错误列表ToolStripMenuItem.Click += new System.EventHandler(this.错误列表ToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(177, 6);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -768,5 +784,7 @@ namespace AlgodooStudio.ASProject
         private WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender vsToolStripExtender;
         private System.Windows.Forms.ToolStripMenuItem 取色器ToolStripMenuItem;
         private System.Windows.Forms.SplitContainer sp;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem 错误列表ToolStripMenuItem;
     }
 }
