@@ -156,7 +156,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 }
 
                 //数字
-                else if (char.IsDigit(c))
+                else if (char.IsDigit(c) || (pos + 1 < cleanContent.Length && c == '.' && char.IsDigit(cleanContent[pos + 1])))
                 {
                     var start = pos;
                     string number = ReadNumber(cleanContent);
