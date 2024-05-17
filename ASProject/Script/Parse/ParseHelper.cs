@@ -10,7 +10,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
     {
         public static int GetBinaryPriority(this ThymeToken op)
         {
-            if (op.Type=="s_symbol" || op.Type == "m_symbol")
+            if (!(op is null) && (op.Type=="s_symbol" || op.Type == "m_symbol"))
             {
                 switch (op.Value)
                 {
@@ -51,7 +51,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
 
         public static int GetUnaryPriority(this ThymeToken op)
         {
-            if (op.Type == "s_symbol" || op.Type == "m_symbol")
+            if (!(op is null) &&( op.Type == "s_symbol" || op.Type == "m_symbol"))
             {
                 switch (op.Value)
                 {

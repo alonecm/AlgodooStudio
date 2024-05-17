@@ -11,7 +11,7 @@ namespace AlgodooStudio.ASProject.Script.Parse.Expr
             Right = right;
         }
 
-        public override string Type => "UnaryExpression";
+        public override string Type => "UnaryExpression "+ Op.Value;
 
         public ThymeToken Op { get; }
 

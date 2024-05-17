@@ -9,6 +9,7 @@ using ICSharpCode.AvalonEdit.Search;
 using PhunSharp;
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -41,7 +42,7 @@ namespace AlgodooStudio.ASProject
         /// <summary>
         /// 提醒器是否已经显示
         /// </summary>
-        private bool _isReminderShow;
+        private bool _isReminderShow = false;
         /// <summary>
         /// 提词器
         /// </summary>
@@ -172,7 +173,7 @@ namespace AlgodooStudio.ASProject
             _editor.TextArea.Caret.PositionChanged += Caret_PositionChanged;
             _editor.TextArea.MouseWheel += TextArea_MouseWheel;
             _editor.TextArea.SelectionChanged += TextArea_SelectionChanged;
-            _editor.TextArea.TextEntered += TextArea_TextEntered;
+            _editor.TextArea.TextEntering += TextArea_TextEntering;
             _editor.TextChanged += Editor_TextChanged;
             //将元素主机作为编辑器创建
             elementHost.Child = _editor;
@@ -190,11 +191,16 @@ namespace AlgodooStudio.ASProject
             //rightMenu.Renderer = ThemeToolStripRenderer.GetRenderer();
         }
 
-      
+        private void Caret_PositionChanged1(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+
 
         #region 编辑器
         /// <summary>
-        /// 文字变动事件
+        /// 文字变动驱动错误检查
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -208,40 +214,30 @@ namespace AlgodooStudio.ASProject
                 SetWindowTitle(true);//展示标题到窗口
             }
             errorCheckTimer.Enabled = true;
+            
         }
         /// <summary>
-        /// 文字输入事件
+        /// 文字输入前创建提词器
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TextArea_TextEntered(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        private void TextArea_TextEntering(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            if (!ReadOnly)
+            if (!ReadOnly)//可编辑时才显示
             {
                 //提词器未显示时检查内容
                 if (!_isReminderShow)
                 {
-                    //如果内容是字母或数字则创建提词器并标注已经启动
-                    if (Regex.IsMatch(e.Text, @"\w|\p{P}"))
+                    //如果内容是字母或数字则创建提词器
+                    if (Regex.IsMatch(e.Text, @"\w"))
                     {
                         CreateReminder();
-                    }
-                }
-                else
-                {
-                    //提词器如果已经显示则检查是否是空格是则关闭提词器并标注已关闭
-                    //如果内容是空格则关闭提词器并标注已经关闭
-                    if (Regex.IsMatch(e.Text, @"\s"))
-                    {
-                        //这个样子只是把之前的给替换掉
-                        _reminder.CompletionList.SelectItem(_editor.Document.GetText(_reminder.StartOffset, _reminder.TextArea.Caret.Offset - _reminder.StartOffset));
-                        _reminder.Close();
                     }
                 }
             }
         }
         /// <summary>
-        /// 所选内容变动事件
+        /// 所选内容变动驱动选择长度
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -299,6 +295,29 @@ namespace AlgodooStudio.ASProject
         }
         #endregion 编辑器
 
+        #region 提词器
+        private void _reminder_Closed(object sender, EventArgs e)
+        {
+            _isReminderShow = false;
+        }
+        private void _reminder_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            _isReminderShow = true;
+        }
+        /// <summary>
+        /// 选定内容如果为空则关闭
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (_reminder.CompletionList.ListBox.SelectedItems.Count == 0)
+            {
+                _reminder.Close();//匹配不到东西就关闭
+            }
+        }
+        #endregion
+
         #region 窗体
         /// <summary>
         /// 窗体关闭时的检查
@@ -351,17 +370,6 @@ namespace AlgodooStudio.ASProject
         }
         #endregion 窗体
 
-        #region 提词器
-        private void Reminder_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            _isReminderShow = true;
-        }
-        private void Reminder_Closed(object sender, EventArgs e)
-        {
-            _isReminderShow = false;
-        }
-        #endregion 提词器
-
         #region 右键菜单
         private void 复制ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -396,8 +404,10 @@ namespace AlgodooStudio.ASProject
             _reminder = new CompletionWindow(_editor.TextArea);
             //reminder.Background = new SolidColorBrush(NormalColorToMediaColor(Setting.theme.BackColor1));
             //reminder.Foreground = new SolidColorBrush(NormalColorToMediaColor(Setting.theme.VarNameColor));
-            _reminder.Closed += Reminder_Closed;
-            _reminder.Loaded += Reminder_Loaded;
+            _reminder.CompletionList.IsFiltering = true;
+            _reminder.Loaded += _reminder_Loaded;
+            _reminder.Closed += _reminder_Closed;
+            _reminder.CompletionList.ListBox.SelectionChanged += ListBox_SelectionChanged;
             AddReminderItem(_reminder);
             _reminder.Show();
         }
@@ -619,9 +629,11 @@ namespace AlgodooStudio.ASProject
         {
             if (!this.ReadOnly)//只解析可编辑文档
             {
+                _tokenizer.Diagnostics.Clear();
                 var tos = _tokenizer.Tokenize(_editor.Text);
                 var parser = new ThymeParser(tos);
                 var result = parser.Parse();
+                parser.Diagnostics.AddRange(_tokenizer.Diagnostics);//合并异常
                 //如果文件存在则按照文件名设置
                 if (File.Exists(_filepath))
                 {

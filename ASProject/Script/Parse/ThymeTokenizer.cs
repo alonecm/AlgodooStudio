@@ -36,6 +36,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
 
             //特殊词
             RegistSpecial("alloc", "alloc");
+            RegistSpecial("inf", "inf");
 
             commentRemover = CommentRemover.DefaultRemover;
         }
@@ -185,7 +186,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                         }
                         else
                         {
-                            ReportError(new ThymeDiagnostic($"不支持的符号: {c}", new Range(start, pos + 1)));
+                            ReportError(new ThymeDiagnostic($"不支持的符号 '{c}'", new Range(start, pos + 1)));
                             tokens.Add(new ThymeToken("UnsupportSymbol", $"{c}", new Range(start, pos + 1)));
                             break;
                         }

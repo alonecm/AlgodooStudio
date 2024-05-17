@@ -643,6 +643,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
 
                 //特殊词
                 case "alloc": return new Alloc(Next(ref currentTokenCount));
+                case "inf": return new Inf(Next(ref currentTokenCount));
 
 
                 //不支持的格式
