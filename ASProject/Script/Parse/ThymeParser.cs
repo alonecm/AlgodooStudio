@@ -591,6 +591,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                         case "(": return ParseFunction(ref currentTokenCount);
                         case "[": return ParseArray(ref currentTokenCount);
                         case "{": return ParseBlock(ref currentTokenCount);
+                        case "∞": return new Inf(Next(ref currentTokenCount));
                         case ",": case ";": return new EmptyExpression(Next(ref currentTokenCount));
                         default:
                             ReportErrorSymbol(Current);
@@ -642,6 +643,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
 
                 //特殊词
                 case "alloc": return new Alloc(Next(ref currentTokenCount));
+
 
                 //不支持的格式
                 case "UnsupportSymbol":

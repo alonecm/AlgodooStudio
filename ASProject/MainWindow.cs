@@ -294,7 +294,7 @@ namespace AlgodooStudio.ASProject
         {
             foreach (var item in dockPanel.Contents)
             {
-                if (item.DockHandler.TabText == windowName && item is TextEditWindow t)
+                if (item.DockHandler.TabText.Replace("*","") == windowName && item is TextEditWindow t)
                 {
                     item.DockHandler.Activate();
                     t.SelectErrorPos(range);

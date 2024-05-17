@@ -148,11 +148,11 @@
     <Compile Include="ASProject\Dialogs\SettingsDialog.Designer.cs">
       <DependentUpon>SettingsDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="ASProject\ErrorList.cs">
+    <Compile Include="ASProject\ErrorListWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ASProject\ErrorList.Designer.cs">
-      <DependentUpon>ErrorList.cs</DependentUpon>
+    <Compile Include="ASProject\ErrorListWindow.Designer.cs">
+      <DependentUpon>ErrorListWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="ASProject\Interface\IEditable.cs" />
     <Compile Include="ASProject\Interface\IReplaceable.cs" />
@@ -171,6 +171,7 @@
     <Compile Include="ASProject\Script\Parse\Expr\EmptyExpression.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Function.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Ifstatement.cs" />
+    <Compile Include="ASProject\Script\Parse\Expr\Inf.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Line.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Literal.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Identifier.cs" />
@@ -284,8 +285,8 @@
     <EmbeddedResource Include="ASProject\Dialogs\SettingsDialog.resx">
       <DependentUpon>SettingsDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ASProject\ErrorList.resx">
-      <DependentUpon>ErrorList.cs</DependentUpon>
+    <EmbeddedResource Include="ASProject\ErrorListWindow.resx">
+      <DependentUpon>ErrorListWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ASProject\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>

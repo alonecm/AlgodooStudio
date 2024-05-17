@@ -21,7 +21,8 @@ namespace AlgodooStudio.ASProject.Script.Parse
             RegistSingleSymbol(
                 '+', '-', '*', '/', '%', '^', '>', '<', '!',
                 '=', '.', ',', ':', ';', '?',
-                '(', ')', '[', ']', '{', '}');
+                '(', ')', '[', ']', '{', '}',
+                '∞');
 
             //多字符
             RegistMultipleSymbol(

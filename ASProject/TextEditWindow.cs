@@ -617,12 +617,7 @@ namespace AlgodooStudio.ASProject
         /// <param name="e"></param>
         private void errorCheckTimer_Tick(object sender, EventArgs e)
         {
-            if (!this.ReadOnly && (
-                Path.GetExtension(_title) == ".cfg*" ||
-                Path.GetExtension(_title) == ".thm*" ||
-                Path.GetExtension(_title) == ".cfg" || 
-                Path.GetExtension(_title) == ".thm"|| 
-                Path.GetExtension(_title) == ""))//只解析可编辑文档和cfg thm
+            if (!this.ReadOnly)//只解析可编辑文档
             {
                 var tos = _tokenizer.Tokenize(_editor.Text);
                 var parser = new ThymeParser(tos);
