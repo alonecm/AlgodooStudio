@@ -170,6 +170,7 @@
     <Compile Include="ASProject\Script\Parse\Expr\BraceExpression.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\EmptyExpression.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Function.cs" />
+    <Compile Include="ASProject\Script\Parse\Expr\Ifstatement.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Line.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Literal.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Identifier.cs" />

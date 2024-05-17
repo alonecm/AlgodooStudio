@@ -20,10 +20,11 @@ namespace AlgodooStudio.ASProject.Script.Parse
         public override ThymeSyntaxNode Parse()
         {
             var nodes = new List<ThymeSyntaxNode>();
+            var currentTokenCount = 0;
             while (!IsEnd)
             {
-                var node = ParseMain();
-
+                var node = ParseMain(ref currentTokenCount);
+                
                 //出现空表达式则报错
                 if (node is EmptyExpression e)
                 {
@@ -38,8 +39,9 @@ namespace AlgodooStudio.ASProject.Script.Parse
                     //当前是分号创建行并继续
                     if (Current.Value == ";")
                     {
-                        var jump = Next();
+                        var jump = Next(ref currentTokenCount);
                         nodes.Add(new Line(node));
+                        currentTokenCount = 0;
                     }
                     else
                     {
@@ -56,69 +58,89 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 {
                     //停止则直接保存并结束
                     nodes.Add(new Line(node));
+                    currentTokenCount = 0;
                     break;
                 }
             }
             return new Root(nodes.ToArray());
         }
-        
+
+        protected new ThymeToken Next(ref int currentTokenCount)
+        {
+            currentTokenCount++;
+            return base.Next();
+        }
+
         /// <summary>
         /// 主要转换
         /// </summary>
         /// <returns></returns>
-        private ThymeSyntaxNode ParseMain()
+        private ThymeSyntaxNode ParseMain(ref int currentTokenCount)
         {
-            return ParseAssignment();
+            return ParseAssignment(ref currentTokenCount);
         }
 
         /// <summary>
         /// 转换赋值
         /// </summary>
         /// <returns></returns>
-        private ThymeSyntaxNode ParseAssignment()
+        private ThymeSyntaxNode ParseAssignment(ref int currentTokenCount)
         {
-            if (Current.Type == "identifier" && !(Preview is null))
+            //解析左侧
+            var left = ParseIfStatement(ref currentTokenCount);
+
+            //左侧为标识符且当前为赋值或重定向则进行解析
+            if (!IsEnd && (Current.Value == "=" || Current.Value == ":=" || Current.Value == "->"))
             {
-                if (Preview.Value == "=")
+                if (currentTokenCount > 1)
                 {
-                    var id = ParsePrimary();
-                    var eq = Next();
-                    return new Assign(id, ParseAssignment());
+                    ReportError(new ThymeDiagnostic($"左侧令牌太多！(应为1个，现为{currentTokenCount}个)", Review.Range));
+                    GoEnd();
+                    return null;
                 }
-                if (Preview.Value == ":=")
+
+                if (left is Identifier)
                 {
-                    var id = ParsePrimary();
-                    var point = Next();
-                    return new NewAssign(id, ParseAssignment());
-                }
-                if (Preview.Value == "->")
-                {
-                    var id = ParsePrimary();
-                    var re = Next();
-                    if (IsEnd || Current.Value != "{")
+                    switch (Current.Value)
                     {
-                        ReportMissing("{", Review.Range);
-                        GoEnd();
-                        return null;
+                        case "=":
+                            var eq = Next(ref currentTokenCount);
+                            return new Assign(left, ParseAssignment(ref currentTokenCount));
+                        case ":=":
+                            var point = Next(ref currentTokenCount);
+                            return new NewAssign(left, ParseAssignment(ref currentTokenCount));
+                        case "->":
+                            var re = Next(ref currentTokenCount);
+                            if (IsEnd || Current.Value != "{")
+                            {
+                                ReportMissing("{", Review.Range);
+                                GoEnd();
+                                return null;
+                            }
+                            return new Redirect(left, ParseBlock(ref currentTokenCount));
                     }
-                    return new Redirect(id, ParseBlock());
+                }
+                else
+                {
+                    ReportError(new ThymeDiagnostic($"不能对 '{left.Type}' 赋值", Preview.Range));
+                    GoEnd();
+                    return null;
                 }
             }
-            //转换条件表达式
-            return ParseIfStatement();
+            return left;
         }
 
         /// <summary>
         /// 转换条件表达式
         /// </summary>
         /// <returns></returns>
-        private ThymeSyntaxNode ParseIfStatement()
+        private ThymeSyntaxNode ParseIfStatement(ref int currentTokenCount)
         {
             //TODO: 需要不允许冒号间的节点深度超过1
-            var expr1 = ParseExpression();
+            var expr1 = ParseExpression(ref currentTokenCount);
             if (!IsEnd && Current.Value == "?")//如果表达式后有问号则证明是三元表达式
             {
-                var question = Next();
+                var question = Next(ref currentTokenCount);
 
                 if (IsEnd)//缺失表达式2
                 {
@@ -126,7 +148,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                     GoEnd();
                     return null;
                 }
-                var expr2 = ParseExpression();
+                var expr2 = ParseAssignment(ref currentTokenCount);
 
                 if (IsEnd || Current.Value != ":")//缺少冒号或结束了则报错
                 {
@@ -134,7 +156,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                     GoEnd();
                     return null;
                 }
-                var colon = Next();
+                var colon = Next(ref currentTokenCount);
 
                 if (IsEnd)//缺失表达式3
                 {
@@ -142,7 +164,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                     GoEnd();
                     return null;
                 }
-                var expr3 = ParseExpression();
+                var expr3 = ParseAssignment(ref currentTokenCount);
 
                 return new Ifstatement(expr1, expr2, expr3);
             }
@@ -155,26 +177,27 @@ namespace AlgodooStudio.ASProject.Script.Parse
         /// 转换表达式
         /// </summary>
         /// <returns></returns>
-        private ThymeSyntaxNode ParseExpression(int p = 0)
+        private ThymeSyntaxNode ParseExpression(ref int currentTokenCount, int p = 0)
         {
             ThymeSyntaxNode left;
             var unary = Current.GetUnaryPriority();
             if (unary != 0 && p <= unary)//让高优先级字符参与，同时确保运算符是存在的
             {
-                var op = Next();//获取运算符
-                var expr = ParseExpression();//获取元素
+                var op = Next(ref currentTokenCount);//获取运算符
+                var expr = ParseExpression(ref currentTokenCount);//获取元素
                 left = new UnaryExpression(op, expr);
             }
             else
             {
-                left = ParsePrimary();//如果不是一元运算符则直接获取元素
+                left = ParsePrimary(ref currentTokenCount);//如果不是一元运算符则直接获取元素
             }
+
 
             //如果给出的左侧是数组且后方有追加符，则是数组合并
             if (!IsEnd && Current.Value == "++")
             {
-                var pp = Next();
-                var right = ParseExpression();
+                var pp = Next(ref currentTokenCount);
+                var right = ParseExpression(ref currentTokenCount);
                 return new ArrayCombine(left, right);
             }
 
@@ -185,8 +208,10 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 //右侧非空，是标识符
                 if (!(Preview is null) && (Preview.Type == "identifier"))
                 {
-                    var point = Next();
-                    return new MemberCall(left, ParseAssignment());
+                    currentTokenCount--;//这两个是为了保证成员调用只识别为1个令牌而不是多个
+                    currentTokenCount--;
+                    var point = Next(ref currentTokenCount);
+                    return new MemberCall(left, ParseAssignment(ref currentTokenCount));
                 }
                 else
                 {
@@ -196,13 +221,14 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 }
             }
 
+
             while (!IsEnd)//在保证未结束的情况下继续执行这个循环
             {
                 var binary = Current.GetBinaryPriority();
                 if (binary == 0 || binary <= p)//非二元运算符或这个二元运算符优先级比父运算符优先级低则结束
                     break;
-                var op = Next();//记录运算符
-                var right = ParseExpression(binary);
+                var op = Next(ref currentTokenCount);//记录运算符
+                var right = ParseExpression(ref currentTokenCount, binary);
                 left = new BinaryExpression(left, op, right);
             }
 
@@ -213,9 +239,9 @@ namespace AlgodooStudio.ASProject.Script.Parse
         /// 转换函数
         /// </summary>
         /// <returns></returns>
-        private ThymeSyntaxNode ParseFunction()
+        private ThymeSyntaxNode ParseFunction(ref int currentTokenCount)
         {
-            var brace = ParseBrace();
+            var brace = ParseBrace(ref currentTokenCount);
             //未结束且看是否符合函数的定义格式
             if (!IsEnd && Current.Value == "=>")
             {
@@ -243,11 +269,11 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 //允许构建函数
                 if (allowBuildFlag)
                 {
-                    var def = Next();
+                    var def = Next(ref currentTokenCount);
                     //看是否缺少括号
                     if (!IsEnd && Current.Value == "{")
                     {
-                        var block = ParseBlock();
+                        var block = ParseBlock(ref currentTokenCount);
                         Params @params = null;
                         switch (brace)
                         {
@@ -279,11 +305,11 @@ namespace AlgodooStudio.ASProject.Script.Parse
         /// 转换大括号
         /// </summary>
         /// <returns></returns>
-        private ThymeSyntaxNode ParseBlock()
+        private ThymeSyntaxNode ParseBlock(ref int currentTokenCount)
         {
-            var start = Next();//略过首括号
+            var start = Next(ref currentTokenCount);//略过首括号
+            var block_CurrentTokenCount = 0;
             var nodes = new List<ThymeSyntaxNode>();
-
             //如果直接结束了则报错
             if (IsEnd)
             {
@@ -297,11 +323,11 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 //如果直接结束了则结束
                 if (Current.Value == "}")
                 {
-                    var end = Next();//略过
+                    var end = Next(ref block_CurrentTokenCount);//略过
                     break;
                 }
 
-                var node = ParseMain();
+                var node = ParseMain(ref block_CurrentTokenCount);
 
                 //出现空表达式则报错
                 if (node is EmptyExpression e)
@@ -317,13 +343,14 @@ namespace AlgodooStudio.ASProject.Script.Parse
                     //碰上分号则换行
                     if (Current.Value == ";")
                     {
-                        var jump = Next();//略过
+                        var jump = Next(ref block_CurrentTokenCount);//略过
                         nodes.Add(new Line(node));
+                        block_CurrentTokenCount = 0;
                     }
                     //碰上大括号则结束
                     else if (Current.Value == "}")
                     {
-                        var end = Next();//略过
+                        var end = Next(ref block_CurrentTokenCount);//略过
                         nodes.Add(new Line(node));
                         break;
                     }
@@ -359,9 +386,10 @@ namespace AlgodooStudio.ASProject.Script.Parse
         /// 转换数组
         /// </summary>
         /// <returns></returns>
-        private ThymeSyntaxNode ParseArray()
+        private ThymeSyntaxNode ParseArray(ref int currentTokenCount)
         {
-            var start = Next();//略过首括号
+            var start = Next(ref currentTokenCount);//略过首括号
+            var array_CurrentTokenCount = 0;
             var nodes = new List<ThymeSyntaxNode>();
 
             //如果直接结束了则报错
@@ -377,11 +405,11 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 //如果直接结束了则结束
                 if (Current.Value == "]")
                 {
-                    var end = Next();//略过
+                    var end = Next(ref array_CurrentTokenCount);//略过
                     break;
                 }
 
-                var node = ParseMain();
+                var node = ParseMain(ref array_CurrentTokenCount);
 
                 //出现空表达式则报错
                 if (node is EmptyExpression e)
@@ -397,13 +425,13 @@ namespace AlgodooStudio.ASProject.Script.Parse
                     //碰上逗号则略过
                     if (Current.Value == ",")
                     {
-                        var jump = Next();//略过
+                        var jump = Next(ref array_CurrentTokenCount);//略过
                         nodes.Add(node);
                     }
                     //碰上方括号说明是结束了
                     else if (Current.Value == "]")
                     {
-                        var end = Next();//略过
+                        var end = Next(ref array_CurrentTokenCount);//略过
                         nodes.Add(node);
                         break;
                     }
@@ -429,12 +457,12 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 }
                 if (Current.Value == "[") //如果当前还有数组则按照数组群组调用来表示
                 {
-                    var arrCall = ParseArray();
+                    var arrCall = ParseArray(ref currentTokenCount);
                     return new ArrayCall(arr, arrCall);
                 }
                 if (Current.Value=="(")
                 {
-                    var idx = ParseBrace();
+                    var idx = ParseBrace(ref currentTokenCount);
                     return new Call(arr, idx);
                 }
             }
@@ -446,9 +474,10 @@ namespace AlgodooStudio.ASProject.Script.Parse
         /// 转换小括号（包圆全部的小括号相关方面）
         /// </summary>
         /// <returns></returns>
-        private ThymeSyntaxNode ParseBrace()
+        private ThymeSyntaxNode ParseBrace(ref int currentTokenCount)
         {
-            var start = Next();//略过首括号
+            var start = Next(ref currentTokenCount);//略过首括号
+            var brace_CurrentTokenCount = 0;
             var nodes = new List<ThymeSyntaxNode>();
 
             //如果直接结束了则报错
@@ -464,11 +493,11 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 //如果直接结束了则结束
                 if (Current.Value == ")")
                 {
-                    var end = Next();//略过
+                    var end = Next(ref brace_CurrentTokenCount);//略过
                     break;
                 }
 
-                var node = ParseMain();
+                var node = ParseMain(ref brace_CurrentTokenCount);
 
                 //出现空表达式则报错
                 if (node is EmptyExpression e)
@@ -484,13 +513,13 @@ namespace AlgodooStudio.ASProject.Script.Parse
                     //碰上逗号则是参数或数组
                     if (Current.Value == "," )
                     {
-                        var jump = Next();//略过
+                        var jump = Next(ref brace_CurrentTokenCount);//略过
                         nodes.Add(node);
                     }
                     //碰上小括号说明是结束了
                     else if (Current.Value == ")")
                     {
-                        var end = Next();//略过
+                        var end = Next(ref brace_CurrentTokenCount);//略过
                         nodes.Add(node);
                         break;
                     }
@@ -524,12 +553,12 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 {
                     if (Current.Value == "[")
                     {
-                        var idx = ParseArray();
+                        var idx = ParseArray(ref currentTokenCount);
                         return new ArrayCall(temp, idx);
                     }
                     if (Current.Value == "(")
                     {
-                        var idx = ParseBrace();
+                        var idx = ParseBrace(ref currentTokenCount);
                         return new Call(temp, idx);
                     }
                 }
@@ -537,7 +566,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 {
                     if (Current.Value == "(")
                     {
-                        var idx = ParseBrace();
+                        var idx = ParseBrace(ref currentTokenCount);
                         return new Call(temp, idx);
                     }
                 }
@@ -550,7 +579,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
         /// 转换基本
         /// </summary>
         /// <returns></returns>
-        private ThymeSyntaxNode ParsePrimary()
+        private ThymeSyntaxNode ParsePrimary(ref int currentTokenCount)
         {
             switch (Current.Type)
             {
@@ -559,10 +588,10 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 case "m_symbol":
                     switch (Current.Value)
                     {
-                        case "(": return ParseFunction();
-                        case "[": return ParseArray();
-                        case "{": return ParseBlock();
-                        case ",": case ";": return new EmptyExpression(Next());
+                        case "(": return ParseFunction(ref currentTokenCount);
+                        case "[": return ParseArray(ref currentTokenCount);
+                        case "{": return ParseBlock(ref currentTokenCount);
+                        case ",": case ";": return new EmptyExpression(Next(ref currentTokenCount));
                         default:
                             ReportErrorSymbol(Current);
                             GoEnd(); 
@@ -573,11 +602,11 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 case "number":
                 case "bool":
                 case "string":
-                    return new Literal(Next());
+                    return new Literal(Next(ref currentTokenCount));
 
                 //标识符
                 case "identifier":
-                    var id = new Identifier(Next());
+                    var id = new Identifier(Next(ref currentTokenCount));
                     if (!IsEnd)
                     {
                         //函数调用
@@ -586,7 +615,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                             case "(":
                             case "{":
                             case "[":
-                                return new Call(id, ParsePrimary());
+                                return new Call(id, ParsePrimary(ref currentTokenCount));
                         }
                         //函数调用
                         switch (Current.Type)
@@ -597,7 +626,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                             case "bool":
                             case "string":
                             case "identifier":
-                                return new Call(id, ParsePrimary());
+                                return new Call(id, ParsePrimary(ref currentTokenCount));
                         }
                     }
                     return id;
@@ -606,17 +635,17 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 case "keyword":
                     switch (Current.Value)
                     {
-                        case "null": return new Null(Next());
-                        case "NaN": return new NaN(Next());
+                        case "null": return new Null(Next(ref currentTokenCount));
+                        case "NaN": return new NaN(Next(ref currentTokenCount));
                         default: throw new Exception($"未定义关键词 '{Current.Value}'");
                     }
 
                 //特殊词
-                case "alloc": return new Alloc(Next());
+                case "alloc": return new Alloc(Next(ref currentTokenCount));
 
                 //不支持的格式
                 case "UnsupportSymbol":
-                    return new UnsupportSymbol(Next());
+                    return new UnsupportSymbol(Next(ref currentTokenCount));
 
                 default:
                     throw new Exception($"未定义类型 '{Current.Type}'");
