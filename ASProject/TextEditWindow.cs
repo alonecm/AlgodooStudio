@@ -578,14 +578,17 @@ namespace AlgodooStudio.ASProject
         /// <param name="e"></param>
         private void rightMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            粘贴ToolStripMenuItem.Visible =
-                toolStripSeparator5.Visible =
-                Clipboard.ContainsText();
+            bool selectNotZero = _editor.SelectionLength != 0;
+            bool clipboardContainedText = Clipboard.ContainsText();
+            将选定文字保存为片段ToolStripMenuItem.Visible = selectNotZero;
 
-            将选定文字保存为片段ToolStripMenuItem.Visible =
-            toolStripSeparator5.Visible =
-            复制ToolStripMenuItem.Visible =
-            剪切ToolStripMenuItem.Visible = (_editor.SelectionLength != 0);
+            toolStripSeparator5.Visible = selectNotZero;
+
+            复制ToolStripMenuItem.Visible = selectNotZero;
+            剪切ToolStripMenuItem.Visible = selectNotZero;
+            粘贴ToolStripMenuItem.Visible = clipboardContainedText;
+
+            toolStripSeparator3.Visible = (clipboardContainedText || selectNotZero);
         }
         /// <summary>
         /// 选定文字并允许保存

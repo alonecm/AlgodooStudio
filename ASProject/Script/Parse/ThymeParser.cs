@@ -157,7 +157,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                     return null;
                 }
                 var colon = Next(ref currentTokenCount);
-
+               
                 if (IsEnd)//缺失表达式3
                 {
                     ReportMissing("expression3", Review.Range);
@@ -310,17 +310,18 @@ namespace AlgodooStudio.ASProject.Script.Parse
             var start = Next(ref currentTokenCount);//略过首括号
             var block_CurrentTokenCount = 0;
             var nodes = new List<ThymeSyntaxNode>();
-            //如果直接结束了则报错
-            if (IsEnd)
-            {
-                ReportMissing("}", Review.Range);
-                GoEnd();
-                return null;
-            }
 
             while (true)
             {
-                //如果直接结束了则结束
+                //如果直接结束了则报错
+                if (IsEnd)
+                {
+                    ReportMissing("}", Review.Range);
+                    GoEnd();
+                    return null;
+                }
+
+                //找到结尾大括号则结束块解析
                 if (Current.Value == "}")
                 {
                     var end = Next(ref block_CurrentTokenCount);//略过
