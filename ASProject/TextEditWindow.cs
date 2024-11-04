@@ -437,7 +437,7 @@ namespace AlgodooStudio.ASProject
             //如果只读
             if (ReadOnly)
             {
-                str+="[只读] ";
+                str = "[只读] " + str;
             }
             //记录标题
             str += this._title;

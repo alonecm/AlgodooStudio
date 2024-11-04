@@ -228,6 +228,11 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 if (binary == 0 || binary <= p)//非二元运算符或这个二元运算符优先级比父运算符优先级低则结束
                     break;
                 var op = Next(ref currentTokenCount);//记录运算符
+                if (IsEnd)
+                {
+                    ReportMissing("右侧表达式", op.Range);
+                    return null;
+                }
                 var right = ParseExpression(ref currentTokenCount, binary);
                 left = new BinaryExpression(left, op, right);
             }

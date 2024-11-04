@@ -136,6 +136,8 @@ namespace AlgodooStudio.ASProject
                 return propertyWindow;
             else if (persistString == typeof(ToolBoxWindow).ToString())
                 return toolBoxWindow;
+            else if (persistString == typeof(ErrorListWindow).ToString())
+                return errorListWindow;
             else
             {
                 //不为固定窗口则使用文本窗口打开
@@ -203,6 +205,7 @@ namespace AlgodooStudio.ASProject
             fileExploreWindow.DockPanel = null;
             propertyWindow.DockPanel = null;
             toolBoxWindow.DockPanel = null;
+            errorListWindow.DockPanel = null;
             // 关闭所有文档窗口
             CloseAllDocuments();
 
@@ -433,11 +436,14 @@ namespace AlgodooStudio.ASProject
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
+            
             //如果需要则保存布局
             if (Program.Setting.IsSavingLayout)
                 dockPanel.SaveAsXml(configFile);
             else if (File.Exists(configFile))
                 File.Delete(configFile);
+            //关闭所有文档窗口
+            CloseAllDocuments();
         }
         /// <summary>
         /// 活动窗口变动事件
@@ -673,6 +679,10 @@ namespace AlgodooStudio.ASProject
         {
             CloseAllContents();
         }
+        private void 关闭所有文档窗口ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CloseAllDocuments();
+        }
         #endregion
 
         #region 插件
@@ -708,10 +718,11 @@ namespace AlgodooStudio.ASProject
         {
             SaveAll();
         }
-        #endregion
 
         #endregion
 
-        
+        #endregion
+
+       
     }
 }

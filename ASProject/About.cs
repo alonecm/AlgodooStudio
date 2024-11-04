@@ -13,7 +13,7 @@ namespace AlgodooStudio.ASProject
             this.labelProductName.Text = AssemblyProduct;
             this.labelVersion.Text = "v0.1.4-beta";
             this.labelCopyright.Text = AssemblyCopyright;
-            this.labelCompanyName.Text = String.Format("作者 {0}", AssemblyAuthor);
+            this.labelCompanyName.Text = String.Format("作者：{0}", AssemblyAuthor);
             this.textBoxDescription.Text = AssemblyDescription;
         }
 
