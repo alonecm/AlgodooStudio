@@ -31,9 +31,9 @@
             this.errorList = new System.Windows.Forms.ListView();
             this.errorNum = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.errorPosStart = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.errorPosEnd = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.errorDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.errorFile = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.errorPosEnd = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // errorList
@@ -60,11 +60,17 @@
             // errorNum
             // 
             this.errorNum.Text = "问题编号";
+            this.errorNum.Width = 85;
             // 
             // errorPosStart
             // 
             this.errorPosStart.Text = "起始位置";
             this.errorPosStart.Width = 69;
+            // 
+            // errorPosEnd
+            // 
+            this.errorPosEnd.Text = "结束位置";
+            this.errorPosEnd.Width = 73;
             // 
             // errorDescription
             // 
@@ -75,11 +81,6 @@
             // 
             this.errorFile.Text = "文件";
             this.errorFile.Width = 195;
-            // 
-            // errorPosEnd
-            // 
-            this.errorPosEnd.Text = "结束位置";
-            this.errorPosEnd.Width = 73;
             // 
             // ErrorListWindow
             // 

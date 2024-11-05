@@ -178,23 +178,22 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 else
                 {
                     var start = pos;
-                    if (singleSymbols.Contains(c))
+                    //尝试获取多字符符号
+                    string symbol = ReadMultipleSymbol();
+                    if (symbol != null)
+                    {
+                        tokens.Add(new ThymeToken("m_symbol", symbol, new Range(start, pos)));
+                        Next();
+                    }
+                    else if (singleSymbols.Contains(c))
                     {
                         tokens.Add(new ThymeToken("s_symbol", $"{Next()}", new Range(start, pos)));
+                        continue;
                     }
                     else
                     {
-                        //尝试获取多字符符号
-                        string symbol = ReadMultipleSymbol();
-                        if (symbol != null)
-                        {
-                            tokens.Add(new ThymeToken("m_symbol", symbol, new Range(start, pos)));
-                        }
-                        else
-                        {
-                            ReportError(new ThymeDiagnostic($"不支持的符号 '{c}'", new Range(start, pos + 1)));
-                            tokens.Add(new ThymeToken("UnsupportSymbol", $"{c}", new Range(start, pos + 1)));
-                        }
+                        ReportError(new ThymeDiagnostic($"不支持的符号 '{c}'", new Range(start, pos + 1)));
+                        tokens.Add(new ThymeToken("UnsupportSymbol", $"{c}", new Range(start, pos + 1)));
                         Next();
                     }
                 }
