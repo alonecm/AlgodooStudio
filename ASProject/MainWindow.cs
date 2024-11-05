@@ -86,26 +86,29 @@ namespace AlgodooStudio.ASProject
             InitializeComponent();
             //初始化固定窗口
             CreateStandardWindow();
+            LogWriter.WriteInfo("初始化窗口...");
             //设定渲染器
             vsToolStripExtender.DefaultRenderer = _toolStripProfessionalRenderer;
+            LogWriter.WriteInfo("设定渲染器...");
             //设定主题
             SetSchema(this.蓝色ToolStripMenuItem, null);
 
             //获取配置文件路径
             string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
+            LogWriter.WriteInfo("解析布局...");
             //反序列化布局
             deserializeDockContent = new DeserializeDockContent(GetContentFromPersistString);
             //加载布局
             if (File.Exists(configFile))
                 dockPanel.LoadFromXml(configFile, deserializeDockContent);
 
-
+            LogWriter.WriteInfo("创建最近项管理器...");
             //为最近打开创建MRU管理器
             this.mruManager = new MRUManager(this.最近打开ToolStripMenuItem, this.MRU_Open);
-
+            LogWriter.WriteInfo("创建取色器...");
             //创建取色器
-            colorPicker=new ColorPicker();
-
+            colorPicker = new ColorPicker();
+            LogWriter.WriteInfo("载入插件选项...");
             //加载插件
             ShowPlugins();
         }
@@ -163,23 +166,25 @@ namespace AlgodooStudio.ASProject
         {
             // 设置主题会重启界面
             string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.temp.config");
-
             dockPanel.SaveAsXml(configFile);
             CloseAllContents();
             if (sender == this.蓝色ToolStripMenuItem)
             {
                 this.dockPanel.Theme = this.vS2015BlueTheme;
                 this.EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2015, vS2015BlueTheme);
+                LogWriter.WriteInfo("启用蓝色主题...");
             }
             else if (sender == this.白色ToolStripMenuItem)
             {
                 this.dockPanel.Theme = this.vS2015LightTheme;
                 this.EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2015, vS2015LightTheme);
+                LogWriter.WriteInfo("启用白色主题...");
             }
             else if (sender == this.黑色ToolStripMenuItem)
             {
                 this.dockPanel.Theme = this.vS2015DarkTheme;
                 this.EnableVSRenderer(VisualStudioToolStripExtender.VsVersion.Vs2015, vS2015DarkTheme);
+                LogWriter.WriteInfo("启用黑色主题...");
             }
 
             白色ToolStripMenuItem.Checked = (sender == 白色ToolStripMenuItem);
@@ -194,7 +199,10 @@ namespace AlgodooStudio.ASProject
             }
 
             if (File.Exists(configFile))
+            {
+                LogWriter.WriteInfo("加载布局文件...");
                 dockPanel.LoadFromXml(configFile, deserializeDockContent);
+            }
         }
         /// <summary>
         /// 关闭所有窗口

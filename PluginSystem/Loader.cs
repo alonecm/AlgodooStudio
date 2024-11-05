@@ -59,9 +59,11 @@ namespace AlgodooStudio.PluginSystem
             if (!File.Exists(".\\plgm.bin"))
             {
                 WriteManageFile();
+                LogWriter.WriteInfo("plgm.bin文件不存在，正在创建管理文件plgm.bin...");
             }
             //加载管理文件
             var plgm = SimpleSerializer.GetObjectFromBinaryFile<bool[]>(".\\plgm.bin");
+            LogWriter.WriteInfo("加载管理文件plgm.bin...");
             int pi = 0;
             //依次启用所有注册的插件
             foreach (var plugin in LoadedPlugins.Values)
@@ -74,7 +76,7 @@ namespace AlgodooStudio.PluginSystem
                     }
                     catch (Exception e)
                     {
-                        LogWriter.Write(e.Message);
+                        LogWriter.WriteError(e.Message);
                         MBox.ShowError($"启用插件 \"{plugin.Name}\" 时出现了异常，异常信息已经输出到Logs文件中，请查看");
                     }
                 }
@@ -86,7 +88,7 @@ namespace AlgodooStudio.PluginSystem
                     }
                     catch (Exception e)
                     {
-                        LogWriter.Write(e.Message);
+                        LogWriter.WriteError(e.Message);
                         MBox.ShowError($"禁用插件 \"{plugin.Name}\" 时出现了异常，异常信息已经输出到Logs文件中，请查看");
                     }
                 }
@@ -105,6 +107,7 @@ namespace AlgodooStudio.PluginSystem
                 pluginStatus[i] = plugin.IsEnabled; i++;
             }
             pluginStatus.WriteObjectToBinaryFile(".\\plgm.bin");
+            LogWriter.WriteInfo("写入状态到管理文件中...");
         }
     }
 }

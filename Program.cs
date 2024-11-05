@@ -56,6 +56,7 @@ namespace AlgodooStudio
         /// </summary>
         public static void ReadSetting()
         {
+            LogWriter.WriteInfo("读取设置...");
             //如果文件不存在则先用保存功能创建一个文件
             if (!File.Exists(settingPath))
             {
@@ -77,6 +78,7 @@ namespace AlgodooStudio
         {
             //直接写入
             new SimpleConfig(setting).Write(settingPath, Encoding.Default);
+            LogWriter.WriteInfo("保存设置...");
         }
         /// <summary>
         /// 设定可编辑属性对象的对象
@@ -85,6 +87,7 @@ namespace AlgodooStudio
         public static void SetPropertyEditObject(object obj)
         {
             mainWindow.SetPropertyEditObject(obj);
+            LogWriter.WriteInfo("设定可编辑属性对象的对象：" + obj.ToString());
         }
         /// <summary>
         /// 设定可编辑属性对象的对象
@@ -120,6 +123,7 @@ namespace AlgodooStudio
             if (setting.ScenePath == string.Empty)
             {
                 setting.ScenePath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\Algodoo\\scenes";
+                LogWriter.WriteInfo("获取场景文件夹路径：" + setting.ScenePath);
             }
             if (setting.AlgodooPath == string.Empty)
             {
@@ -130,6 +134,7 @@ namespace AlgodooStudio
                         if (fbd.ShowDialog() == DialogResult.OK)
                         {
                             setting.AlgodooPath = fbd.SelectedPath;
+                            LogWriter.WriteInfo("设置algodoo根目录为："+ fbd.SelectedPath);
                         }
                     }
                 }
@@ -144,12 +149,14 @@ namespace AlgodooStudio
             if (!Directory.Exists(".\\Plugins"))
             {
                 Directory.CreateDirectory(".\\Plugins");
+                LogWriter.WriteInfo("创建Plugins文件夹...");
             }
             //加载插件
             var files = new DirectoryInfo(".\\Plugins").GetFiles("*.dll");
             foreach (var item in files)
             {
                 Loader.Load(item.FullName);
+                LogWriter.WriteInfo("加载插件："+ item.Name);
             }
             //跟随记录启用插件
             Loader.EnablePlugins();
@@ -163,6 +170,7 @@ namespace AlgodooStudio
             if (!Directory.Exists(".\\Clips"))
             {
                 Directory.CreateDirectory(".\\Clips");
+                LogWriter.WriteInfo("创建Clips文件夹...");
             }
         }
         

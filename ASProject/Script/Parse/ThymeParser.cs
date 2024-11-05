@@ -122,7 +122,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 }
                 else
                 {
-                    ReportError(new ThymeDiagnostic($"不能对 '{left.Type}' 赋值", Preview.Range));
+                    ReportError(new ThymeDiagnostic($"不能对 '{left.Type}' 赋值", Current.Range));
                     GoEnd();
                     return null;
                 }
@@ -197,6 +197,11 @@ namespace AlgodooStudio.ASProject.Script.Parse
             if (!IsEnd && Current.Value == "++")
             {
                 var pp = Next(ref currentTokenCount);
+                if (IsEnd)
+                {
+                    ReportMissing("右侧表达式", pp.Range);
+                    return null;
+                }
                 var right = ParseExpression(ref currentTokenCount);
                 return new ArrayCombine(left, right);
             }
