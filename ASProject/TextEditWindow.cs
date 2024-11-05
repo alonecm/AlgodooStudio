@@ -63,10 +63,6 @@ namespace AlgodooStudio.ASProject
         /// 查找和替换窗口
         /// </summary>
         private ReplaceWindow _replaceWindow;
-        /// <summary>
-        /// 词法解析器
-        /// </summary>
-        private ThymeTokenizer _tokenizer = new ThymeTokenizer();
 
         /// <summary>
         /// 获取和设置文件路径
@@ -632,11 +628,11 @@ namespace AlgodooStudio.ASProject
         {
             if (!this.ReadOnly)//只解析可编辑文档
             {
-                _tokenizer.Diagnostics.Clear();
-                var tos = _tokenizer.Tokenize(_editor.Text);
+                var tokenizer = new ThymeTokenizer(_editor.Text);
+                var tos = tokenizer.Tokenize();
                 var parser = new ThymeParser(tos);
                 var result = parser.Parse();
-                parser.Diagnostics.AddRange(_tokenizer.Diagnostics);//合并异常
+                parser.Diagnostics.AddRange(tokenizer.Diagnostics);//合并异常
                 //如果文件存在则按照文件名设置
                 if (File.Exists(_filepath))
                 {

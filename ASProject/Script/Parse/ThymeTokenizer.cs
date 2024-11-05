@@ -9,14 +9,32 @@ namespace AlgodooStudio.ASProject.Script.Parse
 {
     public sealed class ThymeTokenizer : Tokenizer<ThymeTokenCollection>
     {
-        private readonly CommentRemover commentRemover;
-        /// <summary>
-        /// 忽略注释功能
-        /// </summary>
-        public bool JumpComment { get; set; } = false;
+        private bool removeComment;
 
-        public ThymeTokenizer()
+        /// <summary>
+        /// 创建thyme的标注器
+        /// </summary>
+        /// <param name="content">解析内容</param>
+        /// <param name="removeComment">移除注释</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public ThymeTokenizer(string content, bool removeComment = false) : base(content)
         {
+            if (content is null)
+            {
+                throw new ArgumentNullException(nameof(content));
+            }
+
+            this.removeComment = removeComment;
+
+            //移除注释
+            if (removeComment)
+            {
+                this.content = CommentRemover.DefaultRemover.RemoveComments(this.content);
+            }
+
+            //初始化位置
+            this.pos = 0;
+
             //单符号
             RegistSingleSymbol(
                 '+', '-', '*', '/', '%', '^', '>', '<', '!',
@@ -38,24 +56,12 @@ namespace AlgodooStudio.ASProject.Script.Parse
             RegistSpecial("alloc", "alloc");
             RegistSpecial("inf", "inf");
 
-            commentRemover = CommentRemover.DefaultRemover;
         }
 
-        public override ThymeTokenCollection Tokenize(string content)
+        public override ThymeTokenCollection Tokenize()
         {
-            if (content is null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            this.pos = 0;
 
-            string cleanContent = content;
-
-            //移除注释
-            if (JumpComment)
-            {
-                cleanContent = commentRemover.RemoveComments(content);
-            }
-                
             //多重注释标记
             var mutipleComment = false;
             //行注释
@@ -68,57 +74,60 @@ namespace AlgodooStudio.ASProject.Script.Parse
             pos = 0;
 
             //读取代码
-            while (pos < cleanContent.Length)
+            while (pos < content.Length)
             {
-                var c = cleanContent[pos];
+                var c = Peek(0);
 
-                //结束多行注释
-                if (pos + 1 < cleanContent.Length && c == '*' && cleanContent[pos + 1] == '/')
+                if (!removeComment)
                 {
-                    mutipleComment = false;
-                    pos++;
-                    pos++;
-                    continue;
-                }
+                    //结束多行注释
+                    if (pos + 1 < content.Length && c == '*' && Peek(1) == '/')
+                    {
+                        mutipleComment = false;
+                        pos++;
+                        pos++;
+                        continue;
+                    }
 
-                //执行多重注释
-                if (mutipleComment)
-                {
-                    pos++;
-                    continue;
-                }
+                    //执行多重注释
+                    if (mutipleComment)
+                    {
+                        pos++;
+                        continue;
+                    }
 
-                //启动多重注释
-                if (pos + 1 < cleanContent.Length && c == '/' && cleanContent[pos + 1] == '*')
-                {
-                    mutipleComment = true;
-                    pos++;
-                    pos++;
-                    continue;
-                }
+                    //启动多重注释
+                    if (pos + 1 < content.Length && c == '/' && Peek(1) == '*')
+                    {
+                        mutipleComment = true;
+                        pos++;
+                        pos++;
+                        continue;
+                    }
 
-                //结束单行注释
-                if (singleComment && (c == '\r' || c == '\n'))
-                {
-                    singleComment = false;
-                    pos++;
-                    continue;
-                }
+                    //结束单行注释
+                    if (singleComment && (c == '\r' || c == '\n'))
+                    {
+                        singleComment = false;
+                        pos++;
+                        continue;
+                    }
 
-                //执行单行注释
-                if (singleComment)
-                {
-                    pos++;
-                    continue;
-                }
+                    //执行单行注释
+                    if (singleComment)
+                    {
+                        pos++;
+                        continue;
+                    }
 
-                //启动单行注释
-                if (pos + 1 < cleanContent.Length && c == '/' && cleanContent[pos + 1] == '/')
-                {
-                    singleComment = true;
-                    pos++;
-                    pos++;
-                    continue;
+                    //启动单行注释
+                    if (pos + 1 < content.Length && c == '/' && Peek(1) == '/')
+                    {
+                        singleComment = true;
+                        pos++;
+                        pos++;
+                        continue;
+                    }
                 }
 
                 //越过空白
@@ -128,7 +137,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 else if (char.IsLetter(c) || c == '_')
                 {
                     var start = pos;
-                    var id = this.ReadIdentifier(cleanContent);
+                    var id = this.ReadIdentifier();
                     var lower = id.ToLower();
 
                     if (this.keywords.Contains(id)) //关键词，大小写影响
@@ -153,15 +162,15 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 else if (c == '\"')
                 {
                     var start = pos;
-                    string str = ReadString(cleanContent);
+                    string str = ReadString();
                     tokens.Add(new ThymeToken("string", str, new Range(start, pos)));
                 }
 
                 //数字
-                else if (char.IsDigit(c) || (pos + 1 < cleanContent.Length && c == '.' && char.IsDigit(cleanContent[pos + 1])))
+                else if (char.IsDigit(c) || c == '.' && char.IsDigit(Peek(1)))
                 {
                     var start = pos;
-                    string number = ReadNumber(cleanContent);
+                    string number = ReadNumber();
                     tokens.Add(new ThymeToken("number", number, new Range(start, pos)));
                 }
 
@@ -169,33 +178,28 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 else
                 {
                     var start = pos;
-                    //尝试获取多字符符号
-                    string symbol = ReadMultipleSymbol(cleanContent);
-                    //存在多字符符号
-                    if (symbol != null)
+                    if (singleSymbols.Contains(c))
                     {
-                        tokens.Add(new ThymeToken("m_symbol", symbol, new Range(start, pos)));
+                        tokens.Add(new ThymeToken("s_symbol", $"{Next()}", new Range(start, pos)));
                     }
                     else
                     {
-                        //不属于多字符符号则重新回到原位查找单字符符号
-                        pos = start;
-                        if (singleSymbols.Contains(c))//看字符是否属于单字符符号
+                        //尝试获取多字符符号
+                        string symbol = ReadMultipleSymbol();
+                        if (symbol != null)
                         {
-                            tokens.Add(new ThymeToken("s_symbol", $"{c}", new Range(start, pos + 1)));
+                            tokens.Add(new ThymeToken("m_symbol", symbol, new Range(start, pos)));
                         }
                         else
                         {
                             ReportError(new ThymeDiagnostic($"不支持的符号 '{c}'", new Range(start, pos + 1)));
                             tokens.Add(new ThymeToken("UnsupportSymbol", $"{c}", new Range(start, pos + 1)));
-                            break;
                         }
-                        pos++;
+                        Next();
                     }
                 }
             }
             return new ThymeTokenCollection(tokens);
         }
-
     }
 }

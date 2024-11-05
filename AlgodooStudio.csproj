@@ -92,7 +92,7 @@
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="PhunSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\类库\PhunSharp\PhunSharp\bin\Debug\PhunSharp.dll</HintPath>
+      <HintPath>..\..\类库\PhunSharp\Test\bin\Debug\PhunSharp.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
