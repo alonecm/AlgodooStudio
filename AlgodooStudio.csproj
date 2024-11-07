@@ -324,6 +324,7 @@
       <DependentUpon>ReplaceWindow.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <EmbeddedResource Include="Resources\_res\ThymeHighLighting.xshd" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

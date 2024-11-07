@@ -105,9 +105,19 @@ namespace AlgodooStudio.ASProject.Script.Parse
                     {
                         case "=":
                             var eq = Next(ref currentTokenCount);
+                            if (IsEnd)
+                            {
+                                ReportMissing("给予的值", eq.Range);
+                                return null;
+                            }
                             return new Assign(left, ParseAssignment(ref currentTokenCount));
                         case ":=":
                             var point = Next(ref currentTokenCount);
+                            if (IsEnd)
+                            {
+                                ReportMissing("给予的值", point.Range);
+                                return null;
+                            }
                             return new NewAssign(left, ParseAssignment(ref currentTokenCount));
                         case "->":
                             var re = Next(ref currentTokenCount);

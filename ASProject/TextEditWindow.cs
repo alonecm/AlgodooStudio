@@ -1,18 +1,25 @@
 ﻿using AlgodooStudio.ASProject.Dialogs;
 using AlgodooStudio.ASProject.Interface;
 using AlgodooStudio.ASProject.Script.Parse;
+using AlgodooStudio.Properties;
 using Dex.Common;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Folding;
+using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using ICSharpCode.AvalonEdit.Search;
 using PhunSharp;
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Windows.Media;
+using System.Xml;
+using System.Xml.Serialization;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace AlgodooStudio.ASProject
@@ -146,25 +153,30 @@ namespace AlgodooStudio.ASProject
             //允许滚动到文档下方
             _editor.Options.AllowScrollBelowDocument = true;
             //设置字体
-            _editor.FontFamily = new System.Windows.Media.FontFamily("Console");
-            //设置滚动条
-            _editor.HorizontalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto;
-            _editor.VerticalScrollBarVisibility = System.Windows.Controls.ScrollBarVisibility.Auto;
-            ////设置颜色
-            //BackColor = Setting.theme.BackColor2;
+            _editor.FontFamily = new FontFamily("Consolas");
             ////编辑部份背景色
-            //editor.Background = new SolidColorBrush(NormalColorToMediaColor(BackColor));
+            //_editor.Background = new SolidColorBrush(NormalColorToMediaColor(System.Drawing.Color.CadetBlue));
             ////编辑部份前景色
-            //editor.Foreground = new SolidColorBrush(NormalColorToMediaColor(Setting.theme.VarNameColor));
-            ////列号前景色
-            //editor.LineNumbersForeground = new SolidColorBrush(NormalColorToMediaColor(Setting.theme.StringColor));
-            ////当前行背景色
-            //editor.TextArea.TextView.CurrentLineBackground = new SolidColorBrush(NormalColorToMediaColor(System.Drawing.Color.FromArgb(50, Setting.theme.KeywordsColor)));
-            //editor.TextArea.TextView.CurrentLineBorder = new System.Windows.Media.Pen(editor.TextArea.TextView.CurrentLineBackground, 2);
-            //创建状态栏渲染器
-            //statusBar.Renderer = StatusBarRenderer.GetRenderer();
+            //_editor.Foreground = new SolidColorBrush(NormalColorToMediaColor(System.Drawing.Color.White));
+            //列号前景色
+            _editor.LineNumbersForeground = new SolidColorBrush(NormalColorToMediaColor(System.Drawing.Color.DimGray));
+            //当前行背景色
+            _editor.TextArea.TextView.CurrentLineBackground = new SolidColorBrush(NormalColorToMediaColor(System.Drawing.Color.LightCyan));
+            _editor.TextArea.TextView.CurrentLineBorder = new Pen(new SolidColorBrush(NormalColorToMediaColor(System.Drawing.Color.DeepSkyBlue)), 3);
             //显示行号
             _editor.ShowLineNumbers = true;
+
+            //载入高亮配置文件
+            IHighlightingDefinition highLighting;
+            using (var xml = new XmlTextReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("AlgodooStudio.Resources._res.ThymeHighLighting.xshd")))
+            {
+                highLighting = HighlightingLoader.Load(xml,HighlightingManager.Instance);
+            }
+            //注册这个高亮文件
+            HighlightingManager.Instance.RegisterHighlighting("Thyme", new string[] { ".thm" }, highLighting);
+            //设置高亮语法
+            _editor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinitionByExtension(".thm");
+
             //为编辑器创建事件
             _editor.TextArea.Caret.PositionChanged += Caret_PositionChanged;
             _editor.TextArea.MouseWheel += TextArea_MouseWheel;
