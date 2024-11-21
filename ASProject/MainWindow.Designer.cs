@@ -88,6 +88,7 @@ namespace AlgodooStudio.ASProject
             this.全部浮动ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.关闭所有窗口ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.关闭所有文档窗口ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.插件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.蓝色ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,7 +102,8 @@ namespace AlgodooStudio.ASProject
             this.vS2015LightTheme = new WeifenLuo.WinFormsUI.Docking.VS2015LightTheme();
             this.vsToolStripExtender = new WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender(this.components);
             this.sp = new System.Windows.Forms.SplitContainer();
-            this.关闭所有文档窗口ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.自启动项管理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.statusBar.SuspendLayout();
             this.quickTools.SuspendLayout();
             this.mainMenu.SuspendLayout();
@@ -508,6 +510,8 @@ namespace AlgodooStudio.ASProject
             this.重置AlgodooToolStripMenuItem,
             this.toolStripSeparator14,
             this.取色器ToolStripMenuItem,
+            this.toolStripSeparator13,
+            this.自启动项管理ToolStripMenuItem,
             this.toolStripSeparator10,
             this.插件管理ToolStripMenuItem,
             this.设置ToolStripMenuItem});
@@ -520,7 +524,7 @@ namespace AlgodooStudio.ASProject
             // 
             this.启动AlgodooToolStripMenuItem.Image = global::AlgodooStudio.Properties.Resources.run;
             this.启动AlgodooToolStripMenuItem.Name = "启动AlgodooToolStripMenuItem";
-            this.启动AlgodooToolStripMenuItem.Size = new System.Drawing.Size(187, 26);
+            this.启动AlgodooToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.启动AlgodooToolStripMenuItem.Text = "启动Algodoo";
             this.启动AlgodooToolStripMenuItem.Click += new System.EventHandler(this.启动AlgodooToolStripMenuItem_Click);
             // 
@@ -528,38 +532,38 @@ namespace AlgodooStudio.ASProject
             // 
             this.重置AlgodooToolStripMenuItem.Image = global::AlgodooStudio.Properties.Resources.reset;
             this.重置AlgodooToolStripMenuItem.Name = "重置AlgodooToolStripMenuItem";
-            this.重置AlgodooToolStripMenuItem.Size = new System.Drawing.Size(187, 26);
+            this.重置AlgodooToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.重置AlgodooToolStripMenuItem.Text = "重置Algodoo";
             this.重置AlgodooToolStripMenuItem.Click += new System.EventHandler(this.重置AlgodooToolStripMenuItem_Click);
             // 
             // toolStripSeparator14
             // 
             this.toolStripSeparator14.Name = "toolStripSeparator14";
-            this.toolStripSeparator14.Size = new System.Drawing.Size(184, 6);
+            this.toolStripSeparator14.Size = new System.Drawing.Size(221, 6);
             // 
             // 取色器ToolStripMenuItem
             // 
             this.取色器ToolStripMenuItem.Name = "取色器ToolStripMenuItem";
-            this.取色器ToolStripMenuItem.Size = new System.Drawing.Size(187, 26);
+            this.取色器ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.取色器ToolStripMenuItem.Text = "取色器...";
             this.取色器ToolStripMenuItem.Click += new System.EventHandler(this.取色器ToolStripMenuItem_Click);
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(184, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(221, 6);
             // 
             // 插件管理ToolStripMenuItem
             // 
             this.插件管理ToolStripMenuItem.Name = "插件管理ToolStripMenuItem";
-            this.插件管理ToolStripMenuItem.Size = new System.Drawing.Size(187, 26);
+            this.插件管理ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.插件管理ToolStripMenuItem.Text = "插件管理...";
             this.插件管理ToolStripMenuItem.Click += new System.EventHandler(this.插件管理ToolStripMenuItem_Click);
             // 
             // 设置ToolStripMenuItem
             // 
             this.设置ToolStripMenuItem.Name = "设置ToolStripMenuItem";
-            this.设置ToolStripMenuItem.Size = new System.Drawing.Size(187, 26);
+            this.设置ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.设置ToolStripMenuItem.Text = "设置...";
             this.设置ToolStripMenuItem.Click += new System.EventHandler(this.设置ToolStripMenuItem_Click);
             // 
@@ -601,6 +605,13 @@ namespace AlgodooStudio.ASProject
             this.关闭所有窗口ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.关闭所有窗口ToolStripMenuItem.Text = "关闭所有窗口";
             this.关闭所有窗口ToolStripMenuItem.Click += new System.EventHandler(this.关闭所有窗口ToolStripMenuItem_Click);
+            // 
+            // 关闭所有文档窗口ToolStripMenuItem
+            // 
+            this.关闭所有文档窗口ToolStripMenuItem.Name = "关闭所有文档窗口ToolStripMenuItem";
+            this.关闭所有文档窗口ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.关闭所有文档窗口ToolStripMenuItem.Text = "关闭所有文档窗口";
+            this.关闭所有文档窗口ToolStripMenuItem.Click += new System.EventHandler(this.关闭所有文档窗口ToolStripMenuItem_Click);
             // 
             // 插件ToolStripMenuItem
             // 
@@ -659,7 +670,7 @@ namespace AlgodooStudio.ASProject
             // 
             this.dockPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dockPanel.Location = new System.Drawing.Point(0, 0);
-            this.dockPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dockPanel.Margin = new System.Windows.Forms.Padding(4);
             this.dockPanel.Name = "dockPanel";
             this.dockPanel.Size = new System.Drawing.Size(1067, 482);
             this.dockPanel.TabIndex = 11;
@@ -675,7 +686,7 @@ namespace AlgodooStudio.ASProject
             this.sp.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.sp.IsSplitterFixed = true;
             this.sp.Location = new System.Drawing.Point(0, 28);
-            this.sp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.sp.Margin = new System.Windows.Forms.Padding(4);
             this.sp.Name = "sp";
             this.sp.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -691,12 +702,17 @@ namespace AlgodooStudio.ASProject
             this.sp.SplitterWidth = 1;
             this.sp.TabIndex = 13;
             // 
-            // 关闭所有文档窗口ToolStripMenuItem
+            // 自启动项管理ToolStripMenuItem
             // 
-            this.关闭所有文档窗口ToolStripMenuItem.Name = "关闭所有文档窗口ToolStripMenuItem";
-            this.关闭所有文档窗口ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
-            this.关闭所有文档窗口ToolStripMenuItem.Text = "关闭所有文档窗口";
-            this.关闭所有文档窗口ToolStripMenuItem.Click += new System.EventHandler(this.关闭所有文档窗口ToolStripMenuItem_Click);
+            this.自启动项管理ToolStripMenuItem.Name = "自启动项管理ToolStripMenuItem";
+            this.自启动项管理ToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.自启动项管理ToolStripMenuItem.Text = "自启动项管理...";
+            this.自启动项管理ToolStripMenuItem.Click += new System.EventHandler(this.自启动项管理ToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator13
+            // 
+            this.toolStripSeparator13.Name = "toolStripSeparator13";
+            this.toolStripSeparator13.Size = new System.Drawing.Size(221, 6);
             // 
             // MainWindow
             // 
@@ -709,7 +725,7 @@ namespace AlgodooStudio.ASProject
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainWindow";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ALGODOO STUDIO";
@@ -803,5 +819,7 @@ namespace AlgodooStudio.ASProject
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem 错误列表ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 关闭所有文档窗口ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
+        private System.Windows.Forms.ToolStripMenuItem 自启动项管理ToolStripMenuItem;
     }
 }

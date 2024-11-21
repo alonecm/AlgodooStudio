@@ -124,6 +124,12 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ASProject\Dialogs\AutoExecuteItemManageDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ASProject\Dialogs\AutoExecuteItemManageDialog.Designer.cs">
+      <DependentUpon>AutoExecuteItemManageDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ASProject\Dialogs\ClipEditDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -191,6 +197,11 @@
     <Compile Include="ASProject\Script\Parse\ThymeToken.cs" />
     <Compile Include="ASProject\Script\Parse\ThymeTokenCollection.cs" />
     <Compile Include="ASProject\Script\Parse\ThymeTokenizer.cs" />
+    <Compile Include="ASProject\Script\ThymeEvaluator.cs" />
+    <Compile Include="ASProject\Script\ThymeReGenerator.cs" />
+    <Compile Include="ASProject\Support\AutoExecuteItem.cs" />
+    <Compile Include="ASProject\Support\AutoExecuteItemCollection.cs" />
+    <Compile Include="ASProject\Support\AutoExecuteItemType.cs" />
     <Compile Include="ASProject\Support\ScriptClip.cs" />
     <Compile Include="PluginSystem\Loader.cs" />
     <Compile Include="ASProject\MainWindow.cs">
@@ -273,6 +284,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ASProject\Dialogs\AutoExecuteItemManageDialog.resx">
+      <DependentUpon>AutoExecuteItemManageDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ASProject\Dialogs\ClipEditDialog.resx">
       <DependentUpon>ClipEditDialog.cs</DependentUpon>
     </EmbeddedResource>

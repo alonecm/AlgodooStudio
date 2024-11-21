@@ -664,6 +664,13 @@ namespace AlgodooStudio.ASProject
                 setting.ShowDialog();
             }
         }
+        private void 自启动项管理ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (AutoExecuteItemManageDialog aei=new AutoExecuteItemManageDialog())
+            {
+                aei.ShowDialog();
+            }
+        }
         #endregion
 
         #region 窗口
@@ -726,6 +733,7 @@ namespace AlgodooStudio.ASProject
         {
             SaveAll();
         }
+
 
         #endregion
 
