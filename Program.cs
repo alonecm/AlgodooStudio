@@ -90,6 +90,7 @@ namespace AlgodooStudio
                 }
                 LogWriter.WriteWarn(stringBuilder.ToString());
             }
+            var x = ThymeReGenerator.ReGenerate(tree);
             //TODO:完善自启动项读取
             //var result = new ThymeEvaluator().Evaluate(tree);
 

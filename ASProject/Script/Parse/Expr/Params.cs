@@ -6,7 +6,7 @@ namespace AlgodooStudio.ASProject.Script.Parse.Expr
 {
     public sealed class Params : ThymeSyntaxNode
     {
-        public Params(ThymeSyntaxNode[] tokens)
+        public Params(params ThymeSyntaxNode[] tokens)
         {
             Tokens = tokens;
         }

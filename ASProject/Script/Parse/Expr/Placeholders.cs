@@ -1,23 +1,18 @@
 ﻿using Dex.Analysis.Parse;
-using Dex.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace AlgodooStudio.ASProject.Script.Parse.Expr
 {
     /// <summary>
-    /// 空表达式节点
+    /// 异常占位符
     /// </summary>
-    public sealed class EmptyExpression : ThymeSyntaxNode
+    public sealed class Placeholders : ThymeSyntaxNode
     {
-        public override string Type => "EmptyExpression";
-
-        public ThymeToken Token { get; }
-
-        public EmptyExpression(ThymeToken token)
-        {
-            Token = token;
-        }
+        public override string Type => "[Error]Placeholders[Error]";
 
         public override IEnumerable<ISyntaxNode> GetChildren()
         {

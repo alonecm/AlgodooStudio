@@ -13,7 +13,7 @@ namespace AlgodooStudio.ASProject.Script
     /// <summary>
     /// Thyme评估器
     /// </summary>
-    public class ThymeEvaluator : IEvaluable<object, ThymeSyntaxNode>
+    public sealed class ThymeEvaluator : IEvaluable<object, ThymeSyntaxNode>
     {
         public object Evaluate(ThymeSyntaxNode node)
         {
@@ -28,7 +28,7 @@ namespace AlgodooStudio.ASProject.Script
                     object rootResult = null;
                     foreach (var item in root.Nodes)
                     {
-                        rootResult = EvaluateLine((item as Line).node);
+                        //rootResult = EvaluateLine((item as Root));
                     }
                     return rootResult;
                 default:

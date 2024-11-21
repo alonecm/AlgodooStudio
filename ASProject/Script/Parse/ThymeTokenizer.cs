@@ -74,7 +74,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
             pos = 0;
 
             //读取代码
-            while (pos < content.Length)
+            while (IsNotEnd)
             {
                 var c = Peek(0);
 
