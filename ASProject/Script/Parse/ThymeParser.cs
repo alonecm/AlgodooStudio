@@ -177,6 +177,9 @@ namespace AlgodooStudio.ASProject.Script.Parse
 
             switch (Current.Value)
             {
+                case "(":
+                case "[":
+                    throw new NotImplementedException("未在此处实现二重索引调用！");
                 case "++":
                     //如果给出的左侧是数组且后方有追加符，则是数组合并
                     var pp = Next(ref currentTokenCount);
