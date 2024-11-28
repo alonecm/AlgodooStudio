@@ -12,7 +12,7 @@ using Block = AlgodooStudio.ASProject.Script.Parse.Expr.Block;
 
 namespace AlgodooStudio.ASProject.Script
 {
-    //TODO:制作脚本重生成器
+    //TODO:完善脚本重生成器
     /// <summary>
     /// 脚本重生成
     /// </summary>

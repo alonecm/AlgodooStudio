@@ -3,11 +3,12 @@ using Dex.Analysis.Parse;
 using Dex.Common;
 using System;
 using System.Collections.Generic;
-using System.Windows.Shapes;
 using Array = AlgodooStudio.ASProject.Script.Parse.Expr.Array;
 
 namespace AlgodooStudio.ASProject.Script.Parse
 {
+    //TODO:占位符的创建后未能起到占位的作用，记得修复
+
     public sealed class ThymeParser : Parser<ThymeToken, ThymeSyntaxNode>
     {
         public ThymeParser(ThymeTokenCollection tokens) : base(tokens)
@@ -179,7 +180,8 @@ namespace AlgodooStudio.ASProject.Script.Parse
             {
                 case "(":
                 case "[":
-                    throw new NotImplementedException("未在此处实现二重索引调用！");
+
+                    throw new NotImplementedException("未在此处实现多重索引调用！");
                 case "++":
                     //如果给出的左侧是数组且后方有追加符，则是数组合并
                     var pp = Next(ref currentTokenCount);
