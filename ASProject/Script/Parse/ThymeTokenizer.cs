@@ -1,4 +1,5 @@
-﻿using Dex.Analysis;
+﻿using AlgodooStudio.ASProject.Script.Parse.Expr;
+using Dex.Analysis;
 using Dex.Analysis.Parse;
 using Dex.Common;
 using System;
@@ -196,6 +197,17 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 }
             }
             return new ThymeTokenCollection(tokens);
+        }
+
+        public static ThymeTokenizer GetThymeTokenizer(string content, bool removeComment = false)
+        {
+            return new ThymeTokenizer(content, removeComment);
+        }
+
+        public static Tuple<ThymeTokenCollection, DiagnosticsCollection> GetTokens(string content)
+        {
+            var tkiz = GetThymeTokenizer(content);
+            return new Tuple<ThymeTokenCollection, DiagnosticsCollection>(tkiz.Tokenize(), tkiz.Diagnostics);
         }
     }
 }

@@ -196,6 +196,7 @@
     <Compile Include="ASProject\Script\Parse\Expr\Redirect.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Root.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\MemberCall.cs" />
+    <Compile Include="ASProject\Script\Parse\Expr\Symbol.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\UnaryExpression.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\UnsupportSymbol.cs" />
     <Compile Include="ASProject\Script\Parse\ParseHelper.cs" />

@@ -1,4 +1,6 @@
-﻿namespace AlgodooStudio.ASProject.Support
+﻿using Dex.Common;
+
+namespace AlgodooStudio.ASProject.Support
 {
     /// <summary>
     /// 自启动项
@@ -11,23 +13,21 @@
         /// <param name="isEnabled">项是否启用</param>
         /// <param name="type">项类型</param>
         /// <param name="content">项内容</param>
-        public AutoExecuteItem(bool isEnabled, AutoExecuteItemType type, string content)
+        public AutoExecuteItem(bool isEnabled, AutoExecuteItemType type, string content, Range range)
         {
             IsEnabled = isEnabled;
             Type = type;
             Content = content;
+            Range = range;
         }
         public bool IsEnabled { get; set; }
         public AutoExecuteItemType Type { get; }
         public string Content { get; }
+        public Range Range { get; }
 
         public override string ToString()
         {
-            if (IsEnabled)
-            {
-                return Content;
-            }
-            return "// " + Content;
+            return Content;
         }
     }
 }

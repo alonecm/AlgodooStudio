@@ -116,9 +116,11 @@ namespace AlgodooStudio.ASProject.Dialogs
             _foldingStrategy.UpdateFoldings(_foldingManager, _editor.Document);
             //初始化搜索框
             _searchPanel = SearchPanel.Install(_editor.TextArea);
+
+            //记录内容
             _editor.Text = text;
-            //记录先前内容
             _lastContent = text;
+            EditedText = text;
         }
         /// <summary>
         /// 通过给定的字符串搜索并添加提示条目
@@ -215,19 +217,6 @@ namespace AlgodooStudio.ASProject.Dialogs
         }
         private void TextEditDialog_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (_similarityChecks)
-            {
-                //启用检查才根据结果赋值
-                if (DialogResult == DialogResult.Yes)
-                    EditedText = _editor.Text;
-                else
-                    EditedText = _lastContent;
-            }
-            else
-            {
-                EditedText = _editor.Text;//不启用则按照现有文本进行赋值
-            }
-
             _editor = null;
             _reminder = null;
             _foldingManager.Clear();
@@ -246,6 +235,22 @@ namespace AlgodooStudio.ASProject.Dialogs
             {
                 DialogResult = MBox.ShowWarningYesNoCancel("内容较之前有改变，是否取用当前内容并关闭窗口？");
                 e.Cancel = (DialogResult == DialogResult.Cancel);
+            }
+
+            if (_similarityChecks)
+            {
+                //启用检查才根据结果赋值
+                if (DialogResult == DialogResult.Yes)
+                    EditedText = _editor.Text;
+                else
+                    EditedText = _lastContent;
+            }
+            else
+            {
+                if (DialogResult != DialogResult.Cancel)
+                {
+                    EditedText = _editor.Text;//不启用则按照现有文本进行赋值
+                }
             }
         }
 

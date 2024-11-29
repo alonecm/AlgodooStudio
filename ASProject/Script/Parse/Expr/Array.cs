@@ -1,18 +1,22 @@
 ﻿using Dex.Analysis.Parse;
+using Dex.Common;
 using System.Collections.Generic;
 
 namespace AlgodooStudio.ASProject.Script.Parse.Expr
 {
     public sealed class Array : ThymeSyntaxNode
     {
-        public Array(ThymeSyntaxNode[] nodes)
+        public Array(ThymeSyntaxNode[] nodes, Range range)
         {
             Nodes = nodes;
+            Range = range;
         }
 
         public override string Type => "Array";
 
         public ThymeSyntaxNode[] Nodes { get; set; }
+
+        public override Range Range { get; }
 
         public override IEnumerable<ISyntaxNode> GetChildren()
         {

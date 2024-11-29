@@ -77,16 +77,13 @@ namespace AlgodooStudio
                 return;
             }
             LogWriter.WriteInfo("解析自启动文件...");
-            ThymeParser parserActive = new ThymeParser(
-                new ThymeTokenizer(
-                    FileHandler.GetTextFileContent(path, Encoding.UTF8)//NOTE:自启动文件可以表示为启用项，我再创建一个禁用项文件用来存放禁用项即可，启用就是从禁用项文件中移动到自启动文件中，禁用则是相反
-                    ).Tokenize());
-            var rootActive = parserActive.Parse() as Root;
-            if (parserActive.Diagnostics.Count > 0)
+            var parserActive = ThymeParser.GetAST(FileHandler.GetTextFileContent(path, Encoding.UTF8));
+            var rootActive = parserActive.Item1;
+            if (parserActive.Item2.Count > 0)
             {
                 MBox.ShowWarning("自启动文件中存在语法错误，已输出到日志文件中，请查看");
                 StringBuilder stringBuilder = new StringBuilder();
-                foreach (var item in parserActive.Diagnostics)
+                foreach (var item in parserActive.Item2)
                 {
                     stringBuilder.AppendLine($"{item.Range}[{item.Type}] {item.Message}");
                 }
@@ -98,13 +95,13 @@ namespace AlgodooStudio
             foreach (var item in rootActive.Nodes)
             {
                 var content = rgEnable.ReGenerate(item);
-                if (content.Contains("reflection.executefile"))
+                if (content.IndexOf("reflection.executefile")==0)
                 {
-                    autoExecuteItems.Add(new AutoExecuteItem(true, AutoExecuteItemType.File, content));
+                    autoExecuteItems.Add(true, AutoExecuteItemType.File, content, item.Range);
                 }
                 else
                 {
-                    autoExecuteItems.Add(new AutoExecuteItem(true, AutoExecuteItemType.Code, content));
+                    autoExecuteItems.Add(true, AutoExecuteItemType.Code, content, item.Range);
                 }
             }
 
@@ -112,23 +109,21 @@ namespace AlgodooStudio
             if (File.Exists(".\\Manage\\disabled_execute_item.manage"))
             {
                 LogWriter.WriteInfo("解析托管文件...");
-                ThymeParser parserInactive = new ThymeParser(
-                    new ThymeTokenizer(
-                        FileHandler.GetTextFileContent(".\\Manage\\disabled_execute_item.manage", Encoding.UTF8)//NOTE:自启动文件可以表示为启用项，我再创建一个禁用项文件用来存放禁用项即可，启用就是从禁用项文件中移动到自启动文件中，禁用则是相反
-                        ).Tokenize());
-                var rootInactive = parserInactive.Parse() as Root;
+                
+                var parserInactive = ThymeParser.GetAST(FileHandler.GetTextFileContent(".\\Manage\\disabled_execute_item.manage", Encoding.UTF8));
+                var rootInactive = parserInactive.Item1;
                 //添加禁用项
                 var egEnable = new ThymeReGenerator();
                 foreach (var item in rootInactive.Nodes)
                 {
                     var content = egEnable.ReGenerate(item);
-                    if (content.Contains("reflection.executefile"))
+                    if (content.IndexOf("reflection.executefile") == 0)
                     {
-                        autoExecuteItems.Add(new AutoExecuteItem(false, AutoExecuteItemType.File, content));
+                        autoExecuteItems.Add(false, AutoExecuteItemType.File, content, item.Range);
                     }
                     else
                     {
-                        autoExecuteItems.Add(new AutoExecuteItem(false, AutoExecuteItemType.Code, content));
+                        autoExecuteItems.Add(false, AutoExecuteItemType.Code, content, item.Range);
                     }
                 }
             }

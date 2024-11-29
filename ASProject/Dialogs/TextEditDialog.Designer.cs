@@ -69,7 +69,7 @@
             // 
             this.sp_ud.Panel2.Controls.Add(this.sp_lr);
             this.sp_ud.Size = new System.Drawing.Size(800, 450);
-            this.sp_ud.SplitterDistance = 404;
+            this.sp_ud.SplitterDistance = 407;
             this.sp_ud.SplitterWidth = 1;
             this.sp_ud.TabIndex = 0;
             // 
@@ -78,7 +78,7 @@
             this.elementHost.Dock = System.Windows.Forms.DockStyle.Fill;
             this.elementHost.Location = new System.Drawing.Point(0, 0);
             this.elementHost.Name = "elementHost";
-            this.elementHost.Size = new System.Drawing.Size(800, 404);
+            this.elementHost.Size = new System.Drawing.Size(800, 407);
             this.elementHost.TabIndex = 0;
             this.elementHost.Text = "elementHost";
             this.elementHost.Child = null;
@@ -94,8 +94,8 @@
             // 
             this.sp_lr.Panel2.Controls.Add(this.cancel_button);
             this.sp_lr.Panel2.Controls.Add(this.ok_button);
-            this.sp_lr.Size = new System.Drawing.Size(800, 45);
-            this.sp_lr.SplitterDistance = 540;
+            this.sp_lr.Size = new System.Drawing.Size(800, 42);
+            this.sp_lr.SplitterDistance = 543;
             this.sp_lr.SplitterWidth = 1;
             this.sp_lr.TabIndex = 0;
             // 
@@ -199,6 +199,7 @@
             this.Controls.Add(this.sp_ud);
             this.Name = "TextEditDialog";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "文本编辑";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TextEditDialog_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TextEditDialog_FormClosed);

@@ -1,4 +1,5 @@
 ﻿using Dex.Analysis.Parse;
+using Dex.Common;
 using System.Collections.Generic;
 
 namespace AlgodooStudio.ASProject.Script.Parse.Expr
@@ -8,16 +9,19 @@ namespace AlgodooStudio.ASProject.Script.Parse.Expr
     /// </summary>
     public sealed class BraceWithBraceCall : ThymeSyntaxNode
     {
-        public BraceWithBraceCall(ThymeSyntaxNode brace1, ThymeSyntaxNode brace2)
+        public BraceWithBraceCall(ThymeSyntaxNode brace1, ThymeSyntaxNode brace2, Range range)
         {
             Brace1 = brace1;
             Brace2 = brace2;
+            Range = range;
         }
 
         public override string Type => "BraceWithBraceCall";
 
         public ThymeSyntaxNode Brace1 { get; }
         public ThymeSyntaxNode Brace2 { get; }
+
+        public override Range Range { get; }
 
         public override IEnumerable<ISyntaxNode> GetChildren()
         {

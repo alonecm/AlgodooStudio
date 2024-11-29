@@ -1,8 +1,10 @@
 ﻿using AlgodooStudio.ASProject.Script.Parse.Expr;
 using Dex.Analysis.Parse;
 using Dex.Common;
+using Dex.IO;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Array = AlgodooStudio.ASProject.Script.Parse.Expr.Array;
 
 namespace AlgodooStudio.ASProject.Script.Parse
@@ -24,6 +26,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
         /// <returns></returns>
         private ThymeSyntaxNode ParseRoot()
         {
+            var start = Current;
             var nodes = new List<ThymeSyntaxNode>();
             var currentTokenCount = 0;
             while (!IsEnd)
@@ -58,7 +61,14 @@ namespace AlgodooStudio.ASProject.Script.Parse
                     }
                 }
             }
-            return new Root(nodes.ToArray());
+            if (this.Pos!=0)
+            {
+                return new Root(nodes.ToArray(), new Range(0, Review.Range.Max));
+            }
+            else
+            {
+                return new Root(nodes.ToArray(), new Range(0, 0));
+            }
         }
 
         /// <summary>
@@ -121,11 +131,11 @@ namespace AlgodooStudio.ASProject.Script.Parse
                                 var es = ParseElement(ref currentTokenCount);
                                 if (es is Array array)
                                 {
-                                    return new IdentifierCall(identifier, new RealParams(array.Nodes));
+                                    return new IdentifierCall(identifier, new RealParams(array.Range, array.Nodes), new Range(identifier.Range.Min, array.Range.Max));
                                 }
                                 else if (es is BraceExpression braceExpression)
                                 {
-                                    return new IdentifierCall(identifier, new RealParams(braceExpression.Node));
+                                    return new IdentifierCall(identifier, new RealParams(braceExpression.Range,braceExpression.Node),new Range(identifier.Range.Min,braceExpression.Range.Max));
                                 }
                                 break;
                         }
@@ -160,7 +170,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                     return null;
                 }
                 var expr = ParseExpression(ref currentTokenCount);//获取元素
-                left = new UnaryExpression(op, expr);
+                left = new UnaryExpression(op, expr, new Range(op.Range.Min, expr.Range.Max));
             }
             else
             {
@@ -184,7 +194,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                         return null;
                     }
                     var right = ParseAssignment(ref currentTokenCount);
-                    return new ArrayCombine(left, right);
+                    return new ArrayCombine(left, right, new Range(left.Range.Min, right.Range.Max));
                 case ".":
                     currentTokenCount--;
                     currentTokenCount--;
@@ -194,7 +204,8 @@ namespace AlgodooStudio.ASProject.Script.Parse
                         ReportMissing("子成员", point.Range);
                         return null;
                     }
-                    return new MemberCall(left, ParseAssignment(ref currentTokenCount));
+                    var member = ParseAssignment(ref currentTokenCount);
+                    return new MemberCall(left, member, new Range(left.Range.Min, member.Range.Max));
                 case "?":
                     //三元表达式
                     var question = Next(ref currentTokenCount);
@@ -226,7 +237,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                         return null;
                     }
                     var expr3 = ParseAssignment(ref currentTokenCount);
-                    return new Ifstatement(left, expr2, expr3);
+                    return new Ifstatement(left, expr2, expr3, new Range(left.Range.Min, expr3.Range.Max));
                 default:
                     break;
             }
@@ -249,7 +260,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                     return null;
                 }
                 var right = ParseExpression(ref currentTokenCount, binary);
-                left = new BinaryExpression(left, op, right);
+                left = new BinaryExpression(left, op, right, new Range(left.Range.Min, right.Range.Max));
             }
 
             return left;
@@ -297,7 +308,8 @@ namespace AlgodooStudio.ASProject.Script.Parse
                             ReportMissing("右侧的值", eq.Range);
                             return null;
                         }
-                        return new Assign(left, ParseAssignment(ref currentTokenCount));
+                        var assign = ParseAssignment(ref currentTokenCount);
+                        return new Assign(left, assign, new Range(left.Range.Min, assign.Range.Max));
                     case ":=":
                         var point = Next(ref currentTokenCount);
                         if (IsEnd)
@@ -305,7 +317,8 @@ namespace AlgodooStudio.ASProject.Script.Parse
                             ReportMissing("右侧的值", point.Range);
                             return null;
                         }
-                        return new NewAssign(left, ParseAssignment(ref currentTokenCount));
+                        assign = ParseAssignment(ref currentTokenCount);
+                        return new NewAssign(left, assign, new Range(left.Range.Min, assign.Range.Max));
                     case "->":
                         var re = Next(ref currentTokenCount);
                         if (IsEnd || Current.Value != "{")
@@ -314,7 +327,8 @@ namespace AlgodooStudio.ASProject.Script.Parse
                             GoEnd();
                             return null;
                         }
-                        return new Redirect(left, ParseBlock(ref currentTokenCount));
+                        var block = ParseBlock(ref currentTokenCount);
+                        return new Redirect(left, block, new Range(left.Range.Min, block.Range.Max));
                 }
             }
             return left;
@@ -330,7 +344,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
             var start = Next(ref currentTokenCount);//略过首括号
             var block_CurrentTokenCount = 0;
             var nodes = new List<ThymeSyntaxNode>();
-
+            ThymeToken end;
             while (true)
             {
                 //如果直接结束了则报错
@@ -343,7 +357,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 //找到结尾大括号则结束块解析
                 if (Current.Value == "}")
                 {
-                    var end = Next(ref block_CurrentTokenCount);//略过
+                    end = Next(ref block_CurrentTokenCount);//略过
                     break;
                 }
 
@@ -367,7 +381,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 //碰上大括号则结束
                 else if (Current.Value == "}")
                 {
-                    var end = Next(ref block_CurrentTokenCount);//略过
+                    end = Next(ref block_CurrentTokenCount);//略过
                     nodes.Add(node);
                     break;
                 }
@@ -380,7 +394,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 }
             }
 
-            return new Block(nodes.ToArray());
+            return new Block(nodes.ToArray(), new Range(start.Range.Min, end.Range.Max));
         }
 
         /// <summary>
@@ -393,6 +407,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
             var start = Next(ref currentTokenCount);//略过首括号
             var array_CurrentTokenCount = 0;
             var nodes = new List<ThymeSyntaxNode>();
+            ThymeToken end;
 
             while (true)
             {
@@ -406,7 +421,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 //如果直接结束了则结束
                 if (Current.Value == "]")
                 {
-                    var end = Next(ref array_CurrentTokenCount);//略过
+                    end = Next(ref array_CurrentTokenCount);//略过
                     break;
                 }
 
@@ -431,13 +446,13 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 //碰上方括号说明是结束了
                 if (Current.Value == "]")
                 {
-                    var end = Next(ref array_CurrentTokenCount);//略过
+                    end = Next(ref array_CurrentTokenCount);//略过
                     nodes.Add(node);
                     break;
                 }
             }
 
-            var arr = new Array(nodes.ToArray());
+            var arr = new Array(nodes.ToArray(), new Range(start.Range.Min, end.Range.Max));
 
             //如果后方未结束且有括号则按照调用来表示
             if (IsEnd)
@@ -449,10 +464,10 @@ namespace AlgodooStudio.ASProject.Script.Parse
             {
                 case "[":
                     var followArray = ParseArray(ref currentTokenCount);
-                    return new ArrayWithArrayCall(arr, followArray);
+                    return new ArrayWithArrayCall(arr, followArray, new Range(arr.Range.Min, followArray.Range.Max));
                 case "(":
                     var followBrace = ParseBrace(ref currentTokenCount);
-                    return new ArrayWithBraceCall(arr, followBrace);
+                    return new ArrayWithBraceCall(arr, followBrace, new Range(arr.Range.Min, followBrace.Range.Max));
                 default:
                     return arr;
             }
@@ -468,6 +483,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
             var start = Next(ref currentTokenCount);//略过首括号
             var brace_CurrentTokenCount = 0;
             var nodes = new List<ThymeSyntaxNode>();
+            ThymeToken end;
 
             while (true)
             {
@@ -481,7 +497,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 //如果直接结束了则结束
                 if (Current.Value == ")")
                 {
-                    var end = Next(ref brace_CurrentTokenCount);//略过
+                    end = Next(ref brace_CurrentTokenCount);//略过
                     break;
                 }
 
@@ -504,7 +520,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 //碰上小括号说明是结束了
                 if (Current.Value == ")")
                 {
-                    var end = Next(ref brace_CurrentTokenCount);//略过
+                    end = Next(ref brace_CurrentTokenCount);//略过
                     nodes.Add(node);
                     break;
                 }
@@ -514,11 +530,11 @@ namespace AlgodooStudio.ASProject.Script.Parse
 
             if (nodes.Count != 1)
             {
-                brace = new Array(nodes.ToArray());//输出为小括号数组
+                brace = new Array(nodes.ToArray(), new Range(start.Range.Min, end.Range.Max));//输出为小括号数组
             }
             else
             {
-                brace = new BraceExpression(nodes[0]);
+                brace = new BraceExpression(nodes[0], new Range(start.Range.Min, end.Range.Max));
             }
 
             if (IsEnd)
@@ -530,10 +546,10 @@ namespace AlgodooStudio.ASProject.Script.Parse
             {
                 case "[":
                     var followArray = ParseArray(ref currentTokenCount);
-                    return new BraceWithArrayCall(brace, followArray);
+                    return new BraceWithArrayCall(brace, followArray, new Range(brace.Range.Min, followArray.Range.Max));
                 case "(":
                     var followBrace = ParseBrace(ref currentTokenCount);
-                    return new BraceWithBraceCall(brace, followBrace);
+                    return new BraceWithBraceCall(brace, followBrace, new Range(brace.Range.Min, followBrace.Range.Max));
                 default:
                     return brace;
             }
@@ -597,16 +613,16 @@ namespace AlgodooStudio.ASProject.Script.Parse
                     switch (brace)
                     {
                         case Array array:
-                            @params = new Params(array.Nodes);
+                            @params = new Params(array.Range, array.Nodes);
                             break;
                         case BraceExpression braceExpression:
-                            @params = new Params(braceExpression.Node);
+                            @params = new Params(braceExpression.Range, braceExpression.Node);
                             break;
                         default:
                             break;
                     }
                     var block = ParseBlock(ref currentTokenCount);
-                    return new Function(@params, block);
+                    return new Function(@params, block, new Range(@params.Range.Min, block.Range.Max));
                 }
             }
             return brace;
@@ -682,6 +698,30 @@ namespace AlgodooStudio.ASProject.Script.Parse
                     }
                 }
             }
+        }
+
+
+        /// <summary>
+        /// 获取parser对象和由Tokenizer捕获的异常
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public static Tuple<ThymeParser, DiagnosticsCollection> GetParser(string content)
+        {
+            var tkiz = ThymeTokenizer.GetTokens(content);
+            return new Tuple<ThymeParser, DiagnosticsCollection>(new ThymeParser(tkiz.Item1), tkiz.Item2);
+        }
+
+        /// <summary>
+        /// 获取AST树和由Parser捕获的异常
+        /// </summary>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public static Tuple<Root, DiagnosticsCollection> GetAST(string content)
+        {
+            var parser = GetParser(content);
+            parser.Item1.Diagnostics.AddRange(parser.Item2);//转移异常
+            return new Tuple<Root, DiagnosticsCollection>(parser.Item1.Parse() as Root, parser.Item1.Diagnostics);
         }
     }
 }

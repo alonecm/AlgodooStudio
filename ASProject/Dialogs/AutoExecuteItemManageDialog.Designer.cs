@@ -31,12 +31,12 @@
             this.addItem = new System.Windows.Forms.Button();
             this.switchItemState = new System.Windows.Forms.Button();
             this.removeItem = new System.Windows.Forms.Button();
-            this.close = new System.Windows.Forms.Button();
+            this.cancel_button = new System.Windows.Forms.Button();
             this.itemList = new System.Windows.Forms.ListView();
-            this.itemIndex = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.itemStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.itemType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.itemContent = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ok_button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // addItem
@@ -72,21 +72,20 @@
             this.removeItem.UseVisualStyleBackColor = true;
             this.removeItem.Click += new System.EventHandler(this.removeItem_Click);
             // 
-            // close
+            // cancel_button
             // 
-            this.close.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.close.Location = new System.Drawing.Point(356, 307);
-            this.close.Margin = new System.Windows.Forms.Padding(2);
-            this.close.Name = "close";
-            this.close.Size = new System.Drawing.Size(88, 43);
-            this.close.TabIndex = 1;
-            this.close.Text = "返回";
-            this.close.UseVisualStyleBackColor = true;
+            this.cancel_button.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.cancel_button.Location = new System.Drawing.Point(356, 307);
+            this.cancel_button.Margin = new System.Windows.Forms.Padding(2);
+            this.cancel_button.Name = "cancel_button";
+            this.cancel_button.Size = new System.Drawing.Size(88, 43);
+            this.cancel_button.TabIndex = 1;
+            this.cancel_button.Text = "取消";
+            this.cancel_button.UseVisualStyleBackColor = true;
             // 
             // itemList
             // 
             this.itemList.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.itemIndex,
             this.itemStatus,
             this.itemType,
             this.itemContent});
@@ -100,10 +99,7 @@
             this.itemList.TabIndex = 2;
             this.itemList.UseCompatibleStateImageBehavior = false;
             this.itemList.View = System.Windows.Forms.View.Details;
-            // 
-            // itemIndex
-            // 
-            this.itemIndex.Text = "编号";
+            this.itemList.ItemActivate += new System.EventHandler(this.itemList_ItemActivate);
             // 
             // itemStatus
             // 
@@ -120,13 +116,25 @@
             this.itemContent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.itemContent.Width = 240;
             // 
+            // ok_button
+            // 
+            this.ok_button.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.ok_button.Location = new System.Drawing.Point(356, 260);
+            this.ok_button.Margin = new System.Windows.Forms.Padding(2);
+            this.ok_button.Name = "ok_button";
+            this.ok_button.Size = new System.Drawing.Size(88, 43);
+            this.ok_button.TabIndex = 1;
+            this.ok_button.Text = "确认";
+            this.ok_button.UseVisualStyleBackColor = true;
+            // 
             // AutoExecuteItemManageDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(453, 360);
             this.Controls.Add(this.itemList);
-            this.Controls.Add(this.close);
+            this.Controls.Add(this.ok_button);
+            this.Controls.Add(this.cancel_button);
             this.Controls.Add(this.removeItem);
             this.Controls.Add(this.switchItemState);
             this.Controls.Add(this.addItem);
@@ -145,11 +153,11 @@
         private System.Windows.Forms.Button addItem;
         private System.Windows.Forms.Button switchItemState;
         private System.Windows.Forms.Button removeItem;
-        private System.Windows.Forms.Button close;
+        private System.Windows.Forms.Button cancel_button;
         private System.Windows.Forms.ListView itemList;
-        private System.Windows.Forms.ColumnHeader itemIndex;
         private System.Windows.Forms.ColumnHeader itemType;
         private System.Windows.Forms.ColumnHeader itemContent;
         private System.Windows.Forms.ColumnHeader itemStatus;
+        private System.Windows.Forms.Button ok_button;
     }
 }
