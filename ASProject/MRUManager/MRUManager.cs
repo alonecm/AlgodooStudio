@@ -34,10 +34,10 @@ namespace RuMRUManager
         /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.mruManager = new MRUManager(this.recentToolStripMenuItem,      // Recent menu		
-                                            this.MRU_Open);                     // MRU Funtion open cliced.			
+            this.mruManager = new MRUManager(this.recentToolStripMenuItem,      // Recent menu
+                                            this.MRU_Open);                     // MRU Funtion open cliced.
         }
- 		
+
         private void openToolStripMenuItem_Click(object obj, EventArgs evt)
         {
             OpenFileDialog openFileDlg = new OpenFileDialog();
@@ -76,21 +76,17 @@ namespace RuMRUManager
         private void Open(string fileName)
         {
             MessageBox.Show("Open: " + fileName);
-            
         }
       }
 }
 */
+
 /// <summary>
 /// RuMRUManager 1.2 (Change from 1.0 only affects installation also on Visual Studio 2022)
 /// </summary>
-using Microsoft.Win32;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
@@ -101,8 +97,10 @@ namespace RuFramework.MRU
     public class MRUManager
     {
         #region MRUManager
+
         // MRUDataPath for select the save path of mru file
-        private enum MRUDataPath { Local, Roaming, Common, ExePath };
+        private enum MRUDataPath
+        { Local, Roaming, Common, ExePath };
 
         // Set the desired location of the MRU file
         private MRUDataPath mruDataPath = MRUDataPath.ExePath;
@@ -155,9 +153,10 @@ namespace RuFramework.MRU
             this._refreshRecentFilesMenu();
         }
 
-        #endregion
+        #endregion Public members
+
         #region Private members
-        MRUSettings mruSettings = new MRUSettings();            // MRU-file
+        private MRUSettings mruSettings = new MRUSettings();            // MRU-file
         private ArrayList mruList;                              // MRU list (file names)
         private ToolStripMenuItem ParentMenuItem;               // Recent menu item
         private Action<object, EventArgs> OnRecentFileClick;    // Event to clear MRU-file an recent menu items
@@ -208,7 +207,7 @@ namespace RuFramework.MRU
             // lösche alle Einträge
             this.ParentMenuItem.DropDownItems.Clear();
 
-            // durchlaufe alle Einträge 
+            // durchlaufe alle Einträge
             foreach (string mruItem in mruList)
             {
                 if (mruItem == null) continue;
@@ -230,8 +229,10 @@ namespace RuFramework.MRU
             // Enable das Menü
             this.ParentMenuItem.Enabled = true;
         }
-        #endregion
-        #endregion
+        #endregion Private members
+
+        #endregion MRUManager
+
         #region MRUData
 
         /// <summary>
@@ -288,7 +289,6 @@ namespace RuFramework.MRU
                 Regex r = new Regex(@"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$");
                 if (r.IsMatch(ConfigPath))
                 {
-
                     using (FileStream fileStream = new FileStream(ConfigPath.ToString(), FileMode.Open))
                     {
                         var serializer = new XmlSerializer(typeof(MRUSettings));
@@ -376,6 +376,6 @@ namespace RuFramework.MRU
             mruSettings.MRUList = mruList;
             Save(mruSettings, mruDataPath); // Default = MRUAppDataPath.Roaming
         }
-        #endregion
+        #endregion MRUData
     }
 }

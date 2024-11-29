@@ -3,7 +3,6 @@ using Dex.Analysis.Parse;
 using Dex.Common;
 using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using Array = AlgodooStudio.ASProject.Script.Parse.Expr.Array;
 
 namespace AlgodooStudio.ASProject.Script.Parse
@@ -12,7 +11,6 @@ namespace AlgodooStudio.ASProject.Script.Parse
     {
         public ThymeParser(ThymeTokenCollection tokens) : base(tokens)
         {
-
         }
 
         public override ThymeSyntaxNode Parse()
@@ -206,7 +204,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                         return null;
                     }
                     var expr2 = ParseAssignment(ref currentTokenCount);
-                    
+
                     //结束了则报错
                     if (IsEnd)
                     {
@@ -514,7 +512,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
 
             ThymeSyntaxNode brace;
 
-            if (nodes.Count!=1)
+            if (nodes.Count != 1)
             {
                 brace = new Array(nodes.ToArray());//输出为小括号数组
             }
@@ -579,7 +577,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                         {
                             //不允许则证明存在非标识符
                             ReportError(new ThymeDiagnostic("参数列表中存在非标识符！", Review.Range));
-                            GoEnd();    
+                            GoEnd();
                             return null;
                         }
                         break;

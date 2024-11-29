@@ -1,6 +1,5 @@
 ﻿using AlgodooStudio.ASProject.Dialogs;
 using AlgodooStudio.ASProject.Interface;
-using AlgodooStudio.ASProject.Script.Parse;
 using AlgodooStudio.ASProject.Support;
 using AlgodooStudio.PluginSystem;
 using Dex.Analysis.Parse;
@@ -8,16 +7,9 @@ using Dex.Common;
 using PhunSharp;
 using RuFramework.MRU;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -113,7 +105,6 @@ namespace AlgodooStudio.ASProject
             ShowPlugins();
         }
 
-
         #region 主题辅助
         /// <summary>
         /// 创建标准窗口
@@ -195,7 +186,7 @@ namespace AlgodooStudio.ASProject
             {
                 statusBar.BackColor = dockPanel.Theme.ColorPalette.MainWindowStatusBarDefault.Background;
                 mainMenu.BackColor = dockPanel.Theme.ColorPalette.CommandBarMenuDefault.Background;
-                this.BackColor= dockPanel.Theme.ColorPalette.CommandBarMenuDefault.Background;
+                this.BackColor = dockPanel.Theme.ColorPalette.CommandBarMenuDefault.Background;
             }
 
             if (File.Exists(configFile))
@@ -218,7 +209,7 @@ namespace AlgodooStudio.ASProject
             CloseAllDocuments();
 
             // 释放所有浮动窗口
-            while (dockPanel.FloatWindows.Count>0)
+            while (dockPanel.FloatWindows.Count > 0)
             {
                 var tmp = dockPanel.FloatWindows.FirstOrDefault();
                 if (tmp != null)
@@ -249,7 +240,7 @@ namespace AlgodooStudio.ASProject
             vsToolStripExtender.SetStyle(statusBar, version, theme);
             fileExploreWindow.EnableVSRenderer(version, theme);
         }
-        #endregion
+        #endregion 主题辅助
 
         #region 其他部分
         /// <summary>
@@ -305,7 +296,7 @@ namespace AlgodooStudio.ASProject
         {
             foreach (var item in dockPanel.Contents)
             {
-                if (item.DockHandler.TabText.Replace("*","") == windowName && item is TextEditWindow t)
+                if (item.DockHandler.TabText.Replace("*", "") == windowName && item is TextEditWindow t)
                 {
                     item.DockHandler.Activate();
                     t.SelectErrorPos(range);
@@ -328,7 +319,7 @@ namespace AlgodooStudio.ASProject
         private void ShowPlugins()
         {
             //已启用插件存在则允许显示
-            if (Loader.LoadedPlugins.Count>0)
+            if (Loader.LoadedPlugins.Count > 0)
             {
                 this.插件ToolStripMenuItem.Visible = true;
             }
@@ -434,7 +425,7 @@ namespace AlgodooStudio.ASProject
                 }
             }
         }
-        #endregion
+        #endregion 其他部分
 
         #region 事件
         private void MainWindow_Load(object sender, EventArgs e)
@@ -444,7 +435,7 @@ namespace AlgodooStudio.ASProject
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
-            
+
             //如果需要则保存布局
             if (Program.Setting.IsSavingLayout)
                 dockPanel.SaveAsXml(configFile);
@@ -503,7 +494,7 @@ namespace AlgodooStudio.ASProject
         {
             SaveFile();
         }
-        #endregion
+        #endregion 文件
 
         #region 编辑
         private void 查找ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -569,13 +560,13 @@ namespace AlgodooStudio.ASProject
                 (dockPanel.ActiveContent as IEditable).SelectAll();
             }
         }
-        #endregion
+        #endregion 编辑
 
         #region 视图
         private void 文本编辑器ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            TextEditWindow textEdit = new TextEditWindow("New","","",false);
+            TextEditWindow textEdit = new TextEditWindow("New", "", "", false);
             textEdit.Show(this.dockPanel, DockState.Document);
             Cursor = Cursors.Default;
         }
@@ -619,7 +610,7 @@ namespace AlgodooStudio.ASProject
             errorListWindow.Show(this.dockPanel, DockState.DockBottom);
             Cursor = Cursors.Default;
         }
-        #endregion
+        #endregion 视图
 
         #region 工具
         private void 启动AlgodooToolStripMenuItem_Click(object sender, EventArgs e)
@@ -666,12 +657,12 @@ namespace AlgodooStudio.ASProject
         }
         private void 自启动项管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (AutoExecuteItemManageDialog aei=new AutoExecuteItemManageDialog())
+            using (AutoExecuteItemManageDialog aei = new AutoExecuteItemManageDialog())
             {
                 aei.ShowDialog();
             }
         }
-        #endregion
+        #endregion 工具
 
         #region 窗口
         private void 浮动ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -698,11 +689,8 @@ namespace AlgodooStudio.ASProject
         {
             CloseAllDocuments();
         }
-        #endregion
+        #endregion 窗口
 
-        #region 插件
-
-        #endregion
 
         #region 关于
         private void 关于ToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -710,7 +698,7 @@ namespace AlgodooStudio.ASProject
             About window = new About();
             window.ShowDialog();
         }
-        #endregion
+        #endregion 关于
 
         #region 工具栏功能
         private void newScript_Click(object sender, EventArgs e)
@@ -734,11 +722,8 @@ namespace AlgodooStudio.ASProject
             SaveAll();
         }
 
+        #endregion 工具栏功能
 
-        #endregion
-
-        #endregion
-
-       
+        #endregion 事件
     }
 }

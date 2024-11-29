@@ -19,7 +19,7 @@
         }
         public bool IsEnabled { get; set; }
         public AutoExecuteItemType Type { get; }
-        public string Content {  get; }
+        public string Content { get; }
 
         public override string ToString()
         {

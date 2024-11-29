@@ -1,13 +1,5 @@
 ﻿using AlgodooStudio.ASProject.Support;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AlgodooStudio.ASProject.Dialogs
@@ -33,21 +25,18 @@ namespace AlgodooStudio.ASProject.Dialogs
         {
             using (var ted = new TextEditDialog())
             {
-                if (ted.ShowDialog()==DialogResult.Yes)
+                if (ted.ShowDialog() == DialogResult.Yes)
                 {
-                    
                 }
             }
         }
 
         private void switchItemState_Click(object sender, EventArgs e)
         {
-
         }
 
         private void removeItem_Click(object sender, EventArgs e)
         {
-
         }
 
         /// <summary>
@@ -68,7 +57,6 @@ namespace AlgodooStudio.ASProject.Dialogs
         /// </summary>
         private void RemoveItem(int index)
         {
-
         }
     }
 }

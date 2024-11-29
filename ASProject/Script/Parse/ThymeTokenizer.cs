@@ -1,7 +1,6 @@
 ﻿using Dex.Analysis;
 using Dex.Analysis.Parse;
 using Dex.Common;
-using Dex.IO.Json;
 using System;
 using System.Collections.Generic;
 
@@ -44,10 +43,9 @@ namespace AlgodooStudio.ASProject.Script.Parse
 
             //多字符
             RegistMultipleSymbol(
-                "!=", ">=", "<=", "==", 
+                "!=", ">=", "<=", "==",
                 "||", "&&",
                 "=>", ":=", "++", "->");
-
 
             //关键词
             RegistKeywords("null", "NaN");
@@ -55,7 +53,6 @@ namespace AlgodooStudio.ASProject.Script.Parse
             //特殊词
             RegistSpecial("alloc", "alloc");
             RegistSpecial("inf", "inf");
-
         }
 
         public override ThymeTokenCollection Tokenize()

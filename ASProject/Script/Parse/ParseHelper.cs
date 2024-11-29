@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AlgodooStudio.ASProject.Script.Parse
+﻿namespace AlgodooStudio.ASProject.Script.Parse
 {
     internal static class ParseHelper
     {
         public static int GetBinaryPriority(this ThymeToken op)
         {
-            if (!(op is null) && (op.Type=="s_symbol" || op.Type == "m_symbol"))
+            if (!(op is null) && (op.Type == "s_symbol" || op.Type == "m_symbol"))
             {
                 switch (op.Value)
                 {
@@ -51,7 +45,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
 
         public static int GetUnaryPriority(this ThymeToken op)
         {
-            if (!(op is null) &&( op.Type == "s_symbol" || op.Type == "m_symbol"))
+            if (!(op is null) && (op.Type == "s_symbol" || op.Type == "m_symbol"))
             {
                 switch (op.Value)
                 {

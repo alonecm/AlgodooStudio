@@ -1,12 +1,7 @@
 ﻿using AlgodooStudio.ASProject.Script.Parse;
 using AlgodooStudio.ASProject.Script.Parse.Expr;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using Array = AlgodooStudio.ASProject.Script.Parse.Expr.Array;
 using Block = AlgodooStudio.ASProject.Script.Parse.Expr.Block;
 
@@ -184,7 +179,6 @@ namespace AlgodooStudio.ASProject.Script
             return builder.ToString();
         }
 
-
         private string GenerateIFstatement(Ifstatement ifstatement)
         {
             var builder = new StringBuilder();
@@ -204,7 +198,6 @@ namespace AlgodooStudio.ASProject.Script
             builder.Append(ReGenerate(function.Block));
             return builder.ToString();
         }
-
 
         private string GenerateBraceExpression(BraceExpression braceExpression)
         {

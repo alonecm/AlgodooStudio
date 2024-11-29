@@ -9,11 +9,8 @@ using Dex.Common;
 using Dex.IO;
 using Dex.IO.Config;
 using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
@@ -85,7 +82,7 @@ namespace AlgodooStudio
                     FileHandler.GetTextFileContent(path, Encoding.UTF8)//NOTE:自启动文件可以表示为启用项，我再创建一个禁用项文件用来存放禁用项即可，启用就是从禁用项文件中移动到自启动文件中，禁用则是相反
                     ).Tokenize());
             var rootActive = parserActive.Parse() as Root;
-            if (parserActive.Diagnostics.Count>0)
+            if (parserActive.Diagnostics.Count > 0)
             {
                 MBox.ShowWarning("自启动文件中存在语法错误，已输出到日志文件中，请查看");
                 StringBuilder stringBuilder = new StringBuilder();
@@ -160,7 +157,7 @@ namespace AlgodooStudio
             }
             //读取设置
             var sc = new SimpleConfig();
-            sc.Read(settingPath,Encoding.Default);
+            sc.Read(settingPath, Encoding.Default);
             setting = (Settings)sc.Objects[0];
             //检查相关路径是否存在
             CheckPath();
@@ -230,7 +227,7 @@ namespace AlgodooStudio
                         if (fbd.ShowDialog() == DialogResult.OK)
                         {
                             setting.AlgodooPath = fbd.SelectedPath;
-                            LogWriter.WriteInfo("设置algodoo根目录为："+ fbd.SelectedPath);
+                            LogWriter.WriteInfo("设置algodoo根目录为：" + fbd.SelectedPath);
                         }
                     }
                 }
@@ -252,7 +249,7 @@ namespace AlgodooStudio
             foreach (var item in files)
             {
                 Loader.Load(item.FullName);
-                LogWriter.WriteInfo("加载插件："+ item.Name);
+                LogWriter.WriteInfo("加载插件：" + item.Name);
             }
             //跟随记录启用插件
             Loader.EnablePlugins();
@@ -288,7 +285,7 @@ namespace AlgodooStudio
             if (!Directory.Exists(".\\Temp"))
             {
                 LogWriter.WriteInfo("创建临时文件夹...");
-                var temp= Directory.CreateDirectory(".\\Temp");
+                var temp = Directory.CreateDirectory(".\\Temp");
                 temp.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
             }
         }

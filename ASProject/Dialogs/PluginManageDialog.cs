@@ -21,7 +21,6 @@ namespace AlgodooStudio.ASProject.Dialogs
             }
         }
 
-
         private void b_enabled_Click(object sender, EventArgs e)
         {
             if (selectedPlugin != null)

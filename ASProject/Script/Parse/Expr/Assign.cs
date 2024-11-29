@@ -14,7 +14,7 @@ namespace AlgodooStudio.ASProject.Script.Parse.Expr
         public override string Type => "Assign";
 
         public ThymeSyntaxNode Name { get; }
-        
+
         public ThymeSyntaxNode Node { get; }
 
         public override IEnumerable<ISyntaxNode> GetChildren()

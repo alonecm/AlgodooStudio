@@ -18,7 +18,6 @@ namespace AlgodooStudio.ASProject.Script.Parse.Expr
         public ThymeSyntaxNode Expr2 { get; }
         public ThymeSyntaxNode Expr3 { get; }
 
-
         public override IEnumerable<ISyntaxNode> GetChildren()
         {
             yield return Expr1;

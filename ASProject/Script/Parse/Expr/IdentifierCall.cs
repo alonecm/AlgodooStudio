@@ -6,7 +6,7 @@ namespace AlgodooStudio.ASProject.Script.Parse.Expr
     public sealed class IdentifierCall : ThymeSyntaxNode
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="identifier">标识符</param>
         /// <param name="realParams">实参</param>

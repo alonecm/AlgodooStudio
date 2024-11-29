@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace AlgodooStudio.ASProject.Script.Parse.Expr
 {
-
     /// <summary>
     /// 数组和小括号调用
     /// </summary>
@@ -19,7 +18,6 @@ namespace AlgodooStudio.ASProject.Script.Parse.Expr
 
         public ThymeSyntaxNode Array { get; }
         public ThymeSyntaxNode Brace { get; }
-
 
         public override IEnumerable<ISyntaxNode> GetChildren()
         {

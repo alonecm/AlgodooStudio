@@ -1,27 +1,17 @@
-﻿using AlgodooStudio.ASProject.Support;
+﻿using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Folding;
-using ICSharpCode.AvalonEdit.Search;
-using ICSharpCode.AvalonEdit;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Xml;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Dex.IO;
-using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Highlighting.Xshd;
+using ICSharpCode.AvalonEdit.Search;
+using System;
+using System.ComponentModel;
 using System.Reflection;
-using System.Windows.Forms.Integration;
 using System.Text.RegularExpressions;
-using System.Windows.Input;
 using System.Windows;
-using System.IO;
+using System.Windows.Forms;
+using System.Windows.Input;
+using System.Xml;
 
 namespace AlgodooStudio.ASProject.Dialogs
 {
@@ -129,7 +119,6 @@ namespace AlgodooStudio.ASProject.Dialogs
             _editor.Text = text;
             //记录先前内容
             _lastContent = text;
-            
         }
         /// <summary>
         /// 通过给定的字符串搜索并添加提示条目
@@ -174,7 +163,6 @@ namespace AlgodooStudio.ASProject.Dialogs
                 _editor.Document.Insert(pos, str);
             }
         }
-
 
         private void Editor_TextChanged(object sender, EventArgs e)
         {
@@ -239,7 +227,6 @@ namespace AlgodooStudio.ASProject.Dialogs
             {
                 EditedText = _editor.Text;//不启用则按照现有文本进行赋值
             }
-            
 
             _editor = null;
             _reminder = null;
@@ -262,7 +249,6 @@ namespace AlgodooStudio.ASProject.Dialogs
             }
         }
 
-
         private void Reminder_Loaded(object sender, RoutedEventArgs e)
         {
             _isReminderShow = true;
@@ -272,14 +258,12 @@ namespace AlgodooStudio.ASProject.Dialogs
             _isReminderShow = false;
         }
 
-
         private void 查找ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _searchPanel.Open();
         }
         private void 替换ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
         }
         private void 复制ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -305,7 +289,6 @@ namespace AlgodooStudio.ASProject.Dialogs
         }
         private void rightMenu_Opening(object sender, CancelEventArgs e)
         {
-
         }
     }
 }

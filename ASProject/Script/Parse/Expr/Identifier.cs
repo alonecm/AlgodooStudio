@@ -6,7 +6,7 @@ namespace AlgodooStudio.ASProject.Script.Parse.Expr
 {
     public sealed class Identifier : ThymeSyntaxNode
     {
-        public override string Type => "Identifier "+ Value.Value;
+        public override string Type => "Identifier " + Value.Value;
 
         public ThymeToken Value { get; }
 

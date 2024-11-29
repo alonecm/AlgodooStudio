@@ -1,13 +1,6 @@
 ﻿using Dex.Utils;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AlgodooStudio.ASProject.Dialogs
@@ -63,7 +56,7 @@ namespace AlgodooStudio.ASProject.Dialogs
 
         private void ColorPicker_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar=='c'&& timer.Enabled)
+            if (e.KeyChar == 'c' && timer.Enabled)
             {
                 timer.Enabled = l_pickingTip.Visible = l_pickingTip2.Visible = isPicking = false;
             }

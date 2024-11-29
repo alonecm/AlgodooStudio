@@ -14,7 +14,6 @@
         /// </summary>
         private bool isError = false;
 
-
         /// <summary>
         /// 名称
         /// </summary>
@@ -28,14 +27,13 @@
         /// </summary>
         public string Author { get; }
 
-
         /// <summary>
         /// 是否启用
         /// </summary>
         public bool IsEnabled => isEnabled;
 
-        
-        protected Plugin() { }
+        protected Plugin()
+        { }
         /// <summary>
         /// 新建插件
         /// </summary>
@@ -65,7 +63,6 @@
             isEnabled = false;
             OnDisabled();
         }
-
 
         /// <summary>
         /// 加载时调用

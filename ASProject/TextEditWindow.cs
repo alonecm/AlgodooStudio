@@ -115,7 +115,7 @@ namespace AlgodooStudio.ASProject
             InitializeComponent();
             Initialize();
         }
-        
+
         /// <summary>
         /// 通过标题，内容和读写方式创建文字编辑窗口
         /// </summary>
@@ -166,7 +166,7 @@ namespace AlgodooStudio.ASProject
             IHighlightingDefinition highLighting;
             using (var xml = new XmlTextReader(Assembly.GetExecutingAssembly().GetManifestResourceStream("AlgodooStudio.Resources._res.ThymeHighLighting.xshd")))
             {
-                highLighting = HighlightingLoader.Load(xml,HighlightingManager.Instance);
+                highLighting = HighlightingLoader.Load(xml, HighlightingManager.Instance);
             }
             //注册这个高亮文件
             HighlightingManager.Instance.RegisterHighlighting("Thyme", new string[] { ".thm" }, highLighting);
@@ -200,8 +200,6 @@ namespace AlgodooStudio.ASProject
             throw new NotImplementedException();
         }
 
-
-
         #region 编辑器
         /// <summary>
         /// 文字变动驱动错误检查
@@ -218,7 +216,6 @@ namespace AlgodooStudio.ASProject
                 SetWindowTitle(true);//展示标题到窗口
             }
             errorCheckTimer.Enabled = true;
-            
         }
         /// <summary>
         /// 文字输入前创建提词器
@@ -320,7 +317,7 @@ namespace AlgodooStudio.ASProject
                 _reminder.Close();//匹配不到东西就关闭
             }
         }
-        #endregion
+        #endregion 提词器
 
         #region 窗体
         /// <summary>
@@ -700,7 +697,7 @@ namespace AlgodooStudio.ASProject
         {
             _Search();
         }
-       
+
         /// <summary>
         /// 选中错误位置
         /// </summary>

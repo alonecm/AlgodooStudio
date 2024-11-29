@@ -3,8 +3,8 @@ using Dex.IO;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Folding;
-using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using ICSharpCode.AvalonEdit.Search;
 using System;
 using System.ComponentModel;
@@ -49,7 +49,6 @@ namespace AlgodooStudio.ASProject.Dialogs
         /// </summary>
         private ReplaceWindow _replaceWindow;
 
-
         /// <summary>
         /// 片段位置
         /// </summary>
@@ -58,7 +57,6 @@ namespace AlgodooStudio.ASProject.Dialogs
         /// 提醒器是否已经显示
         /// </summary>
         private bool _isReminderShow;
-
 
         /// <summary>
         /// 初始文字
@@ -78,7 +76,6 @@ namespace AlgodooStudio.ASProject.Dialogs
         /// 编辑中的片段
         /// </summary>
         public ScriptClip EditingScriptClip { get => editingScriptClip; }
-      
 
         /// <summary>
         /// 从路径打开切片
@@ -89,7 +86,6 @@ namespace AlgodooStudio.ASProject.Dialogs
             InitializeComponent();
             Initialize(path);
         }
-
 
         private void Initialize(string path)
         {
@@ -123,7 +119,6 @@ namespace AlgodooStudio.ASProject.Dialogs
             //设置高亮语法
             _editor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinitionByExtension(".thm");
 
-
             //为编辑器创建事件
             _editor.TextArea.MouseWheel += TextArea_MouseWheel;
             _editor.TextArea.TextEntered += TextArea_TextEntered;
@@ -153,7 +148,6 @@ namespace AlgodooStudio.ASProject.Dialogs
             _editor.Text = editingScriptClip.Script;
             t_description.Focus();//聚焦
         }
-
 
         /// <summary>
         /// 通过给定的字符串搜索并添加提示条目
@@ -198,7 +192,6 @@ namespace AlgodooStudio.ASProject.Dialogs
                 _editor.Document.Insert(pos, str);
             }
         }
-
 
         private void Editor_TextChanged(object sender, EventArgs e)
         {
@@ -269,7 +262,6 @@ namespace AlgodooStudio.ASProject.Dialogs
             GC.Collect(2);
         }
 
-
         private void Reminder_Loaded(object sender, RoutedEventArgs e)
         {
             _isReminderShow = true;
@@ -279,7 +271,6 @@ namespace AlgodooStudio.ASProject.Dialogs
             _isReminderShow = false;
         }
 
-      
         private void 查找ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _searchPanel.Open();
@@ -321,7 +312,7 @@ namespace AlgodooStudio.ASProject.Dialogs
             {
                 粘贴ToolStripMenuItem.Visible = true;
             }
-            if (_editor.SelectionLength==0)
+            if (_editor.SelectionLength == 0)
             {
                 复制ToolStripMenuItem.Visible = 剪切ToolStripMenuItem.Visible = false;
             }
@@ -330,7 +321,6 @@ namespace AlgodooStudio.ASProject.Dialogs
                 复制ToolStripMenuItem.Visible = 剪切ToolStripMenuItem.Visible = true;
             }
         }
-        
 
         private void b_clear_Click(object sender, EventArgs e)
         {
@@ -343,7 +333,5 @@ namespace AlgodooStudio.ASProject.Dialogs
         {
             DialogResult = DialogResult.OK;
         }
-
-
     }
 }

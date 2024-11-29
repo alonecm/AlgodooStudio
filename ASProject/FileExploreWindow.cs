@@ -2,7 +2,6 @@
 using AlgodooStudio.ASProject.Support;
 using Dex.IO;
 using Dex.Utils;
-using Microsoft.VisualBasic.FileIO;
 using PhunSharp;
 using PhunSharp.Archive;
 using System;
@@ -56,7 +55,6 @@ namespace AlgodooStudio.ASProject
             //初始化窗体属性
             Initialize();
         }
-
 
         #region 辅助性方法
 
@@ -137,7 +135,7 @@ namespace AlgodooStudio.ASProject
         /// <param name="dirPath">文件夹路径</param>
         private void LoadFoldersAndFilesToListView(string dirPath)
         {
-            if (dirPath!="")
+            if (dirPath != "")
             {
                 //保留当前列表
                 currentFolder = dirPath;
@@ -145,7 +143,7 @@ namespace AlgodooStudio.ASProject
                 fViewer.Clear();
                 var fsm = new FileSystemManager(new DirectoryInfo(dirPath));
                 //加载子文件夹
-                var dirs = fsm.GetChildDirectories(FileAttributes.System|FileAttributes.Hidden);
+                var dirs = fsm.GetChildDirectories(FileAttributes.System | FileAttributes.Hidden);
                 foreach (var dir in dirs)
                 {
                     fViewer.Items.Add(new ListViewItem(dir.Name) { Tag = dir, ImageIndex = 0 });
@@ -203,7 +201,7 @@ namespace AlgodooStudio.ASProject
                         DockContentCollection contents = this.DockPanel.Contents;
                         foreach (var item in contents)
                         {
-                            if (item.DockHandler.TabText==Path.GetFileName(path))
+                            if (item.DockHandler.TabText == Path.GetFileName(path))
                             {
                                 item.DockHandler.Activate();
                                 fViewer.Cursor = Cursors.Default;
@@ -221,7 +219,7 @@ namespace AlgodooStudio.ASProject
                         }
                         break;
                     default:
-                        Process.Start("explorer.exe",path);
+                        Process.Start("explorer.exe", path);
                         break;
                 }
             }
@@ -325,7 +323,7 @@ namespace AlgodooStudio.ASProject
         {
             if (Directory.Exists(path))
             {
-                var fsm=new FileSystemManager(new DirectoryInfo(path));
+                var fsm = new FileSystemManager(new DirectoryInfo(path));
                 fsm.Delete(true);
             }
             if (File.Exists(path))
@@ -349,13 +347,11 @@ namespace AlgodooStudio.ASProject
             {
                 fsm = new FileSystemManager(new DirectoryInfo(path));
                 fsm.Rename(newName, withExtension);
-               
             }
             if (File.Exists(path))
             {
                 fsm = new FileSystemManager(new FileInfo(path));
                 fsm.Rename(newName, withExtension);
-                
             }
             return fsm;
         }
@@ -410,7 +406,6 @@ namespace AlgodooStudio.ASProject
             node.Nodes.Clear();
             node.Nodes.Add("");
         }
-       
 
         #endregion 辅助性方法
 
@@ -480,9 +475,8 @@ namespace AlgodooStudio.ASProject
         /// <param name="e"></param>
         private void folderTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            folderTree.HideSelection=false;
+            folderTree.HideSelection = false;
         }
-
 
         #region 文件树右键菜单
 
@@ -663,7 +657,7 @@ namespace AlgodooStudio.ASProject
         private void returnUp_Click(object sender, EventArgs e)
         {
             var currentDir = new DirectoryInfo(currentFolder);
-            if (currentDir.Root.FullName!=currentDir.FullName)
+            if (currentDir.Root.FullName != currentDir.FullName)
             {
                 currentFolder = currentDir.Parent.FullName;
             }
@@ -709,7 +703,7 @@ namespace AlgodooStudio.ASProject
         private void fViewerContextMenu_Opening(object sender, CancelEventArgs e)
         {
             //选中和未选中
-            if (fViewer.SelectedItems.Count>0)
+            if (fViewer.SelectedItems.Count > 0)
             {
                 //选中的是什么
                 if (fViewer.SelectedItems[0].Tag is FileInfo)//是文件则按文件来
@@ -742,7 +736,7 @@ namespace AlgodooStudio.ASProject
                 在资源管理器中打开ToolStripMenuItem1.Visible =
                 刷新ToolStripMenuItem.Visible =
                 查看ToolStripMenuItem.Visible =
-                新建ToolStripMenuItem1.Visible = 
+                新建ToolStripMenuItem1.Visible =
                 粘贴ToolStripMenuItem1.Visible = false;
             }
             else
@@ -784,12 +778,12 @@ namespace AlgodooStudio.ASProject
 
         private void 空文件夹ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (TextGetDialog tgd=new TextGetDialog())
+            using (TextGetDialog tgd = new TextGetDialog())
             {
                 tgd.Title = "创建文件夹";
                 tgd.IsNameValidCheck = true;
                 tgd.InputText = "New Folder";
-                if (tgd.ShowDialog()==DialogResult.OK)
+                if (tgd.ShowDialog() == DialogResult.OK)
                 {
                     Directory.CreateDirectory($"{currentFolder}\\{tgd.InputText}");
                     RefreshAll(currentFolder);
@@ -831,10 +825,10 @@ namespace AlgodooStudio.ASProject
         {
             Open((fViewer.SelectedItems[0].Tag as FileSystemInfo).FullName);
         }
-        
+
         private void 在Algodoo中打开ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (fViewer.SelectedItems.Count>0)
+            if (fViewer.SelectedItems.Count > 0)
             {
                 var item = fViewer.SelectedItems[0].Tag as FileSystemInfo;
                 if (item.Extension == ".phn" || item.Extension == ".phz")
@@ -842,7 +836,7 @@ namespace AlgodooStudio.ASProject
                         Process.Start($"{Program.Setting.AlgodooPath}\\algodoo.exe", item.FullName);
             }
         }
-        
+
         private void 剪切ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Cut((fViewer.SelectedItems[0].Tag as FileSystemInfo).FullName);
@@ -855,7 +849,7 @@ namespace AlgodooStudio.ASProject
 
         private void 粘贴ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (isCopying||isMoving)
+            if (isCopying || isMoving)
             {
                 Paste(currentFolder);
                 RefreshAll(currentFolder);
@@ -917,7 +911,7 @@ namespace AlgodooStudio.ASProject
                     {
                         //优先进行内存检查
                         MemoryManage(10);
-                        
+
                         //如果存档不存在则优先添加到其中
                         if (!archiveCache.ContainsKey(path))
                         {
@@ -962,7 +956,5 @@ namespace AlgodooStudio.ASProject
             archiveCache.Clear();
             GC.Collect(2);
         }
-
-        
     }
 }

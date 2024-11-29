@@ -6,7 +6,6 @@ namespace AlgodooStudio.ASProject.Script.Parse.Expr
 {
     public sealed class Symbol : ThymeSyntaxNode
     {
-
         public Symbol(ThymeToken token)
         {
             Token = token;
@@ -21,6 +20,7 @@ namespace AlgodooStudio.ASProject.Script.Parse.Expr
             return Enumerable.Empty<ISyntaxNode>();
         }
     }
+
     public sealed class Null : ThymeSyntaxNode
     {
         public override string Type => "Null";

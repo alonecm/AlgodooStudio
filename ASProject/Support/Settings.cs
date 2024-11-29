@@ -1,6 +1,4 @@
 ﻿using Dex.Common;
-using System.IO;
-using System.Numerics;
 
 namespace AlgodooStudio.ASProject.Support
 {
@@ -24,6 +22,5 @@ namespace AlgodooStudio.ASProject.Support
         /// 工作室所在目录
         /// </summary>
         internal string StudioPath { get; } = ".\\";
-
     }
 }

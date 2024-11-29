@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AlgodooStudio.ASProject.Support
 {
@@ -12,7 +8,8 @@ namespace AlgodooStudio.ASProject.Support
     [Serializable]
     internal class ScriptClip
     {
-        public ScriptClip() { }
+        public ScriptClip()
+        { }
 
         public ScriptClip(string description = "", string script = "")
         {

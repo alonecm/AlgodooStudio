@@ -1,5 +1,4 @@
-﻿
-using AlgodooStudio.ASProject;
+﻿using AlgodooStudio.ASProject;
 using System.Windows.Forms;
 
 namespace AlgodooStudio.PluginSystem

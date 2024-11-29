@@ -1,12 +1,4 @@
-﻿using AlgodooStudio.ASProject.Support;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
 namespace AlgodooStudio.ASProject.Dialogs
@@ -47,7 +39,7 @@ namespace AlgodooStudio.ASProject.Dialogs
         {
             using (var fbd = new FolderBrowserDialog())
             {
-                if (fbd.ShowDialog()==DialogResult.OK)
+                if (fbd.ShowDialog() == DialogResult.OK)
                 {
                     text_scenePath.Text = fbd.SelectedPath;
                     if (Program.Setting.ScenePath != text_scenePath.Text)

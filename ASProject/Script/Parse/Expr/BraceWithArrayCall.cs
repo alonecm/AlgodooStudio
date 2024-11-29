@@ -19,7 +19,6 @@ namespace AlgodooStudio.ASProject.Script.Parse.Expr
         public ThymeSyntaxNode Array { get; }
         public ThymeSyntaxNode Brace { get; }
 
-
         public override IEnumerable<ISyntaxNode> GetChildren()
         {
             yield return Brace;

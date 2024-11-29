@@ -1,5 +1,4 @@
-﻿using AlgodooStudio.ASProject;
-using AlgodooStudio.ASProject.Support;
+﻿using AlgodooStudio.ASProject.Support;
 using Dex.IO;
 using System;
 using System.Drawing;
@@ -652,7 +651,7 @@ namespace AlgodooStudio.ASProject.Dialogs
 
         private void b_addClip_Click(object sender, EventArgs e)
         {
-            using (TextGetDialog tgd =new TextGetDialog())
+            using (TextGetDialog tgd = new TextGetDialog())
             {
                 tgd.Title = "创建片段";
                 tgd.InputText = "NewClip";
@@ -697,7 +696,7 @@ namespace AlgodooStudio.ASProject.Dialogs
         {
             ChangeClip();
         }
-        
+
         private void b_change_Click(object sender, EventArgs e)
         {
             ChangeClip();
@@ -722,6 +721,6 @@ namespace AlgodooStudio.ASProject.Dialogs
             }
         }
 
-        #endregion
+        #endregion 片段处理
     }
 }

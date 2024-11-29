@@ -12,10 +12,10 @@ namespace AlgodooStudio.ASProject.Script.Parse.Expr
             Right = right;
         }
 
-        public override string Type => "BinaryExpression " +Op.Value;
+        public override string Type => "BinaryExpression " + Op.Value;
 
         public ThymeSyntaxNode Left { get; }
-        
+
         public ThymeToken Op { get; }
 
         public ThymeSyntaxNode Right { get; }

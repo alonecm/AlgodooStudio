@@ -1,5 +1,4 @@
-﻿using AlgodooStudio.ASProject;
-using System;
+﻿using System;
 using System.Windows.Forms;
 
 namespace AlgodooStudio.ASProject.Dialogs

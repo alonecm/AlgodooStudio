@@ -8,7 +8,6 @@ namespace AlgodooStudio.ASProject.Script.Parse.Expr
     {
         public override string Type => "NaN";
 
-
         public NaN(ThymeToken value)
         {
         }

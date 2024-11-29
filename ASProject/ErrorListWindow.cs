@@ -1,14 +1,6 @@
-﻿using AlgodooStudio.ASProject.Script.Parse;
-using Dex.Analysis.Parse;
+﻿using Dex.Analysis.Parse;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
@@ -50,7 +42,7 @@ namespace AlgodooStudio.ASProject
 
         private void errorList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (errorList.SelectedItems.Count>0)
+            if (errorList.SelectedItems.Count > 0)
             {
                 var item = errorList.SelectedItems[0];
                 Program.SelectError(item.SubItems[4].Text, new Dex.Common.Range(int.Parse(item.SubItems[1].Text), int.Parse(item.SubItems[2].Text)));

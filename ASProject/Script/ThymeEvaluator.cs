@@ -2,10 +2,6 @@
 using AlgodooStudio.ASProject.Script.Parse.Expr;
 using Dex.Analysis.Parse;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AlgodooStudio.ASProject.Script
 {
@@ -51,7 +47,6 @@ namespace AlgodooStudio.ASProject.Script
                     throw new Exception($"[{node.Type}]节点目前无法评估");
             }
         }
-
 
         private object EvaluatePrimary(ThymeSyntaxNode node)
         {

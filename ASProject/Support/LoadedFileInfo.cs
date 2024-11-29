@@ -1,10 +1,5 @@
 ﻿using PhunSharp.Archive;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AlgodooStudio.ASProject.Support
 {
