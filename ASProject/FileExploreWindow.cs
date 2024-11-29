@@ -199,6 +199,17 @@ namespace AlgodooStudio.ASProject
                     case ".phn":
                     case ".cfg":
                     case ".thm":
+
+                        DockContentCollection contents = this.DockPanel.Contents;
+                        foreach (var item in contents)
+                        {
+                            if (item.DockHandler.TabText==Path.GetFileName(path))
+                            {
+                                item.DockHandler.Activate();
+                                fViewer.Cursor = Cursors.Default;
+                                return;
+                            }
+                        }
                         var otherTextEditor = new TextEditWindow();
                         otherTextEditor.FilePath = path;
                         otherTextEditor.Show(this.DockPanel, DockState.Document);

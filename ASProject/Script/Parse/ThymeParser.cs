@@ -3,12 +3,11 @@ using Dex.Analysis.Parse;
 using Dex.Common;
 using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using Array = AlgodooStudio.ASProject.Script.Parse.Expr.Array;
 
 namespace AlgodooStudio.ASProject.Script.Parse
 {
-    //TODO:占位符的创建后未能起到占位的作用，记得修复
-
     public sealed class ThymeParser : Parser<ThymeToken, ThymeSyntaxNode>
     {
         public ThymeParser(ThymeTokenCollection tokens) : base(tokens)
@@ -92,12 +91,16 @@ namespace AlgodooStudio.ASProject.Script.Parse
 
                         case ",":
                         case ";":
-                            ReportEmptyExpression(Next(ref currentTokenCount));
-                            return new Placeholders();
+                            var tk = Current;
+                            ReportEmptyExpression(tk);
+                            GoEnd();
+                            return new Symbol(tk); ;
 
                         default:
-                            ReportErrorSymbol(Next(ref currentTokenCount));
-                            return new Placeholders();
+                            tk = Current;
+                            ReportErrorSymbol(tk);
+                            GoEnd();
+                            return new Symbol(tk);
                     }
 
                 case "keyword":
@@ -112,25 +115,21 @@ namespace AlgodooStudio.ASProject.Script.Parse
                     var identifier = new Identifier(Next(ref currentTokenCount));
                     if (!IsEnd)
                     {
-                        //函数和数组调用
+                        //标识符调用式
                         switch (Current.Value)
                         {
                             case "(":
                             case "[":
-                                var start = Current;
                                 var es = ParseElement(ref currentTokenCount);
-                                switch (es)
+                                if (es is Array array)
                                 {
-                                    case BraceExpression braceExpression:
-                                        es = new BraceArray(braceExpression.Node);
-                                        break;
-                                    case Array array:
-                                        es = new BraceArray(array.Nodes);
-                                        break;
-                                    default:
-                                        break;
+                                    return new IdentifierCall(identifier, new RealParams(array.Nodes));
                                 }
-                                return new IdentifierCall(identifier, start, es, Review);
+                                else if (es is BraceExpression braceExpression)
+                                {
+                                    return new IdentifierCall(identifier, new RealParams(braceExpression.Node));
+                                }
+                                break;
                         }
                     }
                     return identifier;
@@ -160,7 +159,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 if (IsEnd)//此处结束报错
                 {
                     ReportMissing("右侧表达式", op.Range);
-                    return new Placeholders();
+                    return null;
                 }
                 var expr = ParseExpression(ref currentTokenCount);//获取元素
                 left = new UnaryExpression(op, expr);
@@ -178,17 +177,13 @@ namespace AlgodooStudio.ASProject.Script.Parse
 
             switch (Current.Value)
             {
-                case "(":
-                case "[":
-
-                    throw new NotImplementedException("未在此处实现多重索引调用！");
                 case "++":
                     //如果给出的左侧是数组且后方有追加符，则是数组合并
                     var pp = Next(ref currentTokenCount);
                     if (IsEnd)
                     {
                         ReportMissing("右侧表达式", pp.Range);
-                        return new Placeholders();
+                        return null;
                     }
                     var right = ParseAssignment(ref currentTokenCount);
                     return new ArrayCombine(left, right);
@@ -199,7 +194,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                     if (IsEnd)//缺失表达式2
                     {
                         ReportMissing("子成员", point.Range);
-                        return new Placeholders();
+                        return null;
                     }
                     return new MemberCall(left, ParseAssignment(ref currentTokenCount));
                 case "?":
@@ -208,7 +203,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                     if (IsEnd)//缺失表达式2
                     {
                         ReportMissing("expression2", question.Range);
-                        return new Placeholders();
+                        return null;
                     }
                     var expr2 = ParseAssignment(ref currentTokenCount);
                     
@@ -216,21 +211,21 @@ namespace AlgodooStudio.ASProject.Script.Parse
                     if (IsEnd)
                     {
                         ReportMissing(":", Review.Range);
-                        return new Placeholders();
+                        return null;
                     }
                     //缺少冒号则报错
                     if (Current.Value != ":")
                     {
                         ReportMissing(":", Review.Range);
-                        Next(ref currentTokenCount);
-                        return new Placeholders();
+                        GoEnd();
+                        return null;
                     }
 
                     var colon = Next(ref currentTokenCount);
                     if (IsEnd)//缺失表达式3
                     {
                         ReportMissing("expression3", colon.Range);
-                        return new Placeholders();
+                        return null;
                     }
                     var expr3 = ParseAssignment(ref currentTokenCount);
                     return new Ifstatement(left, expr2, expr3);
@@ -280,19 +275,19 @@ namespace AlgodooStudio.ASProject.Script.Parse
             //左侧为标识符且当前为赋值或重定向则进行解析
             if (Current.Value == "=" || Current.Value == ":=" || Current.Value == "->")
             {
-                //没停止则报错;
+                //左侧不是标识符则报错
                 if (!(left is Identifier))
                 {
                     ReportError(new ThymeDiagnostic($"不能对 '{left.Type}' 赋值", Current.Range));
-                    Next(ref currentTokenCount);
-                    return new Placeholders();
+                    GoEnd();
+                    return null;
                 }
 
                 if (currentTokenCount > 1)
                 {
                     ReportError(new ThymeDiagnostic($"'{Current.Value}'左侧令牌太多！(应为1个，现为{currentTokenCount}个)", Current.Range));
-                    Next(ref currentTokenCount);
-                    return new Placeholders();
+                    GoEnd();
+                    return null;
                 }
 
                 switch (Current.Value)
@@ -302,7 +297,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                         if (IsEnd)
                         {
                             ReportMissing("右侧的值", eq.Range);
-                            return new Placeholders();
+                            return null;
                         }
                         return new Assign(left, ParseAssignment(ref currentTokenCount));
                     case ":=":
@@ -310,7 +305,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                         if (IsEnd)
                         {
                             ReportMissing("右侧的值", point.Range);
-                            return new Placeholders();
+                            return null;
                         }
                         return new NewAssign(left, ParseAssignment(ref currentTokenCount));
                     case "->":
@@ -344,7 +339,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 if (IsEnd)
                 {
                     ReportMissing("}", Review.Range);
-                    return new Placeholders();
+                    return null;
                 }
 
                 //找到结尾大括号则结束块解析
@@ -361,7 +356,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 {
                     //如果未退出还结束了则缺少内容
                     ReportMissing("}", Review.Range);
-                    return new Placeholders();
+                    return null;
                 }
 
                 //碰上分号则换行
@@ -382,8 +377,8 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 else
                 {
                     ReportMissing(";", Review.Range);
-                    Next(ref currentTokenCount);
-                    return new Placeholders();
+                    GoEnd();
+                    return null;
                 }
             }
 
@@ -407,7 +402,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 if (IsEnd)
                 {
                     ReportMissing("]", Review.Range);
-                    return new Placeholders();
+                    return null;
                 }
 
                 //如果直接结束了则结束
@@ -424,7 +419,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 {
                     //如果未退出还结束了则缺少内容
                     ReportMissing("]", Review.Range);
-                    return new Placeholders();
+                    return null;
                 }
 
                 //碰上逗号则略过
@@ -432,6 +427,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 {
                     var jump = Next(ref array_CurrentTokenCount);//略过
                     nodes.Add(node);
+                    continue;
                 }
 
                 //碰上方括号说明是结束了
@@ -454,11 +450,11 @@ namespace AlgodooStudio.ASProject.Script.Parse
             switch (Current.Value)
             {
                 case "[":
-                    var arrCall = ParseArray(ref currentTokenCount);
-                    return new ArrayIndexGroupCall(arr, arrCall);
+                    var followArray = ParseArray(ref currentTokenCount);
+                    return new ArrayWithArrayCall(arr, followArray);
                 case "(":
-                    var idx = ParseBrace(ref currentTokenCount);
-                    return new ArrayIndexCall(arr, idx);
+                    var followBrace = ParseBrace(ref currentTokenCount);
+                    return new ArrayWithBraceCall(arr, followBrace);
                 default:
                     return arr;
             }
@@ -481,7 +477,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 if (IsEnd)
                 {
                     ReportMissing(")", Review.Range);
-                    return new Placeholders();
+                    return null;
                 }
 
                 //如果直接结束了则结束
@@ -497,7 +493,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 {
                     //如果未退出还结束了则缺少内容
                     ReportMissing(")", Review.Range);
-                    return new Placeholders();
+                    return null;
                 }
 
                 //碰上逗号则是参数或数组
@@ -505,6 +501,7 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 {
                     var jump = Next(ref brace_CurrentTokenCount);//略过
                     nodes.Add(node);
+                    continue;
                 }
                 //碰上小括号说明是结束了
                 if (Current.Value == ")")
@@ -515,13 +512,32 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 }
             }
 
+            ThymeSyntaxNode brace;
+
             if (nodes.Count!=1)
             {
-                return new Array(nodes.ToArray());//输出为小括号数组
+                brace = new Array(nodes.ToArray());//输出为小括号数组
             }
             else
             {
-                return new BraceExpression(nodes[0]);
+                brace = new BraceExpression(nodes[0]);
+            }
+
+            if (IsEnd)
+            {
+                return brace;
+            }
+
+            switch (Current.Value)
+            {
+                case "[":
+                    var followArray = ParseArray(ref currentTokenCount);
+                    return new BraceWithArrayCall(brace, followArray);
+                case "(":
+                    var followBrace = ParseBrace(ref currentTokenCount);
+                    return new BraceWithBraceCall(brace, followBrace);
+                default:
+                    return brace;
             }
         }
 
@@ -554,8 +570,8 @@ namespace AlgodooStudio.ASProject.Script.Parse
                             }
                             //不允许则证明存在非标识符
                             ReportError(new ThymeDiagnostic("参数列表中存在非标识符！", Review.Range));
-                            Next(ref currentTokenCount);
-                            return new Placeholders();
+                            GoEnd();
+                            return null;
                         }
                         break;
                     case BraceExpression braceExpression:
@@ -563,8 +579,8 @@ namespace AlgodooStudio.ASProject.Script.Parse
                         {
                             //不允许则证明存在非标识符
                             ReportError(new ThymeDiagnostic("参数列表中存在非标识符！", Review.Range));
-                            Next(ref currentTokenCount);
-                            return new Placeholders();
+                            GoEnd();    
+                            return null;
                         }
                         break;
                 }
@@ -574,8 +590,8 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 if (IsEnd || Current.Value != "{")
                 {
                     ReportMissing("{", Review.Range);
-                    Next(ref currentTokenCount);
-                    return new Placeholders();
+                    GoEnd();
+                    return null;
                 }
                 else
                 {
@@ -644,6 +660,30 @@ namespace AlgodooStudio.ASProject.Script.Parse
         private void ReportEmptyExpression(ThymeToken token)
         {
             ReportError(new ThymeDiagnostic($"'{token.Value}' 前的表达式为空！", token.Range, DiagnosticType.Error));
+        }
+
+        protected override void GoEnd()
+        {
+            int tokencount = 0;
+            while (!IsEnd)
+            {
+                Next(ref tokencount);
+                if (!(Current is null))
+                {
+                    switch (Current.Value)
+                    {
+                        case ";":
+                        case ",":
+                        case "}":
+                        case "]":
+                        case ")":
+                        case "?":
+                        case ":":
+                        default:
+                            return;
+                    }
+                }
+            }
         }
     }
 }

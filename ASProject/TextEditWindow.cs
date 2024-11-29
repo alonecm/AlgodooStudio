@@ -1,7 +1,6 @@
 ﻿using AlgodooStudio.ASProject.Dialogs;
 using AlgodooStudio.ASProject.Interface;
 using AlgodooStudio.ASProject.Script.Parse;
-using AlgodooStudio.Properties;
 using Dex.Common;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.CodeCompletion;
@@ -12,14 +11,11 @@ using ICSharpCode.AvalonEdit.Search;
 using PhunSharp;
 using System;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Windows.Media;
 using System.Xml;
-using System.Xml.Serialization;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace AlgodooStudio.ASProject

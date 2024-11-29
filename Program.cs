@@ -1,6 +1,7 @@
 ﻿using AlgodooStudio.ASProject;
 using AlgodooStudio.ASProject.Script;
 using AlgodooStudio.ASProject.Script.Parse;
+using AlgodooStudio.ASProject.Script.Parse.Expr;
 using AlgodooStudio.ASProject.Support;
 using AlgodooStudio.PluginSystem;
 using Dex.Analysis.Parse;
@@ -44,6 +45,10 @@ namespace AlgodooStudio
         private static AutoExecuteItemCollection autoExecuteItems = new AutoExecuteItemCollection();
 
         /// <summary>
+        /// 自启动项集合
+        /// </summary>
+        public static AutoExecuteItemCollection AutoExecuteItems => autoExecuteItems;
+        /// <summary>
         /// 设定信息
         /// </summary>
         public static Settings Setting => setting;
@@ -59,7 +64,7 @@ namespace AlgodooStudio
         /// <summary>
         /// 读取自启动项
         /// </summary>
-        public static void ReadAutoExecuteFile()
+        private static void ReadAutoExecuteFile()
         {
             if (!Directory.Exists(setting.AlgodooPath))
             {
@@ -75,25 +80,61 @@ namespace AlgodooStudio
                 return;
             }
             LogWriter.WriteInfo("解析自启动文件...");
-            ThymeParser parser = new ThymeParser(
+            ThymeParser parserActive = new ThymeParser(
                 new ThymeTokenizer(
-                    FileHandler.GetTextFileContent(path, Encoding.UTF8)
+                    FileHandler.GetTextFileContent(path, Encoding.UTF8)//NOTE:自启动文件可以表示为启用项，我再创建一个禁用项文件用来存放禁用项即可，启用就是从禁用项文件中移动到自启动文件中，禁用则是相反
                     ).Tokenize());
-            var tree = parser.Parse();
-            if (parser.Diagnostics.Count>0)
+            var rootActive = parserActive.Parse() as Root;
+            if (parserActive.Diagnostics.Count>0)
             {
                 MBox.ShowWarning("自启动文件中存在语法错误，已输出到日志文件中，请查看");
                 StringBuilder stringBuilder = new StringBuilder();
-                foreach (var item in parser.Diagnostics)
+                foreach (var item in parserActive.Diagnostics)
                 {
                     stringBuilder.AppendLine($"{item.Range}[{item.Type}] {item.Message}");
                 }
                 LogWriter.WriteWarn(stringBuilder.ToString());
             }
-            var x = ThymeReGenerator.ReGenerate(tree);
-            //TODO:完善自启动项读取
-            //var result = new ThymeEvaluator().Evaluate(tree);
 
+            //添加启用项
+            var rgEnable = new ThymeReGenerator();
+            foreach (var item in rootActive.Nodes)
+            {
+                var content = rgEnable.ReGenerate(item);
+                if (content.Contains("reflection.executefile"))
+                {
+                    autoExecuteItems.Add(new AutoExecuteItem(true, AutoExecuteItemType.File, content));
+                }
+                else
+                {
+                    autoExecuteItems.Add(new AutoExecuteItem(true, AutoExecuteItemType.Code, content));
+                }
+            }
+
+            //检查是否存在禁用项托管文件
+            if (File.Exists(".\\Manage\\disabled_execute_item.manage"))
+            {
+                LogWriter.WriteInfo("解析托管文件...");
+                ThymeParser parserInactive = new ThymeParser(
+                    new ThymeTokenizer(
+                        FileHandler.GetTextFileContent(".\\Manage\\disabled_execute_item.manage", Encoding.UTF8)//NOTE:自启动文件可以表示为启用项，我再创建一个禁用项文件用来存放禁用项即可，启用就是从禁用项文件中移动到自启动文件中，禁用则是相反
+                        ).Tokenize());
+                var rootInactive = parserInactive.Parse() as Root;
+                //添加禁用项
+                var egEnable = new ThymeReGenerator();
+                foreach (var item in rootInactive.Nodes)
+                {
+                    var content = egEnable.ReGenerate(item);
+                    if (content.Contains("reflection.executefile"))
+                    {
+                        autoExecuteItems.Add(new AutoExecuteItem(false, AutoExecuteItemType.File, content));
+                    }
+                    else
+                    {
+                        autoExecuteItems.Add(new AutoExecuteItem(false, AutoExecuteItemType.Code, content));
+                    }
+                }
+            }
         }
         /// <summary>
         /// 保存自启动项
@@ -105,7 +146,6 @@ namespace AlgodooStudio
                 MBox.ShowError("Algodoo根目录未设置正确！请到设置中进行设置！");
                 return;
             }
-
         }
         /// <summary>
         /// 读取设置
@@ -225,11 +265,44 @@ namespace AlgodooStudio
             //如果文件夹不存在则创建文件夹
             if (!Directory.Exists(".\\Clips"))
             {
-                Directory.CreateDirectory(".\\Clips");
                 LogWriter.WriteInfo("创建Clips文件夹...");
+                Directory.CreateDirectory(".\\Clips");
             }
         }
-        
+        /// <summary>
+        /// 创建托管文件夹
+        /// </summary>
+        private static void CreateManageFolder()
+        {
+            if (!Directory.Exists(".\\Manage"))
+            {
+                LogWriter.WriteInfo("创建Manage文件夹...");
+                Directory.CreateDirectory(".\\Manage");
+            }
+        }
+        /// <summary>
+        /// 创建临时文件夹
+        /// </summary>
+        private static void CreateTempFolder()
+        {
+            if (!Directory.Exists(".\\Temp"))
+            {
+                LogWriter.WriteInfo("创建临时文件夹...");
+                var temp= Directory.CreateDirectory(".\\Temp");
+                temp.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
+            }
+        }
+        /// <summary>
+        /// 删除临时文件夹
+        /// </summary>
+        private static void DeleteTempFolder()
+        {
+            if (Directory.Exists(".\\Temp"))
+            {
+                LogWriter.WriteInfo("删除临时文件夹...");
+                Directory.Delete(".\\Temp");
+            }
+        }
 
         [STAThread]
         private static void Main()
@@ -241,12 +314,18 @@ namespace AlgodooStudio
             ReadSetting();
             //加载插件
             LoadPlugins();
+            //创建临时文件夹
+            CreateTempFolder();
+            //生成托管文件夹
+            CreateManageFolder();
             //生成代码片段文件夹
             CreateClipsFolder();
             //读取自启动文件
             ReadAutoExecuteFile();
             //启动工作室
             Application.Run(mainWindow = new MainWindow());
+            //删除临时文件夹
+            DeleteTempFolder();
         }
     }
 }

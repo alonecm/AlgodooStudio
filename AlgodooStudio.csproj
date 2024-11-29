@@ -154,6 +154,12 @@
     <Compile Include="ASProject\Dialogs\SettingsDialog.Designer.cs">
       <DependentUpon>SettingsDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="ASProject\Dialogs\TextEditDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ASProject\Dialogs\TextEditDialog.Designer.cs">
+      <DependentUpon>TextEditDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ASProject\ErrorListWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,14 +173,15 @@
     <Compile Include="ASProject\LogWriter.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Alloc.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Array.cs" />
-    <Compile Include="ASProject\Script\Parse\Expr\ArrayIndexGroupCall.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\ArrayCombine.cs" />
-    <Compile Include="ASProject\Script\Parse\Expr\ArrayIndexCall.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Assign.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\BinaryExpression.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Block.cs" />
-    <Compile Include="ASProject\Script\Parse\Expr\BraceArray.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\BraceExpression.cs" />
+    <Compile Include="ASProject\Script\Parse\Expr\ArrayWithArrayCall.cs" />
+    <Compile Include="ASProject\Script\Parse\Expr\ArrayWithBraceCall.cs" />
+    <Compile Include="ASProject\Script\Parse\Expr\BraceWithArrayCall.cs" />
+    <Compile Include="ASProject\Script\Parse\Expr\BraceWithBraceCall.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Function.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\IdentifierCall.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Ifstatement.cs" />
@@ -185,7 +192,7 @@
     <Compile Include="ASProject\Script\Parse\Expr\NewAssign.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Null.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Params.cs" />
-    <Compile Include="ASProject\Script\Parse\Expr\Placeholders.cs" />
+    <Compile Include="ASProject\Script\Parse\Expr\RealParams.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Redirect.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\Root.cs" />
     <Compile Include="ASProject\Script\Parse\Expr\MemberCall.cs" />
@@ -299,6 +306,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ASProject\Dialogs\SettingsDialog.resx">
       <DependentUpon>SettingsDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ASProject\Dialogs\TextEditDialog.resx">
+      <DependentUpon>TextEditDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ASProject\ErrorListWindow.resx">
       <DependentUpon>ErrorListWindow.cs</DependentUpon>

@@ -12,31 +12,32 @@ using Block = AlgodooStudio.ASProject.Script.Parse.Expr.Block;
 
 namespace AlgodooStudio.ASProject.Script
 {
-    //TODO:完善脚本重生成器
     /// <summary>
     /// 脚本重生成
     /// </summary>
-    public static class ThymeReGenerator
+    public sealed class ThymeReGenerator
     {
+        private int blockLayer = 0;
         /// <summary>
         /// 重生成脚本
         /// </summary>
         /// <param name="node">需要转换的语法节点</param>
         /// <returns></returns>
-        public static string ReGenerate(ThymeSyntaxNode node)
+        public string ReGenerate(ThymeSyntaxNode node)
         {
             switch (node)
             {
                 case Alloc alloc: return "alloc";
                 case Array array: return GenerateArray(array);
                 case ArrayCombine arrayCombine: return GenerateArrayCombine(arrayCombine);
-                case ArrayIndexCall arrayIndexCall: return GenerateArrayIndexCall(arrayIndexCall);
-                case ArrayIndexGroupCall arrayIndexGroupCall: return GenerateArrayIndexGroupCall(arrayIndexGroupCall);
+                case ArrayWithBraceCall arrayWithBraceCall: return GenerateArrayWithBraceCall(arrayWithBraceCall);
+                case ArrayWithArrayCall arrayWithArrayCall: return GenerateArrayWithArrayCall(arrayWithArrayCall);
                 case Assign assign: return GenerateAssign(assign);
                 case BinaryExpression binaryExpression: return GenerateBinaryExpression(binaryExpression);
                 case Block block: return GenerateBlock(block);
-                case BraceArray braceArray: return GenerateBraceArray(braceArray);
                 case BraceExpression braceExpression: return GenerateBraceExpression(braceExpression);
+                case BraceWithArrayCall braceWithArrayCall: return GenerateBraceWithArrayCall(braceWithArrayCall);
+                case BraceWithBraceCall braceWithBraceCall: return GenerateBraceWithBraceCall(braceWithBraceCall);
                 case Function function: return GenerateFunction(function);
                 case Identifier identifier: return identifier.Value.Value;
                 case IdentifierCall IdentifierCall: return GenerateIdentifierCall(IdentifierCall);
@@ -48,7 +49,7 @@ namespace AlgodooStudio.ASProject.Script
                 case NewAssign newAssign: return GenerateNewAssign(newAssign);
                 case Null @null: return "null";
                 case Params @params: return GenerateParams(@params);
-                case Placeholders placeholders: return placeholders.Type;
+                case RealParams realParams: return GenerateRealParams(realParams);
                 case Redirect redirect: return GenerateRedirect(redirect);
                 case Root root: return GenerateRoot(root);
                 case UnaryExpression unaryExpression: return GenerateUnaryExpression(unaryExpression);
@@ -57,46 +58,60 @@ namespace AlgodooStudio.ASProject.Script
             }
         }
 
-        private static string GenerateBraceArray(BraceArray braceArray)
+        private string GenerateBraceWithBraceCall(BraceWithBraceCall braceWithBraceCall)
         {
             var builder = new StringBuilder();
-            if (braceArray.Nodes.Length > 0)
+            builder.Append(ReGenerate(braceWithBraceCall.Brace1));
+            builder.Append(ReGenerate(braceWithBraceCall.Brace2));
+            return builder.ToString();
+        }
+
+        private string GenerateBraceWithArrayCall(BraceWithArrayCall braceWithArrayCall)
+        {
+            var builder = new StringBuilder();
+            builder.Append(ReGenerate(braceWithArrayCall.Brace));
+            builder.Append(ReGenerate(braceWithArrayCall.Array));
+            return builder.ToString();
+        }
+
+        private string GenerateRealParams(RealParams realParams)
+        {
+            var builder = new StringBuilder();
+            if (realParams.Nodes.Length > 0)
             {
-                if (braceArray.Nodes.Length > 1)
+                if (realParams.Nodes.Length > 1)
                 {
                     //添加前面的项
-                    for (int i = 0; i < braceArray.Nodes.Length - 1; i++)
+                    for (int i = 0; i < realParams.Nodes.Length - 1; i++)
                     {
-                        builder.Append(ReGenerate(braceArray.Nodes[i]) + ",");
+                        builder.Append(ReGenerate(realParams.Nodes[i]) + ",");
                     }
                 }
                 //添加最后一项
-                builder.Append(ReGenerate(braceArray.Nodes[braceArray.Nodes.Length - 1]));
+                builder.Append(ReGenerate(realParams.Nodes[realParams.Nodes.Length - 1]));
             }
             return builder.ToString();
         }
 
-        private static string GenerateIdentifierCall(IdentifierCall identifier)
+        private string GenerateIdentifierCall(IdentifierCall identifier)
         {
             var builder = new StringBuilder();
             builder.Append(ReGenerate(identifier.Identifier));
-            builder.Append(identifier.StartToken.Value);
-            builder.Append(ReGenerate(identifier.RealParams));
-            builder.Append(identifier.EndToken.Value);
-            return builder.ToString();
-        }
-
-        private static string GenerateArrayIndexCall(ArrayIndexCall arrayIndexCall)
-        {
-            var builder = new StringBuilder();
-            builder.Append(ReGenerate(arrayIndexCall.Array));
             builder.Append("(");
-            builder.Append(ReGenerate(arrayIndexCall.Index));
+            builder.Append(ReGenerate(identifier.RealParams));
             builder.Append(")");
             return builder.ToString();
         }
 
-        private static string GenerateUnaryExpression(UnaryExpression unaryExpression)
+        private string GenerateArrayWithBraceCall(ArrayWithBraceCall arrayWithBraceCall)
+        {
+            var builder = new StringBuilder();
+            builder.Append(ReGenerate(arrayWithBraceCall.Array));
+            builder.Append(ReGenerate(arrayWithBraceCall.Brace));
+            return builder.ToString();
+        }
+
+        private string GenerateUnaryExpression(UnaryExpression unaryExpression)
         {
             var builder = new StringBuilder();
             builder.Append(unaryExpression.Op.Value);
@@ -104,10 +119,9 @@ namespace AlgodooStudio.ASProject.Script
             return builder.ToString();
         }
 
-        private static string GenerateRoot(Root root)
+        private string GenerateRoot(Root root)
         {
             if (root.Nodes.Length == 0) return "";
-
             var builder = new StringBuilder();
             if (root.Nodes.Length > 1)
             {
@@ -122,7 +136,7 @@ namespace AlgodooStudio.ASProject.Script
             return builder.ToString();
         }
 
-        private static string GenerateRedirect(Redirect redirect)
+        private string GenerateRedirect(Redirect redirect)
         {
             var builder = new StringBuilder();
             builder.Append(ReGenerate(redirect.Name));
@@ -131,7 +145,7 @@ namespace AlgodooStudio.ASProject.Script
             return builder.ToString();
         }
 
-        private static string GenerateParams(Params @params)
+        private string GenerateParams(Params @params)
         {
             var builder = new StringBuilder();
             builder.Append('(');
@@ -152,7 +166,7 @@ namespace AlgodooStudio.ASProject.Script
             return builder.ToString();
         }
 
-        private static string GenerateMemberCall(MemberCall memberCall)
+        private string GenerateMemberCall(MemberCall memberCall)
         {
             var builder = new StringBuilder();
             builder.Append(ReGenerate(memberCall.Name));
@@ -161,7 +175,7 @@ namespace AlgodooStudio.ASProject.Script
             return builder.ToString();
         }
 
-        private static string GenerateNewAssign(NewAssign newAssign)
+        private string GenerateNewAssign(NewAssign newAssign)
         {
             var builder = new StringBuilder();
             builder.Append(ReGenerate(newAssign.Name));
@@ -171,7 +185,7 @@ namespace AlgodooStudio.ASProject.Script
         }
 
 
-        private static string GenerateIFstatement(Ifstatement ifstatement)
+        private string GenerateIFstatement(Ifstatement ifstatement)
         {
             var builder = new StringBuilder();
             builder.Append(ReGenerate(ifstatement.Expr1));
@@ -182,7 +196,7 @@ namespace AlgodooStudio.ASProject.Script
             return builder.ToString();
         }
 
-        private static string GenerateFunction(Function function)
+        private string GenerateFunction(Function function)
         {
             var builder = new StringBuilder();
             builder.Append(ReGenerate(function.Params));
@@ -192,7 +206,7 @@ namespace AlgodooStudio.ASProject.Script
         }
 
 
-        private static string GenerateBraceExpression(BraceExpression braceExpression)
+        private string GenerateBraceExpression(BraceExpression braceExpression)
         {
             var builder = new StringBuilder();
             builder.Append("(");
@@ -201,10 +215,11 @@ namespace AlgodooStudio.ASProject.Script
             return builder.ToString();
         }
 
-        private static string GenerateBlock(Block block)
+        private string GenerateBlock(Block block)
         {
             var builder = new StringBuilder();
-            builder.Append("{");
+            builder.Append("{\r\n");
+            blockLayer++;
             if (block.Nodes.Length > 0)
             {
                 if (block.Nodes.Length > 1)
@@ -212,17 +227,18 @@ namespace AlgodooStudio.ASProject.Script
                     //添加前面的项
                     for (int i = 0; i < block.Nodes.Length - 1; i++)
                     {
-                        builder.Append(ReGenerate(block.Nodes[i]) + ";");
+                        builder.Append("".PadLeft(blockLayer, '\t') + ReGenerate(block.Nodes[i]) + ";\r\n");
                     }
                 }
                 //添加最后一项
-                builder.Append(ReGenerate(block.Nodes[block.Nodes.Length - 1]));
+                builder.Append("".PadLeft(blockLayer, '\t') + ReGenerate(block.Nodes[block.Nodes.Length - 1]) + "\r\n");
             }
-            builder.Append("}");
+            blockLayer--;
+            builder.Append("".PadLeft(blockLayer, '\t') + "}");
             return builder.ToString();
         }
 
-        private static string GenerateBinaryExpression(BinaryExpression binaryExpression)
+        private string GenerateBinaryExpression(BinaryExpression binaryExpression)
         {
             var builder = new StringBuilder();
             builder.Append(ReGenerate(binaryExpression.Left));
@@ -231,7 +247,7 @@ namespace AlgodooStudio.ASProject.Script
             return builder.ToString();
         }
 
-        private static string GenerateAssign(Assign assign)
+        private string GenerateAssign(Assign assign)
         {
             var builder = new StringBuilder();
             builder.Append(ReGenerate(assign.Name));
@@ -240,7 +256,7 @@ namespace AlgodooStudio.ASProject.Script
             return builder.ToString();
         }
 
-        private static string GenerateArrayCombine(ArrayCombine arrayCombine)
+        private string GenerateArrayCombine(ArrayCombine arrayCombine)
         {
             var builder = new StringBuilder();
             builder.Append(ReGenerate(arrayCombine.Array1));
@@ -249,21 +265,19 @@ namespace AlgodooStudio.ASProject.Script
             return builder.ToString();
         }
 
-        private static string GenerateArrayIndexGroupCall(ArrayIndexGroupCall arrayCall)
+        private string GenerateArrayWithArrayCall(ArrayWithArrayCall arrayCall)
         {
             var builder = new StringBuilder();
-            builder.Append(ReGenerate(arrayCall.Array));
-            builder.Append('[');
-            builder.Append(ReGenerate(arrayCall.IndexGroup));
-            builder.Append(']');
+            builder.Append(ReGenerate(arrayCall.Array1));
+            builder.Append(ReGenerate(arrayCall.Array2));
             return builder.ToString();
         }
 
-        private static string GenerateArray(Array array)
+        private string GenerateArray(Array array)
         {
             var builder = new StringBuilder();
             builder.Append('[');
-            if (array.Nodes.Length>0)
+            if (array.Nodes.Length > 0)
             {
                 if (array.Nodes.Length > 1)
                 {

@@ -1,29 +1,32 @@
 ﻿using AlgodooStudio.ASProject.Support;
-using Dex.IO;
-using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using ICSharpCode.AvalonEdit.Folding;
+using ICSharpCode.AvalonEdit.Search;
+using ICSharpCode.AvalonEdit;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Xml;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using Dex.IO;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using ICSharpCode.AvalonEdit.Highlighting;
-using ICSharpCode.AvalonEdit.Search;
-using System;
-using System.ComponentModel;
-using System.IO;
 using System.Reflection;
+using System.Windows.Forms.Integration;
 using System.Text.RegularExpressions;
-using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Input;
-using System.Xml;
+using System.Windows;
+using System.IO;
 
 namespace AlgodooStudio.ASProject.Dialogs
 {
-    internal partial class ClipEditDialog : Form
+    public partial class TextEditDialog : Form
     {
-        /// <summary>
-        /// 编辑中的片段
-        /// </summary>
-        private ScriptClip editingScriptClip;
         /// <summary>
         /// Avalon文字编辑器
         /// </summary>
@@ -49,52 +52,40 @@ namespace AlgodooStudio.ASProject.Dialogs
         /// </summary>
         private ReplaceWindow _replaceWindow;
 
-
         /// <summary>
-        /// 片段位置
+        /// 相似检查
         /// </summary>
-        private string path;
+        private readonly bool _similarityChecks;
+        /// <summary>
+        /// 先前内容
+        /// </summary>
+        private string _lastContent;
+        /// <summary>
+        /// 是否变动了
+        /// </summary>
         /// <summary>
         /// 提醒器是否已经显示
         /// </summary>
         private bool _isReminderShow;
 
+        /// <summary>
+        /// 是否变动文本
+        /// </summary>
+        private bool IsChanged => _similarityChecks ? _editor.Text != _lastContent : false;
+        /// <summary>
+        /// 编辑过的文本
+        /// </summary>
+        public string EditedText { get; set; }
 
-        /// <summary>
-        /// 初始文字
-        /// </summary>
-        public string InitialText
-        {
-            set
-            {
-                _editor.Text = value;
-            }
-        }
-        /// <summary>
-        /// 指示当前是编辑状态
-        /// </summary>
-        public bool IsEdit { get; set; } = false;
-        /// <summary>
-        /// 编辑中的片段
-        /// </summary>
-        public ScriptClip EditingScriptClip { get => editingScriptClip; }
-      
-
-        /// <summary>
-        /// 从路径打开切片
-        /// </summary>
-        /// <param name="path"></param>
-        public ClipEditDialog(string path)
+        public TextEditDialog(string text = "", bool similarityChecks = false)
         {
             InitializeComponent();
-            Initialize(path);
+            Initialize(text);
+            this._similarityChecks = similarityChecks;
         }
 
-
-        private void Initialize(string path)
+        private void Initialize(string text)
         {
-            //记录片段路径
-            this.path = path;
             //选中块设定为非圆角
             _editor.TextArea.SelectionCornerRadius = 0;
             //允许复制一整行
@@ -123,7 +114,6 @@ namespace AlgodooStudio.ASProject.Dialogs
             //设置高亮语法
             _editor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinitionByExtension(".thm");
 
-
             //为编辑器创建事件
             _editor.TextArea.MouseWheel += TextArea_MouseWheel;
             _editor.TextArea.TextEntered += TextArea_TextEntered;
@@ -136,25 +126,11 @@ namespace AlgodooStudio.ASProject.Dialogs
             _foldingStrategy.UpdateFoldings(_foldingManager, _editor.Document);
             //初始化搜索框
             _searchPanel = SearchPanel.Install(_editor.TextArea);
-
-            //初始化片段
-            if (File.Exists(path))
-            {
-                editingScriptClip = SimpleSerializer.GetObjectFromBinaryFile<ScriptClip>(path);
-            }
-            else
-            {
-                editingScriptClip = new ScriptClip();
-            }
-
-            //提取片段信息
-            this.Text = "编辑:" + Path.GetFileNameWithoutExtension(path);
-            t_description.Text = editingScriptClip.Description;
-            _editor.Text = editingScriptClip.Script;
-            t_description.Focus();//聚焦
+            _editor.Text = text;
+            //记录先前内容
+            _lastContent = text;
+            
         }
-
-
         /// <summary>
         /// 通过给定的字符串搜索并添加提示条目
         /// </summary>
@@ -249,12 +225,21 @@ namespace AlgodooStudio.ASProject.Dialogs
                 }
             }
         }
-        private void ClipEditDialog_FormClosed(object sender, FormClosedEventArgs e)
+        private void TextEditDialog_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //保存到路径
-            editingScriptClip.Description = t_description.Text;
-            editingScriptClip.Script = _editor.Text;
-            editingScriptClip.WriteObjectToBinaryFile(path);
+            if (_similarityChecks)
+            {
+                //启用检查才根据结果赋值
+                if (DialogResult == DialogResult.Yes)
+                    EditedText = _editor.Text;
+                else
+                    EditedText = _lastContent;
+            }
+            else
+            {
+                EditedText = _editor.Text;//不启用则按照现有文本进行赋值
+            }
+            
 
             _editor = null;
             _reminder = null;
@@ -268,6 +253,14 @@ namespace AlgodooStudio.ASProject.Dialogs
             }
             GC.Collect(2);
         }
+        private void TextEditDialog_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (IsChanged)
+            {
+                DialogResult = MBox.ShowWarningYesNoCancel("内容较之前有改变，是否取用当前内容并关闭窗口？");
+                e.Cancel = (DialogResult == DialogResult.Cancel);
+            }
+        }
 
 
         private void Reminder_Loaded(object sender, RoutedEventArgs e)
@@ -279,19 +272,14 @@ namespace AlgodooStudio.ASProject.Dialogs
             _isReminderShow = false;
         }
 
-      
+
         private void 查找ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _searchPanel.Open();
         }
         private void 替换ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //检查窗口是否未创建或已释放，是则创建窗口并显示
-            if (_replaceWindow == null || _replaceWindow.IsDisposed)
-            {
-                _replaceWindow = new ReplaceWindow(_editor.TextArea);
-                _replaceWindow.Show();
-            }
+
         }
         private void 复制ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -317,33 +305,7 @@ namespace AlgodooStudio.ASProject.Dialogs
         }
         private void rightMenu_Opening(object sender, CancelEventArgs e)
         {
-            if (System.Windows.Forms.Clipboard.ContainsText())
-            {
-                粘贴ToolStripMenuItem.Visible = true;
-            }
-            if (_editor.SelectionLength==0)
-            {
-                复制ToolStripMenuItem.Visible = 剪切ToolStripMenuItem.Visible = false;
-            }
-            else
-            {
-                复制ToolStripMenuItem.Visible = 剪切ToolStripMenuItem.Visible = true;
-            }
-        }
-        
 
-        private void b_clear_Click(object sender, EventArgs e)
-        {
-            if (MBox.ShowWarningOKCancel("无法恢复，确定清除吗？") == DialogResult.OK)
-            {
-                _editor.Clear();
-            }
         }
-        private void b_saveAndReturn_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.OK;
-        }
-
-
     }
 }
