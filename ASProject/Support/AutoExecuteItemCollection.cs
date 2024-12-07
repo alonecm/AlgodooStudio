@@ -59,7 +59,8 @@ namespace AlgodooStudio.ASProject.Support
         /// <param name="index"></param>
         public void UpdateByIndex(int index)
         {
-            //TODO:更新项未完善，托管文件和自启动文件的内容的需要有转移功能
+            //TODO:按索引更新未完成，请及时完成
+            //NOTE:更新项目启用项目需要按索引和位置更新不能全文档重写
             var item = items[index];
             var enablePth = Program.Setting.AlgodooPath + "\\autoexec.cfg";
             var disablePth = ".\\Manage\\disabled_execute_item.manage";

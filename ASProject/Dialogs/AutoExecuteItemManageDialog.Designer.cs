@@ -31,20 +31,19 @@
             this.addItem = new System.Windows.Forms.Button();
             this.switchItemState = new System.Windows.Forms.Button();
             this.removeItem = new System.Windows.Forms.Button();
-            this.cancel_button = new System.Windows.Forms.Button();
             this.itemList = new System.Windows.Forms.ListView();
             this.itemStatus = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.itemType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.itemContent = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ok_button = new System.Windows.Forms.Button();
+            this.return_button = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // addItem
             // 
-            this.addItem.Location = new System.Drawing.Point(356, 10);
-            this.addItem.Margin = new System.Windows.Forms.Padding(2);
+            this.addItem.Location = new System.Drawing.Point(475, 12);
+            this.addItem.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.addItem.Name = "addItem";
-            this.addItem.Size = new System.Drawing.Size(88, 43);
+            this.addItem.Size = new System.Drawing.Size(117, 54);
             this.addItem.TabIndex = 1;
             this.addItem.Text = "添加项";
             this.addItem.UseVisualStyleBackColor = true;
@@ -52,10 +51,10 @@
             // 
             // switchItemState
             // 
-            this.switchItemState.Location = new System.Drawing.Point(356, 58);
-            this.switchItemState.Margin = new System.Windows.Forms.Padding(2);
+            this.switchItemState.Location = new System.Drawing.Point(475, 72);
+            this.switchItemState.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.switchItemState.Name = "switchItemState";
-            this.switchItemState.Size = new System.Drawing.Size(88, 43);
+            this.switchItemState.Size = new System.Drawing.Size(117, 54);
             this.switchItemState.TabIndex = 1;
             this.switchItemState.Text = "启用/禁用项";
             this.switchItemState.UseVisualStyleBackColor = true;
@@ -63,25 +62,14 @@
             // 
             // removeItem
             // 
-            this.removeItem.Location = new System.Drawing.Point(356, 106);
-            this.removeItem.Margin = new System.Windows.Forms.Padding(2);
+            this.removeItem.Location = new System.Drawing.Point(475, 132);
+            this.removeItem.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.removeItem.Name = "removeItem";
-            this.removeItem.Size = new System.Drawing.Size(88, 43);
+            this.removeItem.Size = new System.Drawing.Size(117, 54);
             this.removeItem.TabIndex = 1;
             this.removeItem.Text = "移除项";
             this.removeItem.UseVisualStyleBackColor = true;
             this.removeItem.Click += new System.EventHandler(this.removeItem_Click);
-            // 
-            // cancel_button
-            // 
-            this.cancel_button.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancel_button.Location = new System.Drawing.Point(356, 307);
-            this.cancel_button.Margin = new System.Windows.Forms.Padding(2);
-            this.cancel_button.Name = "cancel_button";
-            this.cancel_button.Size = new System.Drawing.Size(88, 43);
-            this.cancel_button.TabIndex = 1;
-            this.cancel_button.Text = "取消";
-            this.cancel_button.UseVisualStyleBackColor = true;
             // 
             // itemList
             // 
@@ -92,10 +80,10 @@
             this.itemList.FullRowSelect = true;
             this.itemList.GridLines = true;
             this.itemList.HideSelection = false;
-            this.itemList.Location = new System.Drawing.Point(9, 10);
-            this.itemList.Margin = new System.Windows.Forms.Padding(2);
+            this.itemList.Location = new System.Drawing.Point(12, 12);
+            this.itemList.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.itemList.Name = "itemList";
-            this.itemList.Size = new System.Drawing.Size(344, 342);
+            this.itemList.Size = new System.Drawing.Size(457, 426);
             this.itemList.TabIndex = 2;
             this.itemList.UseCompatibleStateImageBehavior = false;
             this.itemList.View = System.Windows.Forms.View.Details;
@@ -116,30 +104,29 @@
             this.itemContent.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.itemContent.Width = 240;
             // 
-            // ok_button
+            // return_button
             // 
-            this.ok_button.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.ok_button.Location = new System.Drawing.Point(356, 260);
-            this.ok_button.Margin = new System.Windows.Forms.Padding(2);
-            this.ok_button.Name = "ok_button";
-            this.ok_button.Size = new System.Drawing.Size(88, 43);
-            this.ok_button.TabIndex = 1;
-            this.ok_button.Text = "确认";
-            this.ok_button.UseVisualStyleBackColor = true;
+            this.return_button.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.return_button.Location = new System.Drawing.Point(475, 384);
+            this.return_button.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.return_button.Name = "return_button";
+            this.return_button.Size = new System.Drawing.Size(117, 54);
+            this.return_button.TabIndex = 1;
+            this.return_button.Text = "返回";
+            this.return_button.UseVisualStyleBackColor = true;
             // 
             // AutoExecuteItemManageDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(453, 360);
+            this.ClientSize = new System.Drawing.Size(604, 450);
             this.Controls.Add(this.itemList);
-            this.Controls.Add(this.ok_button);
-            this.Controls.Add(this.cancel_button);
+            this.Controls.Add(this.return_button);
             this.Controls.Add(this.removeItem);
             this.Controls.Add(this.switchItemState);
             this.Controls.Add(this.addItem);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.Name = "AutoExecuteItemManageDialog";
             this.ShowIcon = false;
@@ -153,11 +140,10 @@
         private System.Windows.Forms.Button addItem;
         private System.Windows.Forms.Button switchItemState;
         private System.Windows.Forms.Button removeItem;
-        private System.Windows.Forms.Button cancel_button;
         private System.Windows.Forms.ListView itemList;
         private System.Windows.Forms.ColumnHeader itemType;
         private System.Windows.Forms.ColumnHeader itemContent;
         private System.Windows.Forms.ColumnHeader itemStatus;
-        private System.Windows.Forms.Button ok_button;
+        private System.Windows.Forms.Button return_button;
     }
 }

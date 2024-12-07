@@ -5,7 +5,6 @@ using System.Windows.Forms;
 
 namespace AlgodooStudio.ASProject.Dialogs
 {
-    //TODO:自启动文件应该在打开对话框时进行加载，在关闭对话框时更新
     public partial class AutoExecuteItemManageDialog : Form
     {
         public AutoExecuteItemManageDialog()
@@ -48,6 +47,7 @@ namespace AlgodooStudio.ASProject.Dialogs
                                 AddItem(Program.AutoExecuteItems.Add(true,
                                      ted.EditedText.IndexOf("reflection.executefile") == 0 ?
                                     AutoExecuteItemType.File : AutoExecuteItemType.Code, ted.EditedText, new Dex.Common.Range()));
+                                //TODO:此处添加update方法更新文件
                             }
                             return;
                         default:
@@ -66,6 +66,7 @@ namespace AlgodooStudio.ASProject.Dialogs
                     Program.AutoExecuteItems[item.Index].IsEnabled = !Program.AutoExecuteItems[item.Index].IsEnabled;
                     item.SubItems[0].Text = Program.AutoExecuteItems[item.Index].IsEnabled ? "√" : "x";
                 }
+                //TODO:此处添加update方法更新文件
             }
         }
 
@@ -82,6 +83,7 @@ namespace AlgodooStudio.ASProject.Dialogs
                         Program.AutoExecuteItems.RemoveAt(itemIndex);
                         if (itemList.SelectedItems.Count<=0) break;
                     }
+                    //TODO:此处添加update方法更新文件
                 }
             }
         }
@@ -116,6 +118,7 @@ namespace AlgodooStudio.ASProject.Dialogs
                                 AddItem(Program.AutoExecuteItems.Add(true,
                                  ted.EditedText.IndexOf("reflection.executefile") == 0 ?
                                 AutoExecuteItemType.File : AutoExecuteItemType.Code, ted.EditedText, new Dex.Common.Range()));
+                                //TODO:此处添加update方法更新文件
                             }
                             return;
                         default:
@@ -145,6 +148,6 @@ namespace AlgodooStudio.ASProject.Dialogs
             itemList.Items.RemoveAt(index);
         }
 
-        
+
     }
 }
