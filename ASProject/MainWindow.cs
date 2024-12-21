@@ -248,10 +248,10 @@ namespace AlgodooStudio.ASProject
         /// </summary>
         private void StartAlgodoo()
         {
-            if (File.Exists(Program.Setting.AlgodooPath + "\\Algodoo.exe"))
+            if (Program.IsTrueAlgodooPath)
             {
                 Cursor = Cursors.WaitCursor;
-                var algodoo = Process.Start(Program.Setting.AlgodooPath + "\\Algodoo.exe");
+                var algodoo = Process.Start(Program.Setting.AlgodooExecuteFilePath);
                 this.StatusMessage = "正在启动Algodoo...";
                 algodoo.WaitForExit(1000);
                 Cursor = Cursors.Default;
@@ -619,10 +619,10 @@ namespace AlgodooStudio.ASProject
         }
         private void 重置AlgodooToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (File.Exists(Program.Setting.AlgodooPath + "\\Algodoo.exe"))
+            if (Program.IsTrueAlgodooPath)
             {
                 Cursor = Cursors.WaitCursor;
-                var algodoo = Process.Start(Program.Setting.AlgodooPath + "\\Algodoo.exe", "-reset");
+                var algodoo = Process.Start(Program.Setting.AlgodooExecuteFilePath, "-reset");
                 this.StatusMessage = "正在重置Algodoo...";
                 algodoo.WaitForExit();
                 Cursor = Cursors.Default;
@@ -659,6 +659,8 @@ namespace AlgodooStudio.ASProject
         {
             using (AutoExecuteItemManageDialog aei = new AutoExecuteItemManageDialog())
             {
+                if (aei.IsDisposed) return;
+
                 aei.ShowDialog();
             }
         }

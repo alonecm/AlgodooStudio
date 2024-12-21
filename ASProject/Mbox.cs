@@ -58,6 +58,16 @@ namespace AlgodooStudio.ASProject
         }
 
         /// <summary>
+        /// 显示错误提示选择框
+        /// </summary>
+        /// <param name="content">需要显示的内容</param>
+        /// <returns>结果</returns>
+        public static DialogResult ShowErrorOKCancel(string content)
+        {
+            return MessageBox.Show(content, "AlgodooStudio", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+        }
+
+        /// <summary>
         /// 显示信息框
         /// </summary>
         /// <param name="content">需要显示的内容</param>

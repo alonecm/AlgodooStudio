@@ -17,10 +17,17 @@ namespace AlgodooStudio.ASProject.Support
         /// 是否保存当前布局
         /// </summary>
         public bool IsSavingLayout { get; set; } = true;
-
         /// <summary>
         /// 工作室所在目录
         /// </summary>
         internal string StudioPath { get; } = ".\\";
+        /// <summary>
+        /// Algodoo可执行文件路径
+        /// </summary>
+        internal string AlgodooExecuteFilePath => AlgodooPath + "\\algodoo.exe";
+        /// <summary>
+        /// Algodoo自启动文件路径
+        /// </summary>
+        internal string AlgodooAutoExecuteFilePath => AlgodooPath + "\\autoexec.cfg";
     }
 }

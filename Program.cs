@@ -37,15 +37,6 @@ namespace AlgodooStudio
         /// </summary>
         private static Settings setting = new Settings();
         /// <summary>
-        /// 自启动项
-        /// </summary>
-        private static AutoExecuteItemCollection autoExecuteItems = new AutoExecuteItemCollection();
-
-        /// <summary>
-        /// 自启动项集合
-        /// </summary>
-        public static AutoExecuteItemCollection AutoExecuteItems => autoExecuteItems;
-        /// <summary>
         /// 设定信息
         /// </summary>
         public static Settings Setting => setting;
@@ -57,88 +48,12 @@ namespace AlgodooStudio
             get => mainWindow.StatusMessage;
             set => mainWindow.StatusMessage = value;
         }
-
         /// <summary>
-        /// 读取自启动项
+        /// Algodoo根目录设置是否正确
         /// </summary>
-        private static void ReadAutoExecuteFile()
-        {
-            if (!Directory.Exists(setting.AlgodooPath))
-            {
-                MBox.ShowError("Algodoo根目录未设置正确！请到设置中进行设置！");
-                LogWriter.WriteError("Algodoo根目录路径异常");
-                return;
-            }
-            var path = setting.AlgodooPath + "\\autoexec.cfg";
-            if (!File.Exists(path))
-            {
-                MBox.ShowError("找不到Algodoo自启动文件！");
-                LogWriter.WriteError("Algodoo自启动文件丢失");
-                return;
-            }
-            LogWriter.WriteInfo("解析自启动文件...");
-            var parserActive = ThymeParser.GetAST(FileHandler.GetTextFileContent(path, Encoding.UTF8));
-            var rootActive = parserActive.Item1;
-            if (parserActive.Item2.Count > 0)
-            {
-                MBox.ShowWarning("自启动文件中存在语法错误，已输出到日志文件中，请查看");
-                StringBuilder stringBuilder = new StringBuilder();
-                foreach (var item in parserActive.Item2)
-                {
-                    stringBuilder.AppendLine($"{item.Range}[{item.Type}] {item.Message}");
-                }
-                LogWriter.WriteWarn(stringBuilder.ToString());
-            }
-
-            //添加启用项
-            var rgEnable = new ThymeReGenerator();
-            foreach (var item in rootActive.Nodes)
-            {
-                var content = rgEnable.ReGenerate(item);
-                if (content.IndexOf("reflection.executefile")==0)
-                {
-                    autoExecuteItems.Add(true, AutoExecuteItemType.File, content, item.Range);
-                }
-                else
-                {
-                    autoExecuteItems.Add(true, AutoExecuteItemType.Code, content, item.Range);
-                }
-            }
-
-            //检查是否存在禁用项托管文件
-            if (File.Exists(".\\Manage\\disabled_execute_item.manage"))
-            {
-                LogWriter.WriteInfo("解析托管文件...");
-                
-                var parserInactive = ThymeParser.GetAST(FileHandler.GetTextFileContent(".\\Manage\\disabled_execute_item.manage", Encoding.UTF8));
-                var rootInactive = parserInactive.Item1;
-                //添加禁用项
-                var egEnable = new ThymeReGenerator();
-                foreach (var item in rootInactive.Nodes)
-                {
-                    var content = egEnable.ReGenerate(item);
-                    if (content.IndexOf("reflection.executefile") == 0)
-                    {
-                        autoExecuteItems.Add(false, AutoExecuteItemType.File, content, item.Range);
-                    }
-                    else
-                    {
-                        autoExecuteItems.Add(false, AutoExecuteItemType.Code, content, item.Range);
-                    }
-                }
-            }
-        }
-        /// <summary>
-        /// 保存自启动项
-        /// </summary>
-        public static void SaveAutoExecuteItem()
-        {
-            if (!Directory.Exists(setting.AlgodooPath))
-            {
-                MBox.ShowError("Algodoo根目录未设置正确！请到设置中进行设置！");
-                return;
-            }
-        }
+        public static bool IsTrueAlgodooPath => File.Exists(setting.AlgodooExecuteFilePath);
+        
+        
         /// <summary>
         /// 读取设置
         /// </summary>
@@ -227,6 +142,18 @@ namespace AlgodooStudio
                     }
                 }
             }
+            else if (!IsTrueAlgodooPath)
+            {
+                MBox.ShowError("根目录设置不正确，请重新设置！");
+                using (FolderBrowserDialog fbd = new FolderBrowserDialog())
+                {
+                    if (fbd.ShowDialog() == DialogResult.OK)
+                    {
+                        setting.AlgodooPath = fbd.SelectedPath;
+                        LogWriter.WriteInfo("设置algodoo根目录为：" + fbd.SelectedPath);
+                    }
+                }
+            }
         }
         /// <summary>
         /// 加载插件
@@ -312,8 +239,6 @@ namespace AlgodooStudio
             CreateManageFolder();
             //生成代码片段文件夹
             CreateClipsFolder();
-            //读取自启动文件
-            ReadAutoExecuteFile();
             //启动工作室
             Application.Run(mainWindow = new MainWindow());
             //删除临时文件夹

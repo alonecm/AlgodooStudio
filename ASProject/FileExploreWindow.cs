@@ -832,8 +832,8 @@ namespace AlgodooStudio.ASProject
             {
                 var item = fViewer.SelectedItems[0].Tag as FileSystemInfo;
                 if (item.Extension == ".phn" || item.Extension == ".phz")
-                    if (File.Exists($"{Program.Setting.AlgodooPath}\\algodoo.exe"))
-                        Process.Start($"{Program.Setting.AlgodooPath}\\algodoo.exe", item.FullName);
+                    if (Program.IsTrueAlgodooPath)
+                        Process.Start(Program.Setting.AlgodooExecuteFilePath, item.FullName);
             }
         }
 

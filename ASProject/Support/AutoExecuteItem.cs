@@ -7,6 +7,8 @@ namespace AlgodooStudio.ASProject.Support
     /// </summary>
     public class AutoExecuteItem
     {
+        private bool isEnabled = false;
+
         /// <summary>
         /// 创建自启动项
         /// </summary>
@@ -20,7 +22,22 @@ namespace AlgodooStudio.ASProject.Support
             Content = content;
             Range = range;
         }
-        public bool IsEnabled { get; set; }
+        /// <summary>
+        /// 上一次使能状态
+        /// </summary>
+        public bool LastStatus {  get; set; }
+        public bool IsEnabled
+        {
+            get => isEnabled;
+            set
+            {
+                if (value != isEnabled)
+                {
+                    LastStatus = isEnabled;
+                    isEnabled = value;
+                }
+            }
+        }
         public AutoExecuteItemType Type { get; }
         public string Content { get; }
         public Range Range { get; }
