@@ -58,6 +58,11 @@ namespace AlgodooStudio.ASProject.Script.Parse
 
         public override ThymeTokenCollection Tokenize()
         {
+            throw new NotImplementedException();
+        }
+
+        public new ThymeTokenCollection Tokenize(bool analyizeUnsupportedSymbol = true)
+        {
             this.pos = 0;
 
             //多重注释标记
@@ -190,8 +195,12 @@ namespace AlgodooStudio.ASProject.Script.Parse
                     }
                     else
                     {
-                        ReportError(new ThymeDiagnostic($"不支持的符号 '{c}'", new Range(start, pos + 1)));
-                        tokens.Add(new ThymeToken("UnsupportSymbol", $"{c}", new Range(start, pos + 1)));
+                        //读取不支持的符号
+                        if (analyizeUnsupportedSymbol)
+                        {
+                            ReportError(new ThymeDiagnostic($"不支持的符号 '{c}'", new Range(start, pos + 1)));
+                            tokens.Add(new ThymeToken("UnsupportSymbol", $"{c}", new Range(start, pos + 1)));
+                        }
                         Next();
                     }
                 }
@@ -204,10 +213,10 @@ namespace AlgodooStudio.ASProject.Script.Parse
             return new ThymeTokenizer(content, removeComment);
         }
 
-        public static Tuple<ThymeTokenCollection, DiagnosticsCollection> GetTokens(string content)
+        public static Tuple<ThymeTokenCollection, DiagnosticsCollection> GetTokens(string content,bool analyizeUnsupportedSymbol = true)
         {
             var tkiz = GetThymeTokenizer(content);
-            return new Tuple<ThymeTokenCollection, DiagnosticsCollection>(tkiz.Tokenize(), tkiz.Diagnostics);
+            return new Tuple<ThymeTokenCollection, DiagnosticsCollection>(tkiz.Tokenize(analyizeUnsupportedSymbol), tkiz.Diagnostics);
         }
     }
 }

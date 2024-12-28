@@ -93,34 +93,36 @@ namespace AlgodooStudio.ASProject.Support
 
         private void AddTo(string path, AutoExecuteItem item)
         {
-            var thymeRg = new ThymeReGenerator();
-            using (var sw = new StreamWriter(path, true))
+            using (var sw = new StreamWriter(path,true,Encoding.UTF8))
             {
-                sw.WriteLine(item.Content);
+                sw.WriteLine(item.Content + ";");
             }
         }
 
         private void RemoveFrom(string path, AutoExecuteItem item)
         {
             var thymeRg = new ThymeReGenerator();
-            //获取文件的ast树
-            var ast = ThymeParser.GetAST(path);
+            //获取指定文件的内容
+            var content = File.ReadAllText(path, Encoding.UTF8);
+            //获取该文件的ast树
+            var ast = ThymeParser.GetAST(content, false);
             foreach (var node in ast.Item1.Nodes)
             {
                 //转文本并与指定项的内容进行比较，如果存在则将此节点的范围作用于文件修改上
                 if (thymeRg.ReGenerate(node).Replace(" ", "").Replace("\n", "").Replace("\r", "").Contains(item.Content.Replace(" ", "").Replace("\n", "").Replace("\r", "")))
                 {
-                    //读取
-                    var content = FileHandler.GetTextFileContent(path, Encoding.UTF8);
+                    //找到就删除并写入、返回
                     //删除
-                    content.Remove((int)node.Range.Min, (int)node.Range.Max);
+                    int start = (int)node.Range.Min;
+                    int length = (int)node.Range.Max - start + 1;
+                    content = content.Remove(start, length).Replace("\0", "");
                     //写入
-                    FileHandler.WriteContentToTextFile(path, content, Encoding.UTF8);
+                    File.WriteAllText(path, content, Encoding.UTF8);
+                    break;
                 }
             }
         }
-        //TODO:删，删不掉；加，没换行
-
+        
         /// <summary>
         /// 移除指定索引项
         /// </summary>

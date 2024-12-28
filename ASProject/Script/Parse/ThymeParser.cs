@@ -99,16 +99,14 @@ namespace AlgodooStudio.ASProject.Script.Parse
 
                         case ",":
                         case ";":
-                            var tk = Current;
-                            ReportEmptyExpression(tk);
+                            ReportEmptyExpression(Current);
                             GoEnd();
-                            return new Symbol(tk); ;
+                            return null;
 
                         default:
-                            tk = Current;
-                            ReportErrorSymbol(tk);
+                            ReportErrorSymbol(Current);
                             GoEnd();
-                            return new Symbol(tk);
+                            return null;
                     }
 
                 case "keyword":
@@ -706,9 +704,9 @@ namespace AlgodooStudio.ASProject.Script.Parse
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
-        public static Tuple<ThymeParser, DiagnosticsCollection> GetParser(string content)
+        public static Tuple<ThymeParser, DiagnosticsCollection> GetParser(string content, bool analyizeUnsupportedSymbol = true)
         {
-            var tkiz = ThymeTokenizer.GetTokens(content);
+            var tkiz = ThymeTokenizer.GetTokens(content, analyizeUnsupportedSymbol);
             return new Tuple<ThymeParser, DiagnosticsCollection>(new ThymeParser(tkiz.Item1), tkiz.Item2);
         }
 
@@ -717,9 +715,9 @@ namespace AlgodooStudio.ASProject.Script.Parse
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
-        public static Tuple<Root, DiagnosticsCollection> GetAST(string content)
+        public static Tuple<Root, DiagnosticsCollection> GetAST(string content, bool analyizeUnsupportedSymbol = true)
         {
-            var parser = GetParser(content);
+            var parser = GetParser(content, analyizeUnsupportedSymbol);
             parser.Item1.Diagnostics.AddRange(parser.Item2);//转移异常
             return new Tuple<Root, DiagnosticsCollection>(parser.Item1.Parse() as Root, parser.Item1.Diagnostics);
         }

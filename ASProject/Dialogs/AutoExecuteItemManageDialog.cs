@@ -38,7 +38,7 @@ namespace AlgodooStudio.ASProject.Dialogs
                 return;
             }
             LogWriter.WriteInfo("解析自启动文件...");
-            var parserActive = ThymeParser.GetAST(FileHandler.GetTextFileContent(path, Encoding.UTF8));
+            var parserActive = ThymeParser.GetAST(File.ReadAllText(path, Encoding.UTF8), false);
             var rootActive = parserActive.Item1;
             if (parserActive.Item2.Count > 0)
             {
@@ -71,7 +71,7 @@ namespace AlgodooStudio.ASProject.Dialogs
             {
                 LogWriter.WriteInfo("解析托管文件...");
 
-                var parserInactive = ThymeParser.GetAST(FileHandler.GetTextFileContent(".\\Manage\\disabled_execute_item.manage", Encoding.UTF8));
+                var parserInactive = ThymeParser.GetAST(File.ReadAllText(".\\Manage\\disabled_execute_item.manage", Encoding.UTF8),false);
                 var rootInactive = parserInactive.Item1;
                 //添加禁用项
                 var egEnable = new ThymeReGenerator();
