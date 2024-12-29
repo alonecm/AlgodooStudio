@@ -221,7 +221,8 @@ namespace AlgodooStudio.ASProject
         /// </summary>
         private void CloseAllDocuments()
         {
-            foreach (IDockContent document in dockPanel.DocumentsToArray())
+            var documents = dockPanel.DocumentsToArray();
+            foreach (IDockContent document in documents)
             {
                 // 释放并关闭所有面板
                 document.DockHandler.DockPanel = null;
@@ -657,6 +658,17 @@ namespace AlgodooStudio.ASProject
         }
         private void 自启动项管理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //避免同时编辑一个文件
+            var dockContent = dockPanel.DocumentsToArray();
+            foreach (var item in dockContent)
+            {
+                if (item.DockHandler.TabText.ToLower()=="autoexec.cfg")
+                {
+                    MBox.ShowWarning("请先结束对autoexec.cfg的编辑再进行管理！");
+                    return;
+                }
+            }
+
             using (AutoExecuteItemManageDialog aei = new AutoExecuteItemManageDialog())
             {
                 if (aei.IsDisposed) return;
