@@ -85,6 +85,8 @@ namespace AlgodooStudio.ASProject
             this.imageListForfViewer_S = new System.Windows.Forms.ImageList(this.components);
             this.fileTip = new System.Windows.Forms.ToolTip(this.components);
             this.vsToolStripExtender = new WeifenLuo.WinFormsUI.Docking.VisualStudioToolStripExtender(this.components);
+            this.将其作为自启动项ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.menuSpliter)).BeginInit();
             this.menuSpliter.Panel1.SuspendLayout();
             this.menuSpliter.Panel2.SuspendLayout();
@@ -409,9 +411,11 @@ namespace AlgodooStudio.ASProject
             this.重命名ToolStripMenuItem1,
             this.toolStripSeparator8,
             this.复制完整路径ToolStripMenuItem1,
-            this.在资源管理器中打开ToolStripMenuItem1});
+            this.在资源管理器中打开ToolStripMenuItem1,
+            this.toolStripSeparator10,
+            this.将其作为自启动项ToolStripMenuItem});
             this.fViewerContextMenu.Name = "treeContextMenu";
-            this.fViewerContextMenu.Size = new System.Drawing.Size(185, 280);
+            this.fViewerContextMenu.Size = new System.Drawing.Size(185, 330);
             this.fViewerContextMenu.Opening += new System.ComponentModel.CancelEventHandler(this.fViewerContextMenu_Opening);
             // 
             // 新建ToolStripMenuItem1
@@ -586,6 +590,18 @@ namespace AlgodooStudio.ASProject
             // 
             this.vsToolStripExtender.DefaultRenderer = null;
             // 
+            // 将其作为自启动项ToolStripMenuItem
+            // 
+            this.将其作为自启动项ToolStripMenuItem.Name = "将其作为自启动项ToolStripMenuItem";
+            this.将其作为自启动项ToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.将其作为自启动项ToolStripMenuItem.Text = "将其作为自启动项";
+            this.将其作为自启动项ToolStripMenuItem.Click += new System.EventHandler(this.将其作为自启动项ToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(181, 6);
+            // 
             // FileExploreWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -670,5 +686,7 @@ namespace AlgodooStudio.ASProject
         private System.Windows.Forms.ToolStripMenuItem 粘贴ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripTextBox text_currentPath;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripMenuItem 将其作为自启动项ToolStripMenuItem;
     }
 }

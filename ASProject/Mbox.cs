@@ -76,5 +76,15 @@ namespace AlgodooStudio.ASProject
         {
             return MessageBox.Show(content, "AlgodooStudio", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        /// <summary>
+        /// 显示询问提示选择框
+        /// </summary>
+        /// <param name="content">需要显示的内容</param>
+        /// <returns>结果</returns>
+        public static DialogResult ShowQuestionYesNo(string content)
+        {
+            return MessageBox.Show(content, "AlgodooStudio", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        }
     }
 }

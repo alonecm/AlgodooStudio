@@ -162,6 +162,12 @@ namespace AlgodooStudio.ASProject.Script.Parse
                 }
 
                 //字符串
+                else if ((c == '@' && Peek(1) == '\"'))
+                {
+                    var start = pos;
+                    string str = Next() + ReadString();
+                    tokens.Add(new ThymeToken("string", str, new Range(start, pos)));
+                }
                 else if (c == '\"')
                 {
                     var start = pos;

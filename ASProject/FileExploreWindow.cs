@@ -702,28 +702,36 @@ namespace AlgodooStudio.ASProject
 
         private void fViewerContextMenu_Opening(object sender, CancelEventArgs e)
         {
-            //选中和未选中
             if (fViewer.SelectedItems.Count > 0)
             {
-                //选中的是什么
-                if (fViewer.SelectedItems[0].Tag is FileInfo)//是文件则按文件来
+                //选中了
+                if (fViewer.SelectedItems[0].Tag is FileInfo file)//选中项是文件则添加文件特殊相关项
                 {
-                    var obj = fViewer.SelectedItems[0].Tag as FileInfo;
-                    switch (obj.Extension)
+                    switch (file.Extension)
                     {
+                        case ".thm":
+                            toolStripSeparator10.Visible = 
+                            将其作为自启动项ToolStripMenuItem.Visible = true;
+                            break;
                         case ".phz":
                         case ".phn":
                             在Algodoo中打开ToolStripMenuItem.Visible = true;
                             break;
                         default:
+                            toolStripSeparator10.Visible =
+                            将其作为自启动项ToolStripMenuItem.Visible = 
                             在Algodoo中打开ToolStripMenuItem.Visible = false;
                             break;
                     }
                 }
-                else
+                else //选中项不是文件则隐藏文件特殊相关项
                 {
+                    toolStripSeparator10.Visible =
+                    将其作为自启动项ToolStripMenuItem.Visible =
                     在Algodoo中打开ToolStripMenuItem.Visible = false;
                 }
+
+                //添加通用项
 
                 toolStripSeparator9.Visible =   //这个是关闭时就不显示
                 复制完整路径ToolStripMenuItem1.Visible =
@@ -741,11 +749,15 @@ namespace AlgodooStudio.ASProject
             }
             else
             {
+                //未选中
+
                 在资源管理器中打开ToolStripMenuItem1.Visible =
                 刷新ToolStripMenuItem.Visible =
                 查看ToolStripMenuItem.Visible =
                 新建ToolStripMenuItem1.Visible = true;
 
+                toolStripSeparator10.Visible =
+                将其作为自启动项ToolStripMenuItem.Visible = 
                 toolStripSeparator9.Visible =   //这个是关闭时就不显示
                 复制完整路径ToolStripMenuItem1.Visible =
                 重命名ToolStripMenuItem1.Visible =
@@ -889,6 +901,20 @@ namespace AlgodooStudio.ASProject
             Process.Start("explorer.exe", currentFolder);
         }
 
+        private void 将其作为自启动项ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (var sw = new StreamWriter(Program.Setting.AlgodooAutoExecuteFilePath, true, System.Text.Encoding.UTF8))
+            {
+                var f = fViewer.SelectedItems[0].Tag as FileInfo;
+                if (MBox.ShowQuestionYesNo($"确定要添加{f.Name}到启动项中吗？") == DialogResult.Yes)
+                {
+                    sw.WriteLine($"Reflection.executeFile(@\"{f.FullName}\");");
+                    MBox.ShowInfo($"已添加{f.Name}到自启动项中");
+                }
+            }
+        }
+
+
         #endregion 文件展示区右键菜单
 
         /// <summary>
@@ -956,5 +982,6 @@ namespace AlgodooStudio.ASProject
             archiveCache.Clear();
             GC.Collect(2);
         }
+
     }
 }
